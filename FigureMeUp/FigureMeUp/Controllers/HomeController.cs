@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using FigureMeUp.Models;
+using FigureMeUp.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FigureMeUp.Controllers

@@ -1,0 +1,12 @@
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.GCommon\bin\Debug\net8.0\FigureMeUp.GCommon.deps.json
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.GCommon\bin\Debug\net8.0\FigureMeUp.GCommon.dll
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.GCommon\bin\Debug\net8.0\FigureMeUp.GCommon.pdb
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.GCommon\obj\Debug\net8.0\FigureMeUp.GCommon.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.GCommon\obj\Debug\net8.0\FigureMeUp.GCommon.AssemblyInfoInputs.cache
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.GCommon\obj\Debug\net8.0\FigureMeUp.GCommon.AssemblyInfo.cs
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.GCommon\obj\Debug\net8.0\FigureMeUp.GCommon.csproj.CoreCompileInputs.cache
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.GCommon\obj\Debug\net8.0\FigureMeUp.GCommon.sourcelink.json
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.GCommon\obj\Debug\net8.0\FigureMeUp.GCommon.dll
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.GCommon\obj\Debug\net8.0\refint\FigureMeUp.GCommon.dll
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.GCommon\obj\Debug\net8.0\FigureMeUp.GCommon.pdb
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.GCommon\obj\Debug\net8.0\ref\FigureMeUp.GCommon.dll

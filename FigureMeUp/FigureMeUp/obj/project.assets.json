@@ -1663,6 +1663,45 @@
             "rid": "win"
           }
         }
+      },
+      "FigureMeUp.Data/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "FigureMeUp.Data.Models": "1.0.0",
+          "FigureMeUp.GCommon": "1.0.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.17",
+          "Microsoft.EntityFrameworkCore.SqlServer": "8.0.17"
+        },
+        "compile": {
+          "bin/placeholder/FigureMeUp.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FigureMeUp.Data.dll": {}
+        }
+      },
+      "FigureMeUp.Data.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.17"
+        },
+        "compile": {
+          "bin/placeholder/FigureMeUp.Data.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FigureMeUp.Data.Models.dll": {}
+        }
+      },
+      "FigureMeUp.GCommon/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/FigureMeUp.GCommon.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FigureMeUp.GCommon.dll": {}
+        }
       }
     }
   },
@@ -4440,10 +4479,27 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "FigureMeUp.Data/1.0.0": {
+      "type": "project",
+      "path": "../FigureMeUp.Data.DBContext/FigureMeUp.Data.csproj",
+      "msbuildProject": "../FigureMeUp.Data.DBContext/FigureMeUp.Data.csproj"
+    },
+    "FigureMeUp.Data.Models/1.0.0": {
+      "type": "project",
+      "path": "../FigureMeUp.Data.Models/FigureMeUp.Data.Models.csproj",
+      "msbuildProject": "../FigureMeUp.Data.Models/FigureMeUp.Data.Models.csproj"
+    },
+    "FigureMeUp.GCommon/1.0.0": {
+      "type": "project",
+      "path": "../FigureMeUp.GCommon/FigureMeUp.GCommon.csproj",
+      "msbuildProject": "../FigureMeUp.GCommon/FigureMeUp.GCommon.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "FigureMeUp.Data >= 1.0.0",
+      "FigureMeUp.Data.Models >= 1.0.0",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 8.0.17",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 8.0.17",
       "Microsoft.AspNetCore.Identity.UI >= 8.0.17",
@@ -4483,7 +4539,14 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj": {
+              "projectPath": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj"
+            },
+            "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj": {
+              "projectPath": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
