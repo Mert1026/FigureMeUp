@@ -17,5 +17,6 @@ namespace FigureMeUp.Data.Models
         public IEnumerable<string> Hashtags { get; set; } = new List<string>();
         public string PublisherId { get; set; } = string.Empty;
         public IdentityUser Publisher { get; set; } = null!;
+        public bool IsDeleted { get; set; }
     }
 }

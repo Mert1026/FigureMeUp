@@ -10,5 +10,6 @@ namespace FigureMeUp.Data.Models
     {
         public int Id { get; set; }//ne trqbva da ew int tuka! moje da sa mnogo!!
         public string Name { get; set; } = string.Empty;
+        public bool IsDeleted { get; set; }
     }
 }

@@ -21,5 +21,6 @@ namespace FigureMeUp.Data.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public IEnumerable<UserFigures> UserFigures { get; set; } = new List<UserFigures>();
         public IEnumerable<Hashtag> Hashtags { get; set; } = new List<Hashtag>();
+        public bool IsDeleted { get; set; }
     }
 }

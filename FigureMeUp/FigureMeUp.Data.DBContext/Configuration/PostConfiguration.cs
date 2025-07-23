@@ -31,6 +31,10 @@ namespace FigureMeUp.Data.DBContext.Configuration
                 .Property(p => p.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
+            entity
+                .Property(p => p.IsDeleted)
+                .HasDefaultValue(false);
+
             //entity
             //    .Property(p => p.ImageUrls)
             //    .HasDefaultValue(new string[ImageUrlsMaxCount]);

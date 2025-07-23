@@ -21,6 +21,10 @@ namespace FigureMeUp.Data.DBContext.Configuration
                 .Property(r => r.Name)
                 .IsRequired()
                 .HasMaxLength(NameMaxLength);
+
+            entity
+                .Property(r => r.IsDeleted)
+                .HasDefaultValue(false);
         }
     }
 
