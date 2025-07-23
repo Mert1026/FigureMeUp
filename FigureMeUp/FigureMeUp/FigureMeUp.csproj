@@ -23,6 +23,8 @@
   <ItemGroup>
     <ProjectReference Include="..\FigureMeUp.Data.DBContext\FigureMeUp.Data.csproj" />
     <ProjectReference Include="..\FigureMeUp.Data.Models\FigureMeUp.Data.Models.csproj" />
+    <ProjectReference Include="..\FigureMeUp.Infrastructure\FigureMeUp.Infrastructure.csproj" />
+    <ProjectReference Include="..\FigureMeUp.Services.Core\FigureMeUp.Services.Core.csproj" />
   </ItemGroup>
 
 </Project>

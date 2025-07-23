@@ -1,6 +1,11 @@
 using FigureMeUp.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using FigureMeUp.Infrastructure;
+using FigureMeUp.Data.Repositories.Interfaces;
+using FigureMeUp.Services;
+using FigureMeUp.Services.Core.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +18,12 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddRepositories(typeof(IFiguresRepository).Assembly);
+builder.Services.AddUserDefinedServices(typeof(IFiguresService).Assembly);
+
+builder.Services.AddRepositories(typeof(IPostsRepository).Assembly);
+builder.Services.AddUserDefinedServices(typeof(IPostsService).Assembly);
 
 var app = builder.Build();
 
