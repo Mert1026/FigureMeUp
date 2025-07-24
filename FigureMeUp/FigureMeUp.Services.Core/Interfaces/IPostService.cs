@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FigureMeUp.Services.Core.Interfaces
 {
-    public interface IPostsService
+    public interface IPostService
     {
         public Task<IEnumerable<Post>> GetAllPostsAsync();
         public Task<Post?> GetPostByIdAsync(int id);

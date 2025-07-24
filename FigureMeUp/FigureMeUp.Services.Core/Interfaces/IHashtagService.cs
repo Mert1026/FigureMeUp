@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FigureMeUp.Services.Core.Interfaces
 {
-    public interface IHashtagsService
+    public interface IHashtagService
     {
         Task<bool> CreateHashtagAsync(Hashtag hashtag);
         Task<bool> DeleteHashtagWithIdAsync(int id);

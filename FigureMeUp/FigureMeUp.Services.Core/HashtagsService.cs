@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FigureMeUp.Services.Core
 {
-    public class HashtagsService : IHashtagsService
+    public class HashtagsService : IHashtagService
     {
         private readonly IHashtagsRepository _hashtagsRepository;
 

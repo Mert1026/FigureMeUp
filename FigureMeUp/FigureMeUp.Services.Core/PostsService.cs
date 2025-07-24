@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace FigureMeUp.Services.Core
 {
 
-    public class PostsService : IPostsService
+    public class PostsService : IPostService
     {
 
         private readonly IPostsRepository _postsRepository;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FigureMeUp.Services.Core.Interfaces
 {
-    public interface IFiguresService
+    public interface IFigureService
     {
         public Task<IEnumerable<Figure>> GetAllFiguresAsync();
         public Task<Figure?> GetFigureByIdAsync(int id);
