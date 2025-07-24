@@ -50,7 +50,7 @@ namespace FigureMeUp.Services.Core
                     Name = figure.Name,
                     Description = figure.Description,
                     ImageUrls = figure.ImageUrls ?? new List<string>(), // Assuming ImageUrls is a collection of strings
-                    RarityId = rarityValidation.id,
+                    RarityId = rarityValidation.Id,
                     OwnerId = userId,
                     Owner = user,
                     LastChanged = DateTime.Now,
@@ -139,7 +139,7 @@ namespace FigureMeUp.Services.Core
                 FigureToEdit.Name = newFigure.Name;
                 FigureToEdit.Description = newFigure.Description;
                 FigureToEdit.ImageUrls = newFigure.ImageUrls ?? new List<string>();
-                FigureToEdit.RarityId = rarityValidation.id;
+                FigureToEdit.RarityId = rarityValidation.Id;
                 FigureToEdit.Rarity = rarityValidation;
                 FigureToEdit.Hashtags = hashtags;
                 FigureToEdit.IsDeleted = false;

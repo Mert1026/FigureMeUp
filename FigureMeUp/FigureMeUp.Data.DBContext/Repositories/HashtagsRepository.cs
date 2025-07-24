@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace FigureMeUp.Data.Repositories
 {
-    public class HastagsRepository
+    public class HashtagsRepository
         : BaseRepository<Hashtag, Guid>, IHashtagsRepository
     {
-        public HastagsRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public HashtagsRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
     }

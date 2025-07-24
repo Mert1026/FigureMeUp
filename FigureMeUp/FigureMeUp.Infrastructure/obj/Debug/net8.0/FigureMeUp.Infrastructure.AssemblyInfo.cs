@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FigureMeUp.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2c1ba023f1fb291a44f7511b68faf6c9e2d9e063")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a0fae6cb0902fa9fba5c759fcfdc25b5ae649f96")]
 [assembly: System.Reflection.AssemblyProductAttribute("FigureMeUp.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FigureMeUp.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -30,9 +30,9 @@ builder.Services.AddUserDefinedServices(typeof(IPostsService).Assembly);
 builder.Services.AddRepositories(typeof(IHashtagsRepository).Assembly);
 builder.Services.AddUserDefinedServices(typeof(IHashtagsService).Assembly);
 
-builder.Services.AddScoped<IFiguresService, FigureService>();
-builder.Services.AddScoped<IPostsService, PostsService>();
-builder.Services.AddScoped<IHashtagsService, HashtagsService>();
+//builder.Services.AddScoped<IFiguresService, FigureService>();
+//builder.Services.AddScoped<IPostsService, PostsService>();
+//builder.Services.AddScoped<IHashtagsService, HashtagsService>();
 
 builder.Services.AddScoped<HelperMetods>();
 

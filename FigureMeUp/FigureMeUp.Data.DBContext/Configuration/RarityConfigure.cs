@@ -15,7 +15,7 @@ namespace FigureMeUp.Data.DBContext.Configuration
         public void Configure(EntityTypeBuilder<Rarity> entity)
         {
             entity
-                .HasKey(r => r.id);
+                .HasKey(r => r.Id);
 
             entity
                 .Property(r => r.Name)

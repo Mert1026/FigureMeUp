@@ -4,8 +4,10 @@ C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Services.Core\b
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Services.Core\bin\Debug\net8.0\FigureMeUp.Data.dll
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Services.Core\bin\Debug\net8.0\FigureMeUp.Data.Models.dll
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Services.Core\bin\Debug\net8.0\FigureMeUp.GCommon.dll
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Services.Core\bin\Debug\net8.0\FigureMeUp.Infrastructure.dll
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Services.Core\bin\Debug\net8.0\FigureMeUp.Data.pdb
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Services.Core\bin\Debug\net8.0\FigureMeUp.Data.Models.pdb
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Services.Core\bin\Debug\net8.0\FigureMeUp.Infrastructure.pdb
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Services.Core\bin\Debug\net8.0\FigureMeUp.GCommon.pdb
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Services.Core\obj\Debug\net8.0\FigureMeUp.Services.Core.csproj.AssemblyReference.cache
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Services.Core\obj\Debug\net8.0\FigureMeUp.Services.Core.GeneratedMSBuildEditorConfig.editorconfig
@@ -18,5 +20,3 @@ C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Services.Core\o
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Services.Core\obj\Debug\net8.0\refint\FigureMeUp.Services.Core.dll
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Services.Core\obj\Debug\net8.0\FigureMeUp.Services.Core.pdb
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Services.Core\obj\Debug\net8.0\ref\FigureMeUp.Services.Core.dll
-C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Services.Core\bin\Debug\net8.0\FigureMeUp.Infrastructure.dll
-C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Services.Core\bin\Debug\net8.0\FigureMeUp.Infrastructure.pdb
