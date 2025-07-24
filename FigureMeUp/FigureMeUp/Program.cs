@@ -1,11 +1,13 @@
 using FigureMeUp.Data;
+using FigureMeUp.Data.Repositories.Interfaces;
+using FigureMeUp.Infrastructure;
+using FigureMeUp.Services;
+using FigureMeUp.Services.Core;
+using FigureMeUp.Services.Core.Helpers;
+using FigureMeUp.Services.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using FigureMeUp.Infrastructure;
-using FigureMeUp.Data.Repositories.Interfaces;
-using FigureMeUp.Services;
-using FigureMeUp.Services.Core.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,15 @@ builder.Services.AddUserDefinedServices(typeof(IFiguresService).Assembly);
 builder.Services.AddRepositories(typeof(IPostsRepository).Assembly);
 builder.Services.AddUserDefinedServices(typeof(IPostsService).Assembly);
 
+builder.Services.AddRepositories(typeof(IHashtagsRepository).Assembly);
+builder.Services.AddUserDefinedServices(typeof(IHashtagsService).Assembly);
+
+builder.Services.AddScoped<IFiguresService, FigureService>();
+builder.Services.AddScoped<IPostsService, PostsService>();
+builder.Services.AddScoped<IHashtagsService, HashtagsService>();
+
+builder.Services.AddScoped<HelperMetods>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -43,7 +54,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

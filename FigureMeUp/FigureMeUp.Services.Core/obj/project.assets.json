@@ -1106,6 +1106,20 @@
         "runtime": {
           "bin/placeholder/FigureMeUp.GCommon.dll": {}
         }
+      },
+      "FigureMeUp.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "FigureMeUp.GCommon": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection": "8.0.1"
+        },
+        "compile": {
+          "bin/placeholder/FigureMeUp.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FigureMeUp.Infrastructure.dll": {}
+        }
       }
     }
   },
@@ -2933,12 +2947,18 @@
       "type": "project",
       "path": "../FigureMeUp.GCommon/FigureMeUp.GCommon.csproj",
       "msbuildProject": "../FigureMeUp.GCommon/FigureMeUp.GCommon.csproj"
+    },
+    "FigureMeUp.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../FigureMeUp.Infrastructure/FigureMeUp.Infrastructure.csproj",
+      "msbuildProject": "../FigureMeUp.Infrastructure/FigureMeUp.Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "FigureMeUp.Data >= 1.0.0",
-      "FigureMeUp.Data.Models >= 1.0.0"
+      "FigureMeUp.Data.Models >= 1.0.0",
+      "FigureMeUp.Infrastructure >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -2979,6 +2999,9 @@
             },
             "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj": {
               "projectPath": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj"
+            },
+            "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Infrastructure\\FigureMeUp.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Infrastructure\\FigureMeUp.Infrastructure.csproj"
             }
           }
         }

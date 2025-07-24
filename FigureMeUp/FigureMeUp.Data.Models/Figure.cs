@@ -18,7 +18,7 @@ namespace FigureMeUp.Data.Models
         public Rarity Rarity { get; set; } = null!;
         public IdentityUser Owner { get; set; } = null!;
         public string OwnerId { get; set; } = string.Empty;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime LastChanged { get; set; } = DateTime.UtcNow;
         public IEnumerable<UserFigures> UserFigures { get; set; } = new List<UserFigures>();
         public IEnumerable<Hashtag> Hashtags { get; set; } = new List<Hashtag>();
         public bool IsDeleted { get; set; }

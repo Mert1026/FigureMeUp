@@ -1722,7 +1722,8 @@
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "FigureMeUp.Data": "1.0.0",
-          "FigureMeUp.Data.Models": "1.0.0"
+          "FigureMeUp.Data.Models": "1.0.0",
+          "FigureMeUp.Infrastructure": "1.0.0"
         },
         "compile": {
           "bin/placeholder/FigureMeUp.Services.Core.dll": {}

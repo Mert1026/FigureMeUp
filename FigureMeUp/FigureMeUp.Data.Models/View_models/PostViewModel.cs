@@ -12,6 +12,8 @@ namespace FigureMeUp.Data.Models.View_models
         public string Title { get; set; }
         public string Content { get; set; }
         public List<string>? ImageUrls { get; set; }
+        public List<string>? Hashtags { get; set; }
+        public string AuthorName { get; set; }
         public string PostedOn { get; set; }
     }
 }

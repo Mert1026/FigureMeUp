@@ -1,0 +1,16 @@
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Infrastructure\bin\Debug\net8.0\FigureMeUp.Infrastructure.deps.json
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Infrastructure\bin\Debug\net8.0\FigureMeUp.Infrastructure.dll
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Infrastructure\bin\Debug\net8.0\FigureMeUp.Infrastructure.pdb
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Infrastructure\bin\Debug\net8.0\FigureMeUp.GCommon.dll
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Infrastructure\bin\Debug\net8.0\FigureMeUp.GCommon.pdb
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Infrastructure\obj\Debug\net8.0\FigureMeUp.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Infrastructure\obj\Debug\net8.0\FigureMeUp.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Infrastructure\obj\Debug\net8.0\FigureMeUp.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Infrastructure\obj\Debug\net8.0\FigureMeUp.Infrastructure.AssemblyInfo.cs
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Infrastructure\obj\Debug\net8.0\FigureMeUp.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Infrastructure\obj\Debug\net8.0\FigureMeUp.Infrastructure.sourcelink.json
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Infrastructure\obj\Debug\net8.0\FigureMe.EEA86C70.Up2Date
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Infrastructure\obj\Debug\net8.0\FigureMeUp.Infrastructure.dll
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Infrastructure\obj\Debug\net8.0\refint\FigureMeUp.Infrastructure.dll
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Infrastructure\obj\Debug\net8.0\FigureMeUp.Infrastructure.pdb
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp.Infrastructure\obj\Debug\net8.0\ref\FigureMeUp.Infrastructure.dll

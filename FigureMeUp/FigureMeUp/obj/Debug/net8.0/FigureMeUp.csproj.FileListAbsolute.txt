@@ -160,3 +160,7 @@ C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\FigureMeUp.pdb
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\FigureMeUp.genruntimeconfig.cache
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\ref\FigureMeUp.dll
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\bin\Debug\net8.0\FigureMeUp.Infrastructure.dll
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\bin\Debug\net8.0\FigureMeUp.Services.Core.dll
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\bin\Debug\net8.0\FigureMeUp.Infrastructure.pdb
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\bin\Debug\net8.0\FigureMeUp.Services.Core.pdb

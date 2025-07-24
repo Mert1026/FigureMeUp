@@ -28,7 +28,7 @@ namespace FigureMeUp.Data.DBContext.Configuration
                 .HasMaxLength(DescriptionMaxLength);
 
             entity
-                .Property(f => f.CreatedAt)
+                .Property(f => f.LastChanged)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             entity

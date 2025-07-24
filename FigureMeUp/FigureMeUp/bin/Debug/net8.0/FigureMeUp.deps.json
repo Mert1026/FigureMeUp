@@ -10,6 +10,8 @@
         "dependencies": {
           "FigureMeUp.Data": "1.0.0",
           "FigureMeUp.Data.Models": "1.0.0",
+          "FigureMeUp.Infrastructure": "1.0.0",
+          "FigureMeUp.Services.Core": "1.0.0",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "8.0.17",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.17",
           "Microsoft.AspNetCore.Identity.UI": "8.0.17",
@@ -1030,6 +1032,31 @@
             "fileVersion": "1.0.0.0"
           }
         }
+      },
+      "FigureMeUp.Infrastructure/1.0.0": {
+        "dependencies": {
+          "FigureMeUp.GCommon": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection": "8.0.1"
+        },
+        "runtime": {
+          "FigureMeUp.Infrastructure.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "FigureMeUp.Services.Core/1.0.0": {
+        "dependencies": {
+          "FigureMeUp.Data": "1.0.0",
+          "FigureMeUp.Data.Models": "1.0.0",
+          "FigureMeUp.Infrastructure": "1.0.0"
+        },
+        "runtime": {
+          "FigureMeUp.Services.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -1645,6 +1672,16 @@
       "sha512": ""
     },
     "FigureMeUp.GCommon/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "FigureMeUp.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "FigureMeUp.Services.Core/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -1,4 +1,5 @@
 ﻿using FigureMeUp.Data.Models;
+using FigureMeUp.Data.Models.View_models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace FigureMeUp.Services.Core.Interfaces
     {
         public Task<IEnumerable<Figure>> GetAllFiguresAsync();
         public Task<Figure?> GetFigureByIdAsync(int id);
-        public Task<bool> AddFigureAsync(Post post);
-        public Task<bool> UpdateFigureAsync(Post post);
+        public Task<bool> AddFigureAsync(FiguresViewModel figure, string userId);
+        public Task<bool> UpdateFigureAsync(FiguresViewModel figure, string userId);
         public Task<bool> DeleteFigureAsync(int id);
     }
 }
