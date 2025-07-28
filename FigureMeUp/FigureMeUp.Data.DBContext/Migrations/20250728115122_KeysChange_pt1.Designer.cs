@@ -4,6 +4,7 @@ using FigureMeUp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FigureMeUp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250728115122_KeysChange_pt1")]
+    partial class KeysChange_pt1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,9 +27,11 @@ namespace FigureMeUp.Data.Migrations
 
             modelBuilder.Entity("FigureMeUp.Data.Models.Figure", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -65,7 +70,7 @@ namespace FigureMeUp.Data.Migrations
 
                     b.HasIndex("RarityId");
 
-                    b.ToTable("Figures");
+                    b.ToTable("Figure");
                 });
 
             modelBuilder.Entity("FigureMeUp.Data.Models.Hashtag", b =>
@@ -76,8 +81,8 @@ namespace FigureMeUp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid?>("FigureId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("FigureId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -89,8 +94,8 @@ namespace FigureMeUp.Data.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<Guid?>("PostId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("PostId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -98,14 +103,16 @@ namespace FigureMeUp.Data.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Hashtags");
+                    b.ToTable("Hashtag");
                 });
 
             modelBuilder.Entity("FigureMeUp.Data.Models.Post", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -139,7 +146,7 @@ namespace FigureMeUp.Data.Migrations
 
                     b.HasIndex("PublisherId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Post");
                 });
 
             modelBuilder.Entity("FigureMeUp.Data.Models.Rarity", b =>
@@ -162,7 +169,7 @@ namespace FigureMeUp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rarities");
+                    b.ToTable("Rarity");
                 });
 
             modelBuilder.Entity("FigureMeUp.Data.Models.UserFigures", b =>
@@ -170,8 +177,8 @@ namespace FigureMeUp.Data.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("FigureId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("FigureId")
+                        .HasColumnType("int");
 
                     b.HasKey("UserId", "FigureId");
 

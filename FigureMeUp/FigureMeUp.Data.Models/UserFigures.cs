@@ -13,7 +13,7 @@ namespace FigureMeUp.Data.Models
         public string UserId { get; set; }
 
         public Figure Figure { get; set; } = null!;
-        public int FigureId { get; set; }
+        public Guid FigureId { get; set; }
 
     }
 }
