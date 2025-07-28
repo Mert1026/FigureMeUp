@@ -34,45 +34,66 @@ namespace FigureMeUp.Services.Core
         public async Task<bool> CreatePostAsync(PostViewModel post, string userId)
         {
             bool OpResult = false;
-            IdentityUser? user = await this._userManager.FindByIdAsync(userId);
-            List<Hashtag> hashtags = _helperMetods.HashtagsConversion(post.Hashtags ?? new List<string>());
-
-            if (user != null)
+            try
             {
-                Post toAdd = new Post
-                {
-                    Title = post.Title,
-                    Content = post.Content,
-                    CreatedAt = DateTime.UtcNow,
-                    ImageUrls = post.ImageUrls ?? new List<string>(),
-                    Hashtags = hashtags,
-                    PublisherId = userId,
-                    IsDeleted = false
-                };
+                IdentityUser? user = await this._userManager.FindByIdAsync(userId);
+                List<Hashtag> hashtags = _helperMetods.HashtagsConversion(post.Hashtags ?? new List<string>());
 
-                await _postsRepository.AddAsync(toAdd);
-                OpResult = true;
+                if (user != null)
+                {
+                    Post toAdd = new Post
+                    {
+                        Title = post.Title,
+                        Content = post.Content,
+                        CreatedAt = DateTime.UtcNow,
+                        ImageUrls = post.ImageUrls ?? new List<string>(),
+                        Hashtags = hashtags,
+                        PublisherId = userId,
+                        IsDeleted = false
+                    };
+
+                    await _postsRepository.AddAsync(toAdd);
+                    OpResult = true;
+                }
+
+                return OpResult;
+            }
+            catch(Exception ex)
+            {
+                //Redirection to error page
+                return false;
             }
 
-            return OpResult;
+            
 
 
         }
 
-        public async Task<bool> DeletePostAsync(int id)
+        public async Task<bool> DeletePostAsync(Guid id)
         {
             bool OpResult = false;
-            Post? postToDelete = await this.GetPostByIdAsync(id);
-            if(postToDelete != null)
+            try
             {
-                OpResult = await _postsRepository.DeleteAsync(postToDelete);
+                Post? postToDelete = await this.GetPostByIdAsync(id);
+                if (postToDelete != null)
+                {
+                    OpResult = await _postsRepository.DeleteAsync(postToDelete);
+                }
+                return OpResult;
             }
-            return OpResult;    
+            catch (Exception ex)
+            {
+                //Redirection to error page
+                return false;
+            }
+              
         }
 
         public async Task<IEnumerable<Post>> GetAllPostsAsync()
         {
-            IEnumerable<Post> allPosts = await _postsRepository
+            try
+            {
+                IEnumerable<Post> allPosts = await _postsRepository
                 .GetAllAttached()
                 .Select(p => new Post
                 {
@@ -88,38 +109,62 @@ namespace FigureMeUp.Services.Core
                 })
                 .ToArrayAsync();
 
-            return allPosts;
+                return allPosts;
+            }
+            catch(Exception ex)
+            {
+                //Redirection to error page
+                return Enumerable.Empty<Post>();
+            }
+            
         }
 
-        public Task<Post?> GetPostByIdAsync(int id)
+        public Task<Post?> GetPostByIdAsync(Guid id)
         {
-            Post? post = _postsRepository
+            try
+            {
+                Post? post = _postsRepository
                 .GetAllAttached()
                 .Include(p => p.Publisher)
                 .Include(p => p.Content)
                 .Include(p => p.ImageUrls)
                 .FirstOrDefault(p => p.Id == id);
 
-            return Task.FromResult(post);
+                return Task.FromResult(post);
+            }
+            catch (Exception ex)
+            {
+                //Redirection to error page
+                return null;
+            }
+
         }
 
         public async Task<bool> UpdatePostAsync(Post newPost)
         {
             bool OpResult = false;
+            try
+            {
+                Post? PostToEdit = await this.GetPostByIdAsync(newPost.Id);
+                if (PostToEdit != null)
+                {
+                    PostToEdit.Title = newPost.Title;
+                    PostToEdit.Content = newPost.Content;
+                    PostToEdit.ImageUrls = newPost.ImageUrls;
+                    PostToEdit.Hashtags = newPost.Hashtags;
+                    PostToEdit.IsDeleted = newPost.IsDeleted;
 
-            Post? PostToEdit = await this.GetPostByIdAsync(newPost.Id); 
-            if (PostToEdit != null) {
-                PostToEdit.Title = newPost.Title;
-                PostToEdit.Content = newPost.Content;
-                PostToEdit.ImageUrls = newPost.ImageUrls;
-                PostToEdit.Hashtags = newPost.Hashtags;
-                PostToEdit.IsDeleted = newPost.IsDeleted;
+                    OpResult = await this._postsRepository.UpdateAsync(PostToEdit);
 
-                OpResult = await  this._postsRepository.UpdateAsync(PostToEdit);
-                
+                }
+
+                return OpResult;
             }
-
-            return OpResult;
+            catch (Exception ex)
+            {
+                //Redirection to error page
+                return false;
+            }
 
         }
     }

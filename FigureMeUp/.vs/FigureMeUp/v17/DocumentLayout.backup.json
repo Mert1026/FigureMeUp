@@ -3,24 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Migrations\\20250724102529_MinorChanges.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:FigureMeUp.Data.DBContext\\Migrations\\20250724102529_MinorChanges.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D7AAC801-8609-4321-A30B-AF9A7258BF48}|FigureMeUp\\FigureMeUp.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D7AAC801-8609-4321-A30B-AF9A7258BF48}|FigureMeUp\\FigureMeUp.csproj|solutionrelative:figuremeup\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{56FDEE13-4998-4263-8678-93E8DEF9D473}|FigureMeUp.Services.Core\\FigureMeUp.Services.Core.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.services.core\\postsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{56FDEE13-4998-4263-8678-93E8DEF9D473}|FigureMeUp.Services.Core\\FigureMeUp.Services.Core.csproj|solutionrelative:figuremeup.services.core\\postsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56FDEE13-4998-4263-8678-93E8DEF9D473}|FigureMeUp.Services.Core\\FigureMeUp.Services.Core.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.services.core\\figureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56FDEE13-4998-4263-8678-93E8DEF9D473}|FigureMeUp.Services.Core\\FigureMeUp.Services.Core.csproj|solutionrelative:figuremeup.services.core\\figureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56FDEE13-4998-4263-8678-93E8DEF9D473}|FigureMeUp.Services.Core\\FigureMeUp.Services.Core.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.services.core\\hashtagsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56FDEE13-4998-4263-8678-93E8DEF9D473}|FigureMeUp.Services.Core\\FigureMeUp.Services.Core.csproj|solutionrelative:figuremeup.services.core\\hashtagsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{56FDEE13-4998-4263-8678-93E8DEF9D473}|FigureMeUp.Services.Core\\FigureMeUp.Services.Core.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.services.core\\interfaces\\ipostservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -35,8 +19,44 @@
       "RelativeMoniker": "D:0:0:{56FDEE13-4998-4263-8678-93E8DEF9D473}|FigureMeUp.Services.Core\\FigureMeUp.Services.Core.csproj|solutionrelative:figuremeup.services.core\\interfaces\\ifigureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8AE2FB6B-59DA-4FFB-A986-2A5B4781DFE6}|FigureMeUp.Infrastructure\\FigureMeUp.Infrastructure.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.infrastructure\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8AE2FB6B-59DA-4FFB-A986-2A5B4781DFE6}|FigureMeUp.Infrastructure\\FigureMeUp.Infrastructure.csproj|solutionrelative:figuremeup.infrastructure\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.models\\view_models\\profiledetailsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|solutionrelative:figuremeup.data.models\\view_models\\profiledetailsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{56FDEE13-4998-4263-8678-93E8DEF9D473}|FigureMeUp.Services.Core\\FigureMeUp.Services.Core.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.services.core\\figureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{56FDEE13-4998-4263-8678-93E8DEF9D473}|FigureMeUp.Services.Core\\FigureMeUp.Services.Core.csproj|solutionrelative:figuremeup.services.core\\figureservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.models\\post.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|solutionrelative:figuremeup.data.models\\post.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.models\\view_models\\figuresviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|solutionrelative:figuremeup.data.models\\view_models\\figuresviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.models\\view_models\\postviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|solutionrelative:figuremeup.data.models\\view_models\\postviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{56FDEE13-4998-4263-8678-93E8DEF9D473}|FigureMeUp.Services.Core\\FigureMeUp.Services.Core.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.services.core\\hashtagsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{56FDEE13-4998-4263-8678-93E8DEF9D473}|FigureMeUp.Services.Core\\FigureMeUp.Services.Core.csproj|solutionrelative:figuremeup.services.core\\hashtagsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.models\\userfigures.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|solutionrelative:figuremeup.data.models\\userfigures.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.models\\rarity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|solutionrelative:figuremeup.data.models\\rarity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.models\\hashtag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|solutionrelative:figuremeup.data.models\\hashtag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.models\\figure.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|solutionrelative:figuremeup.data.models\\figure.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.dbcontext\\configuration\\figureconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -47,20 +67,44 @@
       "RelativeMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|solutionrelative:figuremeup.data.dbcontext\\configuration\\hashtagconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.dbcontext\\configuration\\postconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|solutionrelative:figuremeup.data.dbcontext\\configuration\\postconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.dbcontext\\configuration\\rarityconfigure.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|solutionrelative:figuremeup.data.dbcontext\\configuration\\rarityconfigure.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.dbcontext\\configuration\\userfiguresconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|solutionrelative:figuremeup.data.dbcontext\\configuration\\userfiguresconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7AAC801-8609-4321-A30B-AF9A7258BF48}|FigureMeUp\\FigureMeUp.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup\\figuremeup.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{D7AAC801-8609-4321-A30B-AF9A7258BF48}|FigureMeUp\\FigureMeUp.csproj|solutionrelative:figuremeup\\figuremeup.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.dbcontext\\repositories\\postsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|solutionrelative:figuremeup.data.dbcontext\\repositories\\postsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.dbcontext\\migrations\\20250724102529_minorchanges.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|solutionrelative:figuremeup.data.dbcontext\\migrations\\20250724102529_minorchanges.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D7AAC801-8609-4321-A30B-AF9A7258BF48}|FigureMeUp\\FigureMeUp.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D7AAC801-8609-4321-A30B-AF9A7258BF48}|FigureMeUp\\FigureMeUp.csproj|solutionrelative:figuremeup\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8AE2FB6B-59DA-4FFB-A986-2A5B4781DFE6}|FigureMeUp.Infrastructure\\FigureMeUp.Infrastructure.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.infrastructure\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8AE2FB6B-59DA-4FFB-A986-2A5B4781DFE6}|FigureMeUp.Infrastructure\\FigureMeUp.Infrastructure.csproj|solutionrelative:figuremeup.infrastructure\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.dbcontext\\repositories\\interfaces\\ipostsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|solutionrelative:figuremeup.data.dbcontext\\repositories\\interfaces\\ipostsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.dbcontext\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|solutionrelative:figuremeup.data.dbcontext\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.models\\view_models\\figuresviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|solutionrelative:figuremeup.data.models\\view_models\\figuresviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.dbcontext\\repositories\\postsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|solutionrelative:figuremeup.data.dbcontext\\repositories\\postsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.dbcontext\\repositories\\hashtagsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -91,44 +135,8 @@
       "RelativeMoniker": "D:0:0:{56FDEE13-4998-4263-8678-93E8DEF9D473}|FigureMeUp.Services.Core\\FigureMeUp.Services.Core.csproj|solutionrelative:figuremeup.services.core\\helpers\\helpermetods.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.models\\rarity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|solutionrelative:figuremeup.data.models\\rarity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.dbcontext\\configuration\\rarityconfigure.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|solutionrelative:figuremeup.data.dbcontext\\configuration\\rarityconfigure.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.models\\hashtag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|solutionrelative:figuremeup.data.models\\hashtag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.models\\view_models\\postviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|solutionrelative:figuremeup.data.models\\view_models\\postviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.models\\post.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|solutionrelative:figuremeup.data.models\\post.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.models\\view_models\\profiledetailsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|solutionrelative:figuremeup.data.models\\view_models\\profiledetailsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.models\\userfigures.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|solutionrelative:figuremeup.data.models\\userfigures.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.dbcontext\\repositories\\interfaces\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|solutionrelative:figuremeup.data.dbcontext\\repositories\\interfaces\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.models\\figure.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0607425A-85BF-4A71-AE22-7D35484B850D}|FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj|solutionrelative:figuremeup.data.models\\figure.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D7AAC801-8609-4321-A30B-AF9A7258BF48}|FigureMeUp\\FigureMeUp.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup\\figuremeup.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{D7AAC801-8609-4321-A30B-AF9A7258BF48}|FigureMeUp\\FigureMeUp.csproj|solutionrelative:figuremeup\\figuremeup.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D7AAC801-8609-4321-A30B-AF9A7258BF48}|FigureMeUp\\FigureMeUp.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -179,14 +187,6 @@
       "RelativeMoniker": "D:0:0:{D7AAC801-8609-4321-A30B-AF9A7258BF48}|FigureMeUp\\FigureMeUp.csproj|solutionrelative:figuremeup\\controllers\\favoritescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.dbcontext\\configuration\\userfiguresconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|solutionrelative:figuremeup.data.dbcontext\\configuration\\userfiguresconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.dbcontext\\configuration\\postconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|solutionrelative:figuremeup.data.dbcontext\\configuration\\postconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|c:\\users\\merte\\documents\\github\\figuremeup\\figuremeup\\figuremeup.data.dbcontext\\figuremeup.data.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{72FD419D-5D5C-40A4-AED2-E2E424F71EDB}|FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj|solutionrelative:figuremeup.data.dbcontext\\figuremeup.data.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
@@ -206,49 +206,141 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "20250724102529_MinorChanges.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Migrations\\20250724102529_MinorChanges.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Migrations\\20250724102529_MinorChanges.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Migrations\\20250724102529_MinorChanges.cs",
-              "RelativeToolTip": "FigureMeUp.Data.DBContext\\Migrations\\20250724102529_MinorChanges.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 9,
+              "Title": "HashtagsService.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\HashtagsService.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Services.Core\\HashtagsService.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\HashtagsService.cs",
+              "RelativeToolTip": "FigureMeUp.Services.Core\\HashtagsService.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAIwG8AAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-24T10:25:29.445Z",
+              "WhenOpened": "2025-07-23T10:45:13.913Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "FiguresViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\View_models\\FiguresViewModel.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Data.Models\\View_models\\FiguresViewModel.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\View_models\\FiguresViewModel.cs",
-              "RelativeToolTip": "FigureMeUp.Data.Models\\View_models\\FiguresViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAAjAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "PostsService.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\PostsService.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Services.Core\\PostsService.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\PostsService.cs",
+              "RelativeToolTip": "FigureMeUp.Services.Core\\PostsService.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAqwB4AAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-23T14:29:11.271Z"
+              "WhenOpened": "2025-07-23T10:44:37.309Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "IFigureService.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\Interfaces\\IFigureService.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Services.Core\\Interfaces\\IFigureService.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\Interfaces\\IFigureService.cs",
-              "RelativeToolTip": "FigureMeUp.Services.Core\\Interfaces\\IFigureService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAoAAAAcAAAAAAAAAA==",
+              "DocumentIndex": 12,
+              "Title": "Hashtag.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\Hashtag.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Data.Models\\Hashtag.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\Hashtag.cs",
+              "RelativeToolTip": "FigureMeUp.Data.Models\\Hashtag.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-23T10:42:10.495Z",
+              "WhenOpened": "2025-07-22T16:44:33.305Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
+              "Title": "Post.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\Post.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Data.Models\\Post.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\Post.cs",
+              "RelativeToolTip": "FigureMeUp.Data.Models\\Post.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAkAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T16:46:20.944Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Rarity.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\Rarity.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Data.Models\\Rarity.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\Rarity.cs",
+              "RelativeToolTip": "FigureMeUp.Data.Models\\Rarity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T16:46:20.055Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "UserFigures.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\UserFigures.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Data.Models\\UserFigures.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\UserFigures.cs",
+              "RelativeToolTip": "FigureMeUp.Data.Models\\UserFigures.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T16:46:18.941Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "FigureService.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\FigureService.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Services.Core\\FigureService.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\FigureService.cs",
+              "RelativeToolTip": "FigureMeUp.Services.Core\\FigureService.cs",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAswE4AAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-23T10:41:32.075Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FiguresViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\View_models\\FiguresViewModel.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Data.Models\\View_models\\FiguresViewModel.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\View_models\\FiguresViewModel.cs",
+              "RelativeToolTip": "FigureMeUp.Data.Models\\View_models\\FiguresViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-23T14:29:11.271Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PostViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\View_models\\PostViewModel.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Data.Models\\View_models\\PostViewModel.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\View_models\\PostViewModel.cs",
+              "RelativeToolTip": "FigureMeUp.Data.Models\\View_models\\PostViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAkAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-23T14:30:20.37Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ProfileDetailsViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\View_models\\ProfileDetailsViewModel.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Data.Models\\View_models\\ProfileDetailsViewModel.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\View_models\\ProfileDetailsViewModel.cs",
+              "RelativeToolTip": "FigureMeUp.Data.Models\\View_models\\ProfileDetailsViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-23T14:25:50.736Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "IHashtagService.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\Interfaces\\IHashtagService.cs",
               "RelativeDocumentMoniker": "FigureMeUp.Services.Core\\Interfaces\\IHashtagService.cs",
@@ -262,31 +354,58 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "FigureService.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\FigureService.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Services.Core\\FigureService.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\FigureService.cs",
-              "RelativeToolTip": "FigureMeUp.Services.Core\\FigureService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAoAAAAAAAAAA==",
+              "Title": "IFigureService.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\Interfaces\\IFigureService.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Services.Core\\Interfaces\\IFigureService.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\Interfaces\\IFigureService.cs",
+              "RelativeToolTip": "FigureMeUp.Services.Core\\Interfaces\\IFigureService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBAAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-23T10:41:32.075Z",
+              "WhenOpened": "2025-07-23T10:42:10.495Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\ApplicationDbContext.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\ApplicationDbContext.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\ApplicationDbContext.cs",
-              "RelativeToolTip": "FigureMeUp.Data.DBContext\\ApplicationDbContext.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAIwCIAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "IPostService.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\Interfaces\\IPostService.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Services.Core\\Interfaces\\IPostService.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\Interfaces\\IPostService.cs",
+              "RelativeToolTip": "FigureMeUp.Services.Core\\Interfaces\\IPostService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBAAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-24T09:52:24.798Z"
+              "WhenOpened": "2025-07-23T10:42:39.63Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
+              "Title": "Figure.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\Figure.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Data.Models\\Figure.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\Figure.cs",
+              "RelativeToolTip": "FigureMeUp.Data.Models\\Figure.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAwAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T16:46:41.326Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "FigureConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Configuration\\FigureConfiguration.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Configuration\\FigureConfiguration.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Configuration\\FigureConfiguration.cs",
+              "RelativeToolTip": "FigureMeUp.Data.DBContext\\Configuration\\FigureConfiguration.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAUwCMAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T16:42:09.154Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "HashtagConfiguration.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Configuration\\HashtagConfiguration.cs",
               "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Configuration\\HashtagConfiguration.cs",
@@ -294,89 +413,64 @@
               "RelativeToolTip": "FigureMeUp.Data.DBContext\\Configuration\\HashtagConfiguration.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABkAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T16:40:05.061Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "FigureConfiguration.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Configuration\\FigureConfiguration.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Configuration\\FigureConfiguration.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Configuration\\FigureConfiguration.cs",
-              "RelativeToolTip": "FigureMeUp.Data.DBContext\\Configuration\\FigureConfiguration.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAA6wCMAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T16:42:09.154Z",
+              "WhenOpened": "2025-07-22T16:40:05.061Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ServiceCollectionExtensions.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Infrastructure\\ServiceCollectionExtensions.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Infrastructure\\ServiceCollectionExtensions.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Infrastructure\\ServiceCollectionExtensions.cs",
-              "RelativeToolTip": "FigureMeUp.Infrastructure\\ServiceCollectionExtensions.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAQwDQAAAARAAAAAAAAAA==",
+              "DocumentIndex": 16,
+              "Title": "PostConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Configuration\\PostConfiguration.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Configuration\\PostConfiguration.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Configuration\\PostConfiguration.cs",
+              "RelativeToolTip": "FigureMeUp.Data.DBContext\\Configuration\\PostConfiguration.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAxwCIAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-23T13:14:58.132Z",
+              "WhenOpened": "2025-07-22T16:45:01.598Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IPostService.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\Interfaces\\IPostService.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Services.Core\\Interfaces\\IPostService.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\Interfaces\\IPostService.cs",
-              "RelativeToolTip": "FigureMeUp.Services.Core\\Interfaces\\IPostService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA4AAABLAAAAAAAAAA==",
+              "DocumentIndex": 17,
+              "Title": "RarityConfigure.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Configuration\\RarityConfigure.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Configuration\\RarityConfigure.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Configuration\\RarityConfigure.cs",
+              "RelativeToolTip": "FigureMeUp.Data.DBContext\\Configuration\\RarityConfigure.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-23T10:42:39.63Z",
+              "WhenOpened": "2025-07-22T16:42:04.695Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "HashtagsService.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\HashtagsService.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Services.Core\\HashtagsService.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\HashtagsService.cs",
-              "RelativeToolTip": "FigureMeUp.Services.Core\\HashtagsService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAAOAAAAAAAAAA==",
+              "DocumentIndex": 18,
+              "Title": "UserFiguresConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Configuration\\UserFiguresConfiguration.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Configuration\\UserFiguresConfiguration.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Configuration\\UserFiguresConfiguration.cs",
+              "RelativeToolTip": "FigureMeUp.Data.DBContext\\Configuration\\UserFiguresConfiguration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-23T10:45:13.913Z",
+              "WhenOpened": "2025-07-22T16:40:03.499Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PostsService.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\PostsService.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Services.Core\\PostsService.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\PostsService.cs",
-              "RelativeToolTip": "FigureMeUp.Services.Core\\PostsService.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAcwCwAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-23T10:44:37.309Z",
+              "DocumentIndex": 19,
+              "Title": "FigureMeUp.csproj",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp\\FigureMeUp.csproj",
+              "RelativeDocumentMoniker": "FigureMeUp\\FigureMeUp.csproj",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp\\FigureMeUp.csproj",
+              "RelativeToolTip": "FigureMeUp\\FigureMeUp.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-07-23T13:23:53.075Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp\\Program.cs",
-              "RelativeDocumentMoniker": "FigureMeUp\\Program.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp\\Program.cs",
-              "RelativeToolTip": "FigureMeUp\\Program.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAAwCcAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-23T13:10:39.631Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 20,
               "Title": "PostsRepository.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Repositories\\PostsRepository.cs",
               "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Repositories\\PostsRepository.cs",
@@ -388,7 +482,55 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 23,
+              "Title": "ServiceCollectionExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Infrastructure\\ServiceCollectionExtensions.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Infrastructure\\ServiceCollectionExtensions.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Infrastructure\\ServiceCollectionExtensions.cs",
+              "RelativeToolTip": "FigureMeUp.Infrastructure\\ServiceCollectionExtensions.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAQwDQAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-23T13:14:58.132Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "20250724102529_MinorChanges.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Migrations\\20250724102529_MinorChanges.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Migrations\\20250724102529_MinorChanges.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Migrations\\20250724102529_MinorChanges.cs",
+              "RelativeToolTip": "FigureMeUp.Data.DBContext\\Migrations\\20250724102529_MinorChanges.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T10:25:29.445Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\ApplicationDbContext.cs",
+              "RelativeToolTip": "FigureMeUp.Data.DBContext\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAIwCIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T09:52:24.798Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp\\Program.cs",
+              "RelativeDocumentMoniker": "FigureMeUp\\Program.cs",
+              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp\\Program.cs",
+              "RelativeToolTip": "FigureMeUp\\Program.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwCcAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-23T13:10:39.631Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
               "Title": "FiguresRepository.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Repositories\\FiguresRepository.cs",
               "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Repositories\\FiguresRepository.cs",
@@ -400,7 +542,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 24,
               "Title": "IPostsRepository.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Repositories\\Interfaces\\IPostsRepository.cs",
               "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Repositories\\Interfaces\\IPostsRepository.cs",
@@ -412,7 +554,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 26,
               "Title": "HashtagsRepository.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Repositories\\HashtagsRepository.cs",
               "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Repositories\\HashtagsRepository.cs",
@@ -424,7 +566,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 28,
               "Title": "BaseRepository.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Repositories\\BaseRepository.cs",
               "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Repositories\\BaseRepository.cs",
@@ -436,7 +578,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 29,
               "Title": "IHashtagsRepository.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Repositories\\Interfaces\\IHashtagsRepository.cs",
               "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Repositories\\Interfaces\\IHashtagsRepository.cs",
@@ -448,7 +590,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 30,
               "Title": "ApplicationDbContextModelSnapshot.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Migrations\\ApplicationDbContextModelSnapshot.cs",
               "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Migrations\\ApplicationDbContextModelSnapshot.cs",
@@ -460,7 +602,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 31,
               "Title": "FigureMeUp.Data.Models.csproj",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj",
               "RelativeDocumentMoniker": "FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj",
@@ -468,47 +610,12 @@
               "RelativeToolTip": "FigureMeUp.Data.Models\\FigureMeUp.Data.Models.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-07-24T10:05:48.69Z"
+              "WhenOpened": "2025-07-24T10:05:48.69Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "Rarity.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\Rarity.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Data.Models\\Rarity.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\Rarity.cs",
-              "RelativeToolTip": "FigureMeUp.Data.Models\\Rarity.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T16:46:20.055Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "RarityConfigure.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Configuration\\RarityConfigure.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Configuration\\RarityConfigure.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Configuration\\RarityConfigure.cs",
-              "RelativeToolTip": "FigureMeUp.Data.DBContext\\Configuration\\RarityConfigure.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T16:42:04.695Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "Hashtag.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\Hashtag.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Data.Models\\Hashtag.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\Hashtag.cs",
-              "RelativeToolTip": "FigureMeUp.Data.Models\\Hashtag.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T16:44:33.305Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 32,
               "Title": "HelperMetods.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Services.Core\\Helpers\\HelperMetods.cs",
               "RelativeDocumentMoniker": "FigureMeUp.Services.Core\\Helpers\\HelperMetods.cs",
@@ -520,55 +627,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "FigureMeUp.csproj",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp\\FigureMeUp.csproj",
-              "RelativeDocumentMoniker": "FigureMeUp\\FigureMeUp.csproj",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp\\FigureMeUp.csproj",
-              "RelativeToolTip": "FigureMeUp\\FigureMeUp.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-07-23T13:23:53.075Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "ProfileDetailsViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\View_models\\ProfileDetailsViewModel.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Data.Models\\View_models\\ProfileDetailsViewModel.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\View_models\\ProfileDetailsViewModel.cs",
-              "RelativeToolTip": "FigureMeUp.Data.Models\\View_models\\ProfileDetailsViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-23T14:25:50.736Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "PostViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\View_models\\PostViewModel.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Data.Models\\View_models\\PostViewModel.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\View_models\\PostViewModel.cs",
-              "RelativeToolTip": "FigureMeUp.Data.Models\\View_models\\PostViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAkAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-23T14:30:20.37Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "Post.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\Post.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Data.Models\\Post.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\Post.cs",
-              "RelativeToolTip": "FigureMeUp.Data.Models\\Post.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBAAAABNAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T16:46:20.944Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 38,
               "Title": "IFiguresRepository.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Repositories\\Interfaces\\IFiguresRepository.cs",
               "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Repositories\\Interfaces\\IFiguresRepository.cs",
@@ -580,7 +639,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 37,
               "Title": "ExceptionMessages.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.GCommon\\ExceptionMessages.cs",
               "RelativeDocumentMoniker": "FigureMeUp.GCommon\\ExceptionMessages.cs",
@@ -592,7 +651,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 36,
               "Title": "ApplicationConstants.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.GCommon\\ApplicationConstants.cs",
               "RelativeDocumentMoniker": "FigureMeUp.GCommon\\ApplicationConstants.cs",
@@ -604,7 +663,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 39,
               "Title": "IAsyncRepository.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Repositories\\Interfaces\\IAsyncRepository.cs",
               "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Repositories\\Interfaces\\IAsyncRepository.cs",
@@ -616,7 +675,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 33,
               "Title": "IRepository.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Repositories\\Interfaces\\IRepository.cs",
               "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Repositories\\Interfaces\\IRepository.cs",
@@ -628,7 +687,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 43,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "FigureMeUp\\Controllers\\HomeController.cs",
@@ -640,7 +699,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 42,
               "Title": "HashtagsController.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp\\Controllers\\HashtagsController.cs",
               "RelativeDocumentMoniker": "FigureMeUp\\Controllers\\HashtagsController.cs",
@@ -652,7 +711,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 45,
               "Title": "FavoritesController.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp\\Controllers\\FavoritesController.cs",
               "RelativeDocumentMoniker": "FigureMeUp\\Controllers\\FavoritesController.cs",
@@ -664,7 +723,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 44,
               "Title": "PostsController.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp\\Controllers\\PostsController.cs",
               "RelativeDocumentMoniker": "FigureMeUp\\Controllers\\PostsController.cs",
@@ -676,7 +735,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 41,
               "Title": "FiguresController.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp\\Controllers\\FiguresController.cs",
               "RelativeDocumentMoniker": "FigureMeUp\\Controllers\\FiguresController.cs",
@@ -700,7 +759,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 34,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp\\appsettings.json",
               "RelativeDocumentMoniker": "FigureMeUp\\appsettings.json",
@@ -724,42 +783,6 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "Figure.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\Figure.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Data.Models\\Figure.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\Figure.cs",
-              "RelativeToolTip": "FigureMeUp.Data.Models\\Figure.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAoAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T16:46:41.326Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "UserFigures.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\UserFigures.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Data.Models\\UserFigures.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.Models\\UserFigures.cs",
-              "RelativeToolTip": "FigureMeUp.Data.Models\\UserFigures.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T16:46:18.941Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 45,
-              "Title": "PostConfiguration.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Configuration\\PostConfiguration.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Configuration\\PostConfiguration.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Configuration\\PostConfiguration.cs",
-              "RelativeToolTip": "FigureMeUp.Data.DBContext\\Configuration\\PostConfiguration.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAQwCIAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T16:45:01.598Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 46,
               "Title": "FigureMeUp.Data.csproj",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj",
@@ -768,11 +791,12 @@
               "RelativeToolTip": "FigureMeUp.Data.DBContext\\FigureMeUp.Data.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-07-22T16:41:29.146Z"
+              "WhenOpened": "2025-07-22T16:41:29.146Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 40,
               "Title": "FigureMeUp.GCommon.csproj",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.GCommon\\FigureMeUp.GCommon.csproj",
               "RelativeDocumentMoniker": "FigureMeUp.GCommon\\FigureMeUp.GCommon.csproj",
@@ -780,11 +804,12 @@
               "RelativeToolTip": "FigureMeUp.GCommon\\FigureMeUp.GCommon.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-07-22T16:41:17.048Z"
+              "WhenOpened": "2025-07-22T16:41:17.048Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 35,
               "Title": "ValidationConstraints.cs",
               "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.GCommon\\ValidationConstraints.cs",
               "RelativeDocumentMoniker": "FigureMeUp.GCommon\\ValidationConstraints.cs",
@@ -793,18 +818,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-22T16:41:04.954Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 44,
-              "Title": "UserFiguresConfiguration.cs",
-              "DocumentMoniker": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Configuration\\UserFiguresConfiguration.cs",
-              "RelativeDocumentMoniker": "FigureMeUp.Data.DBContext\\Configuration\\UserFiguresConfiguration.cs",
-              "ToolTip": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp.Data.DBContext\\Configuration\\UserFiguresConfiguration.cs",
-              "RelativeToolTip": "FigureMeUp.Data.DBContext\\Configuration\\UserFiguresConfiguration.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T16:40:03.499Z"
             }
           ]
         }

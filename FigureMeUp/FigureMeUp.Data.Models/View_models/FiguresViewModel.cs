@@ -9,7 +9,7 @@ namespace FigureMeUp.Data.Models.View_models
     public class FiguresViewModel
     {
         //Used as input model too.
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public List<string> ImageUrls { get; set; }

@@ -11,9 +11,9 @@ namespace FigureMeUp.Services.Core.Interfaces
     public interface IPostService
     {
         public Task<IEnumerable<Post>> GetAllPostsAsync();
-        public Task<Post?> GetPostByIdAsync(int id);
+        public Task<Post?> GetPostByIdAsync(Guid id);
         public Task<bool> CreatePostAsync(PostViewModel post, string userId);
         public Task<bool> UpdatePostAsync(Post post);
-        public Task<bool> DeletePostAsync(int id);
+        public Task<bool> DeletePostAsync(Guid id);
     }
 }

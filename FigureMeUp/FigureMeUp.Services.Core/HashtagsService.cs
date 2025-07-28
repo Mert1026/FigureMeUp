@@ -22,50 +22,96 @@ namespace FigureMeUp.Services.Core
 
         public async Task<bool> CreateHashtagAsync(Hashtag hashtag)
         {
-            await _hashtagsRepository.AddAsync(hashtag);
-            return true;
+            try
+            {
+                await _hashtagsRepository.AddAsync(hashtag);
+                return true;
+            }
+            catch(Exception ex)
+            {
+                //Redirection to error page
+                return false;
+            }
+
         }
 
         public async Task<bool> DeleteHashtagWithIdAsync(int id)
         {
             bool OpResult = false;
-            Hashtag? hashtagToDelete = await GetHashtagByIdAsync(id);
-            if (hashtagToDelete != null)
+            try
             {
-                OpResult = await _hashtagsRepository.DeleteAsync(hashtagToDelete);
+                Hashtag? hashtagToDelete = await GetHashtagByIdAsync(id);
+                if (hashtagToDelete != null)
+                {
+                    OpResult = await _hashtagsRepository.DeleteAsync(hashtagToDelete);
+                }
+                return OpResult;
             }
-            return OpResult;
+            catch (Exception ex)
+            {
+                //Redirection to error page
+                return false;
+            }
+
         }
         public async Task<bool> DeleteHashtagWithNameAsync(string name)
         {
             bool OpResult = false;
-            Hashtag? hashtagToDelete = await GetHashtagByNameAsync(name);
-            if (hashtagToDelete != null)
+            try
             {
-                OpResult = await _hashtagsRepository.DeleteAsync(hashtagToDelete);
+                Hashtag? hashtagToDelete = await GetHashtagByNameAsync(name);
+                if (hashtagToDelete != null)
+                {
+                    OpResult = await _hashtagsRepository.DeleteAsync(hashtagToDelete);
+                }
+                return OpResult;
             }
-            return OpResult;
+            catch (Exception ex)
+            {
+                //Redirection to error page
+                return false;
+            }
+
+
         }
 
 
         //##############################################################
         public async Task<Hashtag?> GetHashtagByIdAsync(int id)
         {
-            Hashtag? hashtag = await _hashtagsRepository
+            try
+            {
+                Hashtag? hashtag = await _hashtagsRepository
                 .GetAllAttached()
                 .FirstOrDefaultAsync(h => h.Id == id);
 
-            return hashtag;
+                return hashtag;
+            }
+            catch (Exception ex)
+            {
+                //Redirection to error page
+                return null;
+            }
+
         }
 
 
         public async Task<Hashtag?> GetHashtagByNameAsync(string name)
         {
-            Hashtag? hashtag = await _hashtagsRepository
+            try
+            {
+                Hashtag? hashtag = await _hashtagsRepository
                 .GetAllAttached()
                 .FirstOrDefaultAsync(h => h.Name == name);
 
-            return hashtag;
+                return hashtag;
+            }
+            catch (Exception ex)
+            {
+                //Redirection to error page
+                return null;
+            }
+
         }
 
     }

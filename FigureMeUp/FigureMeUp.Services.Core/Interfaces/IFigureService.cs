@@ -11,9 +11,9 @@ namespace FigureMeUp.Services.Core.Interfaces
     public interface IFigureService
     {
         public Task<IEnumerable<Figure>> GetAllFiguresAsync();
-        public Task<Figure?> GetFigureByIdAsync(int id);
+        public Task<Figure?> GetFigureByIdAsync(Guid id);
         public Task<bool> AddFigureAsync(FiguresViewModel figure, string userId);
         public Task<bool> UpdateFigureAsync(FiguresViewModel figure, string userId);
-        public Task<bool> DeleteFigureAsync(int id);
+        public Task<bool> DeleteFigureAsync(Guid id);
     }
 }

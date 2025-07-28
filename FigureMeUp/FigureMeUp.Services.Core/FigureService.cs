@@ -39,48 +39,68 @@ namespace FigureMeUp.Services.Core
         public async Task<bool> AddFigureAsync(FiguresViewModel figure, string userId)
         {
             bool OpResult = false;
-            IdentityUser? user = await this._userManager.FindByIdAsync(userId);
-            List<Hashtag> hashtags = _helperMetods.HashtagsConversion(figure.Hashtags ?? new List<string>());
-            Rarity? rarityValidation = _helperMetods.RarityValidation(figure.Rarity);
-            if (user != null
-                && rarityValidation != null)
+            try
             {
-                Figure toAdd = new Figure
+                IdentityUser? user = await this._userManager.FindByIdAsync(userId);
+                List<Hashtag> hashtags = _helperMetods.HashtagsConversion(figure.Hashtags ?? new List<string>());
+                Rarity? rarityValidation = _helperMetods.RarityValidation(figure.Rarity);
+                if (user != null
+                    && rarityValidation != null)
                 {
-                    Name = figure.Name,
-                    Description = figure.Description,
-                    ImageUrls = figure.ImageUrls ?? new List<string>(), // Assuming ImageUrls is a collection of strings
-                    RarityId = rarityValidation.Id,
-                    OwnerId = userId,
-                    Owner = user,
-                    LastChanged = DateTime.Now,
-                    IsDeleted = false,
-                    Hashtags = hashtags// Assuming Hashtags is a collection of Hashtag objects
-                };
+                    Figure toAdd = new Figure
+                    {
+                        Name = figure.Name,
+                        Description = figure.Description,
+                        ImageUrls = figure.ImageUrls ?? new List<string>(), // Assuming ImageUrls is a collection of strings
+                        RarityId = rarityValidation.Id,
+                        OwnerId = userId,
+                        Owner = user,
+                        LastChanged = DateTime.Now,
+                        IsDeleted = false,
+                        Hashtags = hashtags// Assuming Hashtags is a collection of Hashtag objects
+                    };
 
 
-                await _figuresRepository.AddAsync(toAdd);
-                OpResult = true;
+                    await _figuresRepository.AddAsync(toAdd);
+                    OpResult = true;
+                }
+
+                return OpResult;
             }
-
-            return OpResult;
+            catch (Exception ex)
+            {
+                //Redirection to error page
+                return false;
+            }
+            
 
         }
 
-        public async Task<bool> DeleteFigureAsync(int id)
+        public async Task<bool> DeleteFigureAsync(Guid id)
         {
             bool OpResult = false;
-            Figure? figureToDelete = await this.GetFigureByIdAsync(id);
-            if (figureToDelete != null)
+            try
             {
-                OpResult = await _figuresRepository.DeleteAsync(figureToDelete);
+                Figure? figureToDelete = await this.GetFigureByIdAsync(id);
+                if (figureToDelete != null)
+                {
+                    OpResult = await _figuresRepository.DeleteAsync(figureToDelete);
+                }
+                return OpResult;
             }
-            return OpResult;
+            catch (Exception ex)
+            {
+                //Redirection to error page
+                return false;
+            }
+
         }
 
         public async Task<IEnumerable<Figure>> GetAllFiguresAsync()
         {
-            IEnumerable<Figure> figures = await this._figuresRepository
+            try
+            {
+                IEnumerable<Figure> figures = await this._figuresRepository
                 .GetAllAttached()
                 .Include(p => p.Rarity)
                 .Include(p => p.Owner)
@@ -103,19 +123,28 @@ namespace FigureMeUp.Services.Core
                 })
                 .ToArrayAsync();
 
-            if (figures == null || !figures.Any())
-            {             
+                if (figures == null || !figures.Any())
+                {
+                    return Enumerable.Empty<Figure>();
+                }
+                else
+                {
+                    return figures;
+                }
+            }
+            catch(Exception ex)
+            {
+                //Redirection to error page
                 return Enumerable.Empty<Figure>();
             }
-            else
-            {
-                return figures;
-            }
+            
         }
 
-        public async Task<Figure?> GetFigureByIdAsync(int id)
+        public async Task<Figure?> GetFigureByIdAsync(Guid id)
         {
-            Figure? figure = await this._figuresRepository
+            try
+            {
+                Figure? figure = await this._figuresRepository
                 .GetAllAttached()
                 .Include(p => p.Rarity)
                 .Include(p => p.Owner)
@@ -123,35 +152,51 @@ namespace FigureMeUp.Services.Core
                 .Include(p => p.Hashtags)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
-            return figure;
+                return figure;
+            }
+            catch (Exception ex)
+            {
+                //Redirection to error page
+                return null;
+            }
+
         }
 
         public async Task<bool> UpdateFigureAsync(FiguresViewModel newFigure, string userId)
         {
             bool OpResult = false;
-            IdentityUser? user = await this._userManager.FindByIdAsync(userId);
-            List<Hashtag> hashtags = _helperMetods.HashtagsConversion(newFigure.Hashtags ?? new List<string>());
-            Rarity? rarityValidation = _helperMetods.RarityValidation(newFigure.Rarity);
-            Figure? FigureToEdit = await this.GetFigureByIdAsync(newFigure.Id);
-            if (FigureToEdit != null
-                && rarityValidation != null)
+            try
             {
-                FigureToEdit.Name = newFigure.Name;
-                FigureToEdit.Description = newFigure.Description;
-                FigureToEdit.ImageUrls = newFigure.ImageUrls ?? new List<string>();
-                FigureToEdit.RarityId = rarityValidation.Id;
-                FigureToEdit.Rarity = rarityValidation;
-                FigureToEdit.Hashtags = hashtags;
-                FigureToEdit.IsDeleted = false;
-                FigureToEdit.LastChanged = DateTime.Now;
-                FigureToEdit.OwnerId = FigureToEdit.OwnerId;
-                FigureToEdit.Owner = FigureToEdit.Owner;
+                IdentityUser? user = await this._userManager.FindByIdAsync(userId);
+                List<Hashtag> hashtags = _helperMetods.HashtagsConversion(newFigure.Hashtags ?? new List<string>());
+                Rarity? rarityValidation = _helperMetods.RarityValidation(newFigure.Rarity);
+                Figure? FigureToEdit = await this.GetFigureByIdAsync(newFigure.Id);
+                if (FigureToEdit != null
+                    && rarityValidation != null)
+                {
+                    FigureToEdit.Name = newFigure.Name;
+                    FigureToEdit.Description = newFigure.Description;
+                    FigureToEdit.ImageUrls = newFigure.ImageUrls ?? new List<string>();
+                    FigureToEdit.RarityId = rarityValidation.Id;
+                    FigureToEdit.Rarity = rarityValidation;
+                    FigureToEdit.Hashtags = hashtags;
+                    FigureToEdit.IsDeleted = false;
+                    FigureToEdit.LastChanged = DateTime.Now;
+                    FigureToEdit.OwnerId = FigureToEdit.OwnerId;
+                    FigureToEdit.Owner = FigureToEdit.Owner;
 
-                OpResult = await _figuresRepository.UpdateAsync(FigureToEdit);
+                    OpResult = await _figuresRepository.UpdateAsync(FigureToEdit);
+                    return OpResult;
+                }
+
                 return OpResult;
             }
-
-            return OpResult;
+            catch (Exception ex)
+            {
+                //Redirection to error page
+                return false;
+            }
+           
         }
     }
 }
