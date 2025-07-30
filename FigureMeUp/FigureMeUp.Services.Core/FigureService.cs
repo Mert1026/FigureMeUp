@@ -51,13 +51,13 @@ namespace FigureMeUp.Services.Core
                     {
                         Name = figure.Name,
                         Description = figure.Description,
-                        ImageUrls = figure.ImageUrls ?? new List<string>(), // Assuming ImageUrls is a collection of strings
+                        ImageUrls = figure.ImageUrls.ToList() ?? new List<string>(),
                         RarityId = rarityValidation.Id,
                         OwnerId = userId,
                         Owner = user,
                         LastChanged = DateTime.Now,
                         IsDeleted = false,
-                        Hashtags = hashtags// Assuming Hashtags is a collection of Hashtag objects
+                        Hashtags = hashtags.ToList()
                     };
 
 
@@ -90,7 +90,7 @@ namespace FigureMeUp.Services.Core
             }
             catch (Exception ex)
             {
-                //Redirection to error page
+                //Redirection to error page.. ne zabravyay
                 return false;
             }
 
@@ -118,8 +118,8 @@ namespace FigureMeUp.Services.Core
                     Owner = p.Owner,
                     OwnerId = p.OwnerId,
                     LastChanged = p.LastChanged,
-                    UserFigures = p.UserFigures,
-                    Hashtags = p.Hashtags// Note: The ImageUrls property is assumed to be a collection of strings.
+                    UserFigures = p.UserFigures.ToList(),
+                    Hashtags = p.Hashtags.ToList()
                 })
                 .ToArrayAsync();
 
@@ -176,10 +176,10 @@ namespace FigureMeUp.Services.Core
                 {
                     FigureToEdit.Name = newFigure.Name;
                     FigureToEdit.Description = newFigure.Description;
-                    FigureToEdit.ImageUrls = newFigure.ImageUrls ?? new List<string>();
+                    FigureToEdit.ImageUrls = newFigure.ImageUrls.ToList() ?? new List<string>();
                     FigureToEdit.RarityId = rarityValidation.Id;
                     FigureToEdit.Rarity = rarityValidation;
-                    FigureToEdit.Hashtags = hashtags;
+                    FigureToEdit.Hashtags = hashtags.ToList();
                     FigureToEdit.IsDeleted = false;
                     FigureToEdit.LastChanged = DateTime.Now;
                     FigureToEdit.OwnerId = FigureToEdit.OwnerId;

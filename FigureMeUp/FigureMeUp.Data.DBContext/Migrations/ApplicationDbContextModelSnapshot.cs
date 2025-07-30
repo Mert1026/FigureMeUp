@@ -163,6 +163,32 @@ namespace FigureMeUp.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rarities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IsDeleted = false,
+                            Name = "Common"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsDeleted = false,
+                            Name = "Rare"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IsDeleted = false,
+                            Name = "Epic"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            IsDeleted = false,
+                            Name = "Legendary"
+                        });
                 });
 
             modelBuilder.Entity("FigureMeUp.Data.Models.UserFigures", b =>

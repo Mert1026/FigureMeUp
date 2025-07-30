@@ -1,4 +1,178 @@
-﻿@{
+﻿@model FigureMeUp.Controllers.HomeViewModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="hero-section bg-primary text-white text-center py-5 mb-5 rounded">
+    <div class="container">
+        <h1 class="display-4 fw-bold">
+            <i class="fas fa-robot me-3"></i>Welcome to FigureMeUp
+        </h1>
+        <p class="lead">Discover, collect, and share amazing figures with our community</p>
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <div class="mt-4">
+                <a class="btn btn-light btn-lg me-3" asp-area="Identity" asp-page="/Account/Register">
+                    <i class="fas fa-user-plus me-2"></i>Get Started
+                </a>
+                <a class="btn btn-outline-light btn-lg" asp-controller="Figures" asp-action="Index">
+                    <i class="fas fa-search me-2"></i>Browse Figures
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h3 class="card-title mb-0">
+                    <i class="fas fa-newspaper me-2 text-primary"></i>Recent Posts
+                </h3>
+            </div>
+            <div class="card-body">
+                @if (Model.RecentPosts.Any())
+                {
+                    @foreach (var post in Model.RecentPosts)
+                    {
+                        <div class="post-card border-bottom pb-3 mb-3">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <h5 class="mb-2">
+                                        <a  class="text-decoration-none">
+                                            @post.Title
+                                        </a>
+                                    </h5>
+                                    <p class="text-muted mb-2">@post.Content.Substring(0, Math.Min(150, post.Content.Length))@(post.Content.Length > 150 ? "..." : "")</p>
+                                    <div class="d-flex align-items-center text-muted small">
+                                        <i class="fas fa-user me-1"></i>
+                                        <span class="me-3">@(post.Publisher?.UserName ?? "Unknown")</span>
+                                        <i class="fas fa-calendar me-1"></i>
+                                        <span>@post.CreatedAt.ToString("MMM dd, yyyy")</span>
+                                    </div>
+                                </div>
+                            </div>
+                            @if (post.Hashtags.Any())
+                            {
+                                <div class="mt-2">
+                                    @foreach (var hashtag in post.Hashtags.Take(3))
+                                    {
+                                        <span class="badge bg-secondary me-1">#@hashtag.Name</span>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                    <div class="text-center">
+                        <a href="@Url.Action("Index", "Posts")" class="btn btn-primary">
+                            <i class="fas fa-newspaper me-2"></i>View All Posts
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-4">
+                        <i class="fas fa-newspaper fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">No posts available yet. Be the first to share something!</p>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a href="@Url.Action("Create", "Posts")" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i>Create Post
+                            </a>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h4 class="card-title mb-0">
+                    <i class="fas fa-robot me-2 text-primary"></i>Recent Figures
+                </h4>
+            </div>
+            <div class="card-body">
+                @if (Model.RecentFigures.Any())
+                {
+                    @foreach (var figure in Model.RecentFigures)
+                    {
+                        <div class="figure-card mb-3 p-3 border rounded">
+                            <div class="d-flex align-items-center">
+                                @if (figure.ImageUrls.Any())
+                                {
+                                    <img src="@figure.ImageUrls.First()" alt="@figure.Name" class="figure-thumbnail me-3" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+                                }
+                                else
+                                {
+                                    <div class="figure-placeholder me-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; background-color: #f8f9fa; border-radius: 8px;">
+                                        <i class="fas fa-robot text-muted"></i>
+                                    </div>
+                                }
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">
+                                        <a class="text-decoration-none">
+                                            @figure.Name
+                                        </a>
+                                    </h6>
+                                    <small class="text-muted">@figure.Rarity.Name</small>
+                                    <br>
+                                    <small class="text-muted">by @(figure.Owner?.UserName ?? "Unknown")</small>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="text-center">
+                        <a href="@Url.Action("Index", "Figures")" class="btn btn-outline-primary">
+                            <i class="fas fa-robot me-2"></i>View All Figures
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-4">
+                        <i class="fas fa-robot fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">No figures available yet. Be the first to add one!</p>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a href="@Url.Action("Create", "Figures")" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i>Add Figure
+                            </a>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="card shadow-sm mt-4">
+                <div class="card-header bg-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-plus me-2 text-success"></i>Quick Actions
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="@Url.Action("Create", "Figures")" class="btn btn-outline-primary">
+                            <i class="fas fa-robot me-2"></i>Add Figure
+                        </a>
+                        <a href="@Url.Action("Create", "Posts")" class="btn btn-outline-success">
+                            <i class="fas fa-plus-circle me-2"></i>Create Post
+                        </a>
+                        <a href="@Url.Action("ViewFavorites", "Home")" class="btn btn-outline-danger">
+                            <i class="fas fa-heart me-2"></i>My Favorites
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@* @{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,3 +180,4 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+ *@

@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "mry3wxNgtss=",
+  "dgSpecHash": "SO/Vgucbk1w=",
   "success": true,
   "projectFilePath": "C:\\Users\\merte\\Documents\\GitHub\\FigureMeUp\\FigureMeUp\\FigureMeUp\\FigureMeUp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\merte\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\merte\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
+    "C:\\Users\\merte\\.nuget\\packages\\bootstrap\\5.3.7\\bootstrap.5.3.7.nupkg.sha512",
+    "C:\\Users\\merte\\.nuget\\packages\\fontawesome\\4.7.0\\fontawesome.4.7.0.nupkg.sha512",
     "C:\\Users\\merte\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\merte\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\8.0.17\\microsoft.aspnetcore.cryptography.internal.8.0.17.nupkg.sha512",
     "C:\\Users\\merte\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\8.0.17\\microsoft.aspnetcore.cryptography.keyderivation.8.0.17.nupkg.sha512",

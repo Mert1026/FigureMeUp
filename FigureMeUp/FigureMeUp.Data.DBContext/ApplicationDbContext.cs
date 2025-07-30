@@ -1,4 +1,5 @@
 ﻿using FigureMeUp.Data.DBContext.Configuration;
+using FigureMeUp.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -28,6 +29,12 @@ namespace FigureMeUp.Data
             builder.ApplyConfigurationsFromAssembly(typeof(PostConfiguration).Assembly);
             builder.ApplyConfigurationsFromAssembly(typeof(RarityConfigure).Assembly);
             builder.ApplyConfigurationsFromAssembly(typeof(UserFiguresConfiguration).Assembly);
+
+            builder.Entity<Rarity>().HasData(
+                new Rarity { Id = 1, Name = "Common", IsDeleted = false },
+                new Rarity { Id = 2, Name = "Rare", IsDeleted = false },
+                new Rarity { Id = 3, Name = "Epic", IsDeleted = false },
+                new Rarity { Id = 4, Name = "Legendary", IsDeleted = false });
 
         }
     }

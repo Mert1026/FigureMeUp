@@ -13,7 +13,7 @@ namespace FigureMeUp.Data.Models.View_models
         public string Content { get; set; }
         public List<string>? ImageUrls { get; set; }
         public List<string>? Hashtags { get; set; }
-        public string AuthorName { get; set; }
-        public string PostedOn { get; set; }
+        public string AuthorName { get; set; } = string.Empty;
+        public string PostedOn { get; set; } = DateTime.Now.ToString();
     }
 }

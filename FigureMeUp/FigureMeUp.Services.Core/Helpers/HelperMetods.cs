@@ -35,8 +35,8 @@ namespace FigureMeUp.Services.Core.Helpers
 
         public Rarity? RarityValidation(string rarityName)
         {
-            //Rarity? result = this._context.Rarities.FirstOrDefault(r => r.Name == rarityName);
-            return new Rarity();
+            return _context.Rarities
+                .FirstOrDefault(r => r.Name == rarityName && !r.IsDeleted);
         }
     }
 }

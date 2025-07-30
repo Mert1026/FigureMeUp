@@ -13,14 +13,14 @@ namespace FigureMeUp.Data.Models
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public IEnumerable<string> ImageUrls { get; set; } = new List<string>();
+        public List<string> ImageUrls { get; set; } = new List<string>();
         public int RarityId { get; set; }
         public Rarity Rarity { get; set; } = null!;
         public IdentityUser Owner { get; set; } = null!;
         public string OwnerId { get; set; } = string.Empty;
         public DateTime LastChanged { get; set; } = DateTime.UtcNow;
-        public IEnumerable<UserFigures> UserFigures { get; set; } = new List<UserFigures>();
-        public IEnumerable<Hashtag> Hashtags { get; set; } = new List<Hashtag>();
+        public List<UserFigures> UserFigures { get; set; } = new List<UserFigures>();
+        public List<Hashtag> Hashtags { get; set; } = new List<Hashtag>();
         public bool IsDeleted { get; set; }
     }
 }

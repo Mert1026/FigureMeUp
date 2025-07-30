@@ -1,0 +1,193 @@
+﻿@model IEnumerable<FigureMeUp.Data.Models.Post>
+@{
+    ViewData["Title"] = "All Posts";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-newspaper me-2 text-primary"></i>All Posts</h2>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i>Create New Post
+        </a>
+    }
+</div>
+
+@if (Model.Any())
+{
+    <div class="row">
+        <div class="col-lg-8">
+            @foreach (var post in Model)
+            {
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="flex-grow-1">
+                                <h4 class="card-title mb-2">
+                                    <a class="text-decoration-none">
+                                        @post.Title
+                                    </a>
+                                </h4>
+                                <div class="d-flex align-items-center text-muted small mb-2">
+                                    <i class="fas fa-user me-1"></i>
+                                    <span class="me-3">@(post.Publisher?.UserName ?? "Unknown")</span>
+                                    <i class="fas fa-calendar me-1"></i>
+                                    <span class="me-3">@post.CreatedAt.ToString("MMM dd, yyyy HH:mm")</span>
+                                </div>
+                            </div>
+                            @if (User.Identity.IsAuthenticated && post.PublisherId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value)
+                            {
+                                <div class="dropdown">
+                                    <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" asp-action="Edit" asp-route-id="@post.Id">
+                                                <i class="fas fa-edit me-2"></i>Edit
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deletePostModal@(post.Id)">
+                                                <i class="fas fa-trash me-2"></i>Delete
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+
+                        <p class="card-text">@post.Content</p>
+
+                        @if (post.ImageUrls.Any())
+                        {
+                            <div class="row mb-3">
+                                @if (post.ImageUrls.Count() == 1)
+                                {
+                                    <div class="col-12">
+                                        <img src="@post.ImageUrls.First()" class="img-fluid rounded" alt="Post image" style="max-height: 400px; width: 100%; object-fit: cover;">
+                                    </div>
+                                }
+                                else
+                                {
+                                    @foreach (var imageUrl in post.ImageUrls.Take(3))
+                                    {
+                                        <div class="col-md-4 mb-2">
+                                            <img src="@imageUrl" class="img-fluid rounded" alt="Post image" style="height: 150px; width: 100%; object-fit: cover;">
+                                        </div>
+                                    }
+                                    @if (post.ImageUrls.Count() > 3)
+                                    {
+                                        <div class="col-12 text-center mt-2">
+                                            <small class="text-muted">+@(post.ImageUrls.Count() - 3) more images</small>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
+
+                        @if (post.Hashtags.Any())
+                        {
+                            <div class="mb-3">
+                                @foreach (var hashtag in post.Hashtags)
+                                {
+                                    <span class="badge bg-secondary me-1">#@hashtag.Name</span>
+                                }
+                            </div>
+                        }
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                @if (post.ImageUrls.Count() > 1)
+                                {
+                                    <a  class="btn btn-primary btn-sm">
+                                        <i class="fas fa-images me-1"></i>View Details
+                                    </a>
+                                }
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <button class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-heart me-1"></i>Like
+                                    </button>
+                                }
+                            </div>
+                            <small class="text-muted">
+                                <i class="fas fa-eye me-1"></i>0 views
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                @if (User.Identity.IsAuthenticated && post.PublisherId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value)
+                {
+                    <!-- Delete Confirmation Modal -->
+                    <div class="modal fade" id="deletePostModal@(post.Id)" tabindex="-1" aria-labelledby="deletePostModalLabel@(post.Id)" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deletePostModalLabel@(post.Id)">Confirm Delete</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete the post "<strong>@post.Title</strong>"? This action cannot be undone.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <form asp-action="Delete" asp-route-id="@post.Id" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fas fa-trash me-1"></i>Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm sticky-top" style="top: 20px;">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-info-circle me-2"></i>Community Guidelines
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Share quality content</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Be respectful to others</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Use relevant hashtags</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Credit original creators</li>
+                    </ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="Create" class="btn btn-primary btn-sm w-100">
+                            <i class="fas fa-plus me-2"></i>Create Post
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center py-5">
+        <i class="fas fa-newspaper fa-5x text-muted mb-4"></i>
+        <h3 class="text-muted">No Posts Yet</h3>
+        <p class="text-muted">Be the first to share something with the community!</p>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a asp-action="Create" class="btn btn-primary btn-lg">
+                <i class="fas fa-plus me-2"></i>Create Your First Post
+            </a>
+        }
+        else
+        {
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary btn-lg">
+                <i class="fas fa-user-plus me-2"></i>Join to Create Posts
+            </a>
+        }
+    </div>
+}

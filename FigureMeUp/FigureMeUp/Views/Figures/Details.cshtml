@@ -1,0 +1,209 @@
+﻿@model FigureMeUp.Data.Models.Figure
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-4">
+                    <div>
+                        <h1 class="mb-2">@Model.Name</h1>
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="badge bg-info text-dark me-2">@Model.Rarity.Name</span>
+                            <small class="text-muted">
+                                <i class="fas fa-user me-1"></i>by @(Model.Owner?.UserName ?? "Unknown")
+                            </small>
+                            <small class="text-muted ms-3">
+                                <i class="fas fa-calendar me-1"></i>@Model.LastChanged.ToString("MMM dd, yyyy")
+                            </small>
+                        </div>
+                    </div>
+                    @if (User.Identity.IsAuthenticated && Model.OwnerId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value)
+                    {
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-cog"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" asp-action="Edit" asp-route-id="@Model.Id">
+                                        <i class="fas fa-edit me-2"></i>Edit
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                        <i class="fas fa-trash me-2"></i>Delete
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                    else if (User.Identity.IsAuthenticated)
+                    {
+                        <button class="btn btn-outline-danger">
+                            <i class="fas fa-heart me-1"></i>Add to Favorites
+                        </button>
+                    }
+                </div>
+
+                @if (Model.ImageUrls.Any())
+                {
+                    <div class="mb-4">
+                        @if (Model.ImageUrls.Count() == 1)
+                        {
+                            <img src="@Model.ImageUrls.First()" alt="@Model.Name" class="img-fluid rounded shadow" style="max-height: 500px; width: 100%; object-fit: cover;">
+                        }
+                        else
+                        {
+                            <div id="figureCarousel" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    @for (int i = 0; i < Model.ImageUrls.Count(); i++)
+                                    {
+                                        <button type="button" data-bs-target="#figureCarousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")" aria-current="@(i == 0 ? "true" : "false")" aria-label="Slide @(i + 1)"></button>
+                                    }
+                                </div>
+                                <div class="carousel-inner">
+                                    @{
+                                        int index = 0;
+                                    }
+                                    @foreach (var imageUrl in Model.ImageUrls)
+                                    {
+                                        <div class="carousel-item @(index == 0 ? "active" : "")">
+                                            <img src="@imageUrl" class="d-block w-100 rounded" alt="@Model.Name" style="height: 400px; object-fit: cover;">
+                                        </div>
+                                        index++;
+                                    }
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#figureCarousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#figureCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="bg-light d-flex align-items-center justify-content-center rounded mb-4" style="height: 300px;">
+                        <i class="fas fa-robot fa-5x text-muted"></i>
+                    </div>
+                }
+
+                <div class="mb-4">
+                    <h3>Description</h3>
+                    <p class="lead">@Model.Description</p>
+                </div>
+
+                @if (Model.Hashtags.Any())
+                {
+                    <div class="mb-4">
+                        <h5>Tags</h5>
+                        @foreach (var hashtag in Model.Hashtags)
+                        {
+                            <span class="badge bg-secondary me-1">#@hashtag.Name</span>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card shadow sticky-top" style="top: 20px;">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-info-circle me-2"></i>Figure Details
+                </h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-borderless">
+                    <tr>
+                        <td><strong>Name:</strong></td>
+                        <td>@Model.Name</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Rarity:</strong></td>
+                        <td><span class="badge bg-info text-dark">@Model.Rarity.Name</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Owner:</strong></td>
+                        <td>@(Model.Owner?.UserName ?? "Unknown")</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Added:</strong></td>
+                        <td>@Model.LastChanged.ToString("MMM dd, yyyy")</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Images:</strong></td>
+                        <td>@Model.ImageUrls.Count()</td>
+                    </tr>
+                </table>
+
+                <div class="d-grid gap-2 mt-4">
+                    <a asp-action="Index" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Figures
+                    </a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <button class="btn btn-outline-success" disabled>
+                            <i class="fas fa-share me-2"></i>Share
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="card shadow mt-4">
+                <div class="card-header">
+                    <h6 class="card-title mb-0">
+                        <i class="fas fa-plus me-2"></i>Quick Actions
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a asp-action="Create" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-robot me-2"></i>Add Another Figure
+                        </a>
+                        <a asp-controller="Posts" asp-action="Create" class="btn btn-outline-success btn-sm">
+                            <i class="fas fa-plus-circle me-2"></i>Create Post
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@if (User.Identity.IsAuthenticated && Model.OwnerId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value)
+{
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete the figure "<strong>@Model.Name</strong>"? This action cannot be undone.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash me-1"></i>Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -46,8 +46,8 @@ namespace FigureMeUp.Services.Core
                         Title = post.Title,
                         Content = post.Content,
                         CreatedAt = DateTime.UtcNow,
-                        ImageUrls = post.ImageUrls ?? new List<string>(),
-                        Hashtags = hashtags,
+                        ImageUrls = post.ImageUrls.ToList() ?? new List<string>(),
+                        Hashtags = hashtags.ToList(),
                         PublisherId = userId,
                         IsDeleted = false
                     };
@@ -126,8 +126,6 @@ namespace FigureMeUp.Services.Core
                 Post? post = _postsRepository
                 .GetAllAttached()
                 .Include(p => p.Publisher)
-                .Include(p => p.Content)
-                .Include(p => p.ImageUrls)
                 .FirstOrDefault(p => p.Id == id);
 
                 return Task.FromResult(post);
@@ -162,7 +160,7 @@ namespace FigureMeUp.Services.Core
             }
             catch (Exception ex)
             {
-                //Redirection to error page
+                //Redirection to error page -- naistina ne zabravyay
                 return false;
             }
 

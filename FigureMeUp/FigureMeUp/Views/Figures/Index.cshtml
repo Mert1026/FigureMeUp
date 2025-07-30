@@ -1,0 +1,127 @@
+﻿@model IEnumerable<FigureMeUp.Data.Models.Figure>
+@{
+    ViewData["Title"] = "All Figures";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-robot me-2 text-primary"></i>All Figures</h2>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i>Add New Figure
+        </a>
+    }
+</div>
+
+@if (Model.Any())
+{
+    <div class="row">
+        @foreach (var figure in Model)
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-sm h-100">
+                    @if (figure.ImageUrls.Any())
+                    {
+                        <img src="@figure.ImageUrls.First()" class="card-img-top" alt="@figure.Name" style="height: 200px; object-fit: cover;">
+                    }
+                    else
+                    {
+                        <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
+                            <i class="fas fa-robot fa-3x text-muted"></i>
+                        </div>
+                    }
+                    
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@figure.Name</h5>
+                        <p class="card-text flex-grow-1">@figure.Description.Substring(0, Math.Min(100, figure.Description.Length))@(figure.Description.Length > 100 ? "..." : "")</p>
+                        
+                        <div class="mb-2">
+                            <span class="badge bg-info text-dark">@figure.Rarity.Name</span>
+                            @if (figure.Hashtags.Any())
+                            {
+                                @foreach (var hashtag in figure.Hashtags.Take(2))
+                                {
+                                    <span class="badge bg-secondary">#@hashtag.Name</span>
+                                }
+                            }
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <small class="text-muted">
+                                <i class="fas fa-user me-1"></i>@(figure.Owner?.UserName ?? "Unknown")
+                            </small>
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>@figure.LastChanged.ToString("MMM dd")
+                            </small>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <a asp-action="Details" asp-route-id="@figure.Id" class="btn btn-primary btn-sm">
+                                <i class="fas fa-eye me-1"></i>View Details
+                            </a>
+                            
+                            @if (User.Identity.IsAuthenticated && figure.OwnerId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value)
+                            {
+                                <a asp-action="Edit" asp-route-id="@figure.Id" class="btn btn-outline-secondary btn-sm">
+                                    <i class="fas fa-edit me-1"></i>Edit
+                                </a>
+                                <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal@(figure.Id)">
+                                    <i class="fas fa-trash me-1"></i>Delete
+                                </button>
+                                
+                                <!-- Delete Confirmation Modal -->
+                                <div class="modal fade" id="deleteModal@(figure.Id)" tabindex="-1" aria-labelledby="deleteModalLabel@(figure.Id)" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteModalLabel@(figure.Id)">Confirm Delete</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure you want to delete the figure "<strong>@figure.Name</strong>"? This action cannot be undone.
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <form asp-action="Delete" asp-route-id="@figure.Id" method="post" class="d-inline">
+                                                    <button type="submit" class="btn btn-danger">
+                                                        <i class="fas fa-trash me-1"></i>Delete
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else if (User.Identity.IsAuthenticated)
+                            {
+                                <button class="btn btn-outline-danger btn-sm">
+                                    <i class="fas fa-heart me-1"></i>Add to Favorites
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="text-center py-5">
+        <i class="fas fa-robot fa-5x text-muted mb-4"></i>
+        <h3 class="text-muted">No Figures Found</h3>
+        <p class="text-muted">Be the first to share your amazing figure collection!</p>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a asp-action="Create" class="btn btn-primary btn-lg">
+                <i class="fas fa-plus me-2"></i>Add Your First Figure
+            </a>
+        }
+        else
+        {
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary btn-lg">
+                <i class="fas fa-user-plus me-2"></i>Join to Add Figures
+            </a>
+        }
+    </div>
+}

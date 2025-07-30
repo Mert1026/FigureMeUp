@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FigureMeUp.Services.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dd706c1c390bb49dafa51422accfbb3e7bbbe33f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e06aea293b60baf96168fa6931b79d25343ec1ec")]
 [assembly: System.Reflection.AssemblyProductAttribute("FigureMeUp.Services.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FigureMeUp.Services.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
