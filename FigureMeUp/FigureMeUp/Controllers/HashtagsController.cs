@@ -15,20 +15,17 @@ namespace FigureMeUp.Controllers
             _hashtagService = hashtagService;
         }
 
-        // GET: Hashtag/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Hashtag/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Hashtag model)
         {
             if (ModelState.IsValid)
             {
-                // Check if hashtag already exists
                 var existingHashtag = await _hashtagService.GetHashtagByNameAsync(model.Name);
                 if (existingHashtag != null)
                 {
@@ -52,7 +49,6 @@ namespace FigureMeUp.Controllers
             return View(model);
         }
 
-        // POST: Hashtag/Delete/5(vece e GUID)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
@@ -71,7 +67,6 @@ namespace FigureMeUp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // POST: Hashtag/DeleteByName
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteByName(string name)
@@ -96,7 +91,6 @@ namespace FigureMeUp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: Hashtag/Details/5(vece e GUID)
         public async Task<IActionResult> Details(int id)
         {
             var hashtag = await _hashtagService.GetHashtagByIdAsync(id);
@@ -108,7 +102,6 @@ namespace FigureMeUp.Controllers
             return View(hashtag);
         }
 
-        // GET: Hashtag/DetailsByName
         public async Task<IActionResult> DetailsByName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))

@@ -1,0 +1,209 @@
+﻿@model IEnumerable<FigureMeUp.Data.Models.Post>
+@{
+    ViewData["Title"] = "My Posts";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-edit me-2 text-primary"></i>My Posts</h2>
+    <a asp-controller="Posts" asp-action="Create" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>Create New Post
+    </a>
+</div>
+
+@if (Model.Any())
+{
+    <div class="row">
+        <div class="col-lg-8">
+            @foreach (var post in Model)
+            {
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="flex-grow-1">
+                                <h4 class="card-title mb-2">
+                                    <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" class="text-decoration-none">
+                                        @post.Title
+                                    </a>
+                                </h4>
+                                <div class="d-flex align-items-center text-muted small mb-2">
+                                    <i class="fas fa-calendar me-1"></i>
+                                    <span class="me-3">Published: @post.CreatedAt.ToString("MMM dd, yyyy HH:mm")</span>
+                                    @if (post.ImageUrls.Any())
+                                    {
+                                        <i class="fas fa-images me-1"></i>
+                                        <span class="me-3">@post.ImageUrls.Count() image(s)</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-cog"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Posts" asp-action="Edit" asp-route-id="@post.Id">
+                                            <i class="fas fa-edit me-2"></i>Edit
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deletePostModal@(post.Id)">
+                                            <i class="fas fa-trash me-2"></i>Delete
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <p class="card-text">@post.Content.Substring(0, Math.Min(200, post.Content.Length))@(post.Content.Length > 200 ? "..." : "")</p>
+
+                        @if (post.ImageUrls.Any())
+                        {
+                            <div class="row mb-3">
+                                @if (post.ImageUrls.Count() == 1)
+                                {
+                                    <div class="col-12">
+                                        <img src="@post.ImageUrls.First()" class="img-fluid rounded" alt="Post image" style="max-height: 300px; width: 100%; object-fit: cover;">
+                                    </div>
+                                }
+                                else
+                                {
+                                    @foreach (var imageUrl in post.ImageUrls.Take(3))
+                                    {
+                                        <div class="col-md-4 mb-2">
+                                            <img src="@imageUrl" class="img-fluid rounded" alt="Post image" style="height: 120px; width: 100%; object-fit: cover;">
+                                        </div>
+                                    }
+                                    @if (post.ImageUrls.Count() > 3)
+                                    {
+                                        <div class="col-12 text-center mt-2">
+                                            <small class="text-muted">+@(post.ImageUrls.Count() - 3) more images</small>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
+
+                        @if (post.Hashtags.Any())
+                        {
+                            <div class="mb-3">
+                                @foreach (var hashtag in post.Hashtags)
+                                {
+                                    <span class="badge bg-secondary me-1">#@hashtag.Name</span>
+                                }
+                            </div>
+                        }
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-eye me-1"></i>View Details
+                                </a>
+                                <a asp-controller="Posts" asp-action="Edit" asp-route-id="@post.Id" class="btn btn-outline-secondary btn-sm">
+                                    <i class="fas fa-edit me-1"></i>Edit
+                                </a>
+                            </div>
+                            <small class="text-muted">
+                                <i class="fas fa-clock me-1"></i>@post.CreatedAt.ToString("MMM dd, yyyy")
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delete Confirmation Modal -->
+                <div class="modal fade" id="deletePostModal@(post.Id)" tabindex="-1" aria-labelledby="deletePostModalLabel@(post.Id)" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deletePostModalLabel@(post.Id)">Confirm Delete</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to delete the post "<strong>@post.Title</strong>"? This action cannot be undone.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <form asp-controller="Posts" asp-action="Delete" asp-route-id="@post.Id" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-trash me-1"></i>Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm sticky-top" style="top: 20px;">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-chart-bar me-2"></i>Post Statistics
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td><strong>Total Posts:</strong></td>
+                            <td>@Model.Count()</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Posts with Images:</strong></td>
+                            <td>@Model.Count(p => p.ImageUrls.Any())</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tagged Posts:</strong></td>
+                            <td>@Model.Count(p => p.Hashtags.Any())</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Most Recent:</strong></td>
+                            <td>@(Model.Any() ? Model.Max(p => p.CreatedAt).ToString("MMM dd") : "N/A")</td>
+                        </tr>
+                    </table>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <a asp-controller="Posts" asp-action="Create" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>Create New Post
+                        </a>
+                        <a asp-controller="Posts" asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="fas fa-newspaper me-2"></i>All Posts
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mt-4">
+                <div class="card-header">
+                    <h6 class="card-title mb-0">
+                        <i class="fas fa-lightbulb me-2"></i>Tips for Better Posts
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Use engaging titles</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Add high-quality images</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Include relevant hashtags</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Share detailed experiences</li>
+                        <li class="mb-0"><i class="fas fa-check text-success me-2"></i>Engage with the community</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center py-5">
+        <i class="fas fa-edit fa-5x text-muted mb-4"></i>
+        <h3 class="text-muted">No Posts Yet</h3>
+        <p class="text-muted">You haven't created any posts yet. Share your thoughts and experiences with the community!</p>
+        <a asp-controller="Posts" asp-action="Create" class="btn btn-primary btn-lg">
+            <i class="fas fa-plus me-2"></i>Create Your First Post
+        </a>
+        <div class="mt-4">
+            <a asp-controller="Posts" asp-action="Index" class="btn btn-outline-secondary">
+                <i class="fas fa-newspaper me-2"></i>Browse All Posts
+            </a>
+        </div>
+    </div>
+}

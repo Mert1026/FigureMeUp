@@ -22,5 +22,7 @@ namespace FigureMeUp.Data.Models
         public List<UserFigures> UserFigures { get; set; } = new List<UserFigures>();
         public List<Hashtag> Hashtags { get; set; } = new List<Hashtag>();
         public bool IsDeleted { get; set; }
+        public int LikesCount { get; set; } = 0;
+        public List<string> LikedByUsersIds { get; set; } = new List<string>();
     }
 }

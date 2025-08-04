@@ -44,9 +44,17 @@ namespace FigureMeUp.Services.Core
                 IdentityUser? user = await this._userManager.FindByIdAsync(userId);
                 List<Hashtag> hashtags = _helperMetods.HashtagsConversion(figure.Hashtags ?? new List<string>());
                 Rarity? rarityValidation = _helperMetods.RarityValidation(figure.Rarity);
+                bool isValidImageUrl = await HelperMetods.IsValidImageUrlAsync(figure.ImageUrls[0]);
                 if (user != null
                     && rarityValidation != null)
                 {
+                    if (figure.ImageUrls[0] == null
+                        || !isValidImageUrl)
+                    {
+                        figure
+                            .ImageUrls[0] = "https://media.istockphoto.com/id/1290743328/vector/faceless-man-abstract-silhouette-of-person-the-figure-of-man-without-a-face-front-view.jpg?s=612x612&w=0&k=20&c=Ys-4Co9NaWFFBDjmvDJABB2BPePxJwHugC8_G5u0rOk=";
+                    }
+
                     Figure toAdd = new Figure
                     {
                         Name = figure.Name,
@@ -102,10 +110,10 @@ namespace FigureMeUp.Services.Core
             {
                 IEnumerable<Figure> figures = await this._figuresRepository
                 .GetAllAttached()
-                .Include(p => p.Rarity)
-                .Include(p => p.Owner)
-                .Include(p => p.UserFigures)
-                .Include(p => p.Hashtags)
+                .Include(f => f.Rarity)
+                .Include(f => f.Owner)
+                .Include(f => f.UserFigures)
+                .Include(f => f.Hashtags)
                 .Select(p => new Figure()
                 {
                     Id = p.Id,
@@ -119,7 +127,9 @@ namespace FigureMeUp.Services.Core
                     OwnerId = p.OwnerId,
                     LastChanged = p.LastChanged,
                     UserFigures = p.UserFigures.ToList(),
-                    Hashtags = p.Hashtags.ToList()
+                    Hashtags = p.Hashtags.ToList(),
+                    LikedByUsersIds = p.LikedByUsersIds,
+                    LikesCount = p.LikesCount
                 })
                 .ToArrayAsync();
 
@@ -171,6 +181,14 @@ namespace FigureMeUp.Services.Core
                 List<Hashtag> hashtags = _helperMetods.HashtagsConversion(newFigure.Hashtags ?? new List<string>());
                 Rarity? rarityValidation = _helperMetods.RarityValidation(newFigure.Rarity);
                 Figure? FigureToEdit = await this.GetFigureByIdAsync(newFigure.Id);
+                bool isValidImageUrl = await HelperMetods.IsValidImageUrlAsync(newFigure.ImageUrls[0]);
+
+                if (newFigure.ImageUrls[0] == null
+                   || isValidImageUrl == false)
+                {
+                    newFigure.ImageUrls[0] = "https://media.istockphoto.com/id/1290743328/vector/faceless-man-abstract-silhouette-of-person-the-figure-of-man-without-a-face-front-view.jpg?s=612x612&w=0&k=20&c=Ys-4Co9NaWFFBDjmvDJABB2BPePxJwHugC8_G5u0rOk=";
+                }
+
                 if (FigureToEdit != null
                     && rarityValidation != null)
                 {
@@ -197,6 +215,101 @@ namespace FigureMeUp.Services.Core
                 return false;
             }
            
+        }
+
+        // Method to add a like (only if not already liked)
+        public async Task<bool> AddLikeAsync(Guid figureId, string userId)
+        {
+            Figure figure = _figuresRepository.GetAllAttached().FirstOrDefault(f => f.Id == figureId);
+            if (figure == null || figure.IsDeleted)
+            {
+                return false;
+            }
+
+            // Check if user hasn't liked the post yet
+            if (!figure.LikedByUsersIds.Contains(userId))
+            {
+                figure.LikedByUsersIds.Add(userId);
+                    figure.LikesCount++;
+                await _figuresRepository.UpdateAsync(figure);
+                return true;
+            }
+
+            // User has already liked the post
+            return false;
+        }
+
+        // Method to toggle like/unlike (better for your ToggleLike controller action)
+        public async Task<bool> ToggleLikeAsync(Guid figureId, string userId)
+        {
+            Figure figure = _figuresRepository.GetAllAttached()
+                .FirstOrDefault(f => f.Id == figureId);
+            if (figure == null || figure.IsDeleted)
+            {
+                return false;
+            }
+
+            if (figure.LikedByUsersIds.Contains(userId))
+            {
+                // User has liked it, so unlike it
+                figure.LikedByUsersIds.Remove(userId);
+                figure.LikesCount = Math.Max(0, figure.LikesCount - 1); // Prevent negative counts
+            }
+            else
+            {
+                // User hasn't liked it, so like it
+                figure.LikedByUsersIds.Add(userId);
+                figure.LikesCount++;
+            }
+
+            await _figuresRepository.UpdateAsync(figure);
+            return true;
+        }
+
+        public async Task<IEnumerable<Figure>> GetFiguresByUserIdAsync(string userId)
+        {
+            try
+            {
+                List<Figure> figures = _figuresRepository
+                .GetAllAttached()
+                .Include(f => f.Rarity)
+                .Include(f => f.Owner)
+                .Include(f => f.UserFigures)
+                .Include(f => f.Hashtags)
+                .Where(f => f.OwnerId == userId && !f.IsDeleted)
+                .ToList();
+
+                return figures;
+            }
+            catch (Exception ex)
+            {
+                //Redirection to error page
+                return Enumerable.Empty<Figure>();
+            }
+            
+        }
+
+        public async Task<IEnumerable<Figure>> GetLikedFiguresByUserIdAsync(string userId)
+        {
+            try
+            {
+                List<Figure> figures = _figuresRepository
+                .GetAllAttached()
+                .Include(f => f.Rarity)
+                .Include(f => f.Owner)
+                .Include(f => f.UserFigures)
+                .Include(f => f.Hashtags)
+                .Where(f => f.LikedByUsersIds.Contains(userId)
+                && !f.IsDeleted)
+                .ToList();
+
+                return figures;
+            }
+            catch (Exception ex)
+            {
+                //Redirection to error page
+                return Enumerable.Empty<Figure>();
+            }
         }
     }
 }

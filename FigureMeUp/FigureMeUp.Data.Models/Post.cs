@@ -18,5 +18,8 @@ namespace FigureMeUp.Data.Models
         public string PublisherId { get; set; } = string.Empty;
         public IdentityUser Publisher { get; set; } = null!;
         public bool IsDeleted { get; set; }
+        public int LikesCount { get; set; } = 0;
+        public List<string> LikedByUsersIds { get; set; } = new List<string>();
+        public int ViewsCount { get; set; } = 0;
     }
 }

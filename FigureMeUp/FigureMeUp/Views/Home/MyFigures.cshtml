@@ -1,0 +1,209 @@
+﻿@model IEnumerable<FigureMeUp.Data.Models.Figure>
+@{
+    ViewData["Title"] = "My Figures";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-robot me-2 text-primary"></i>My Figure Collection</h2>
+    <a asp-controller="Figures" asp-action="Create" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>Add New Figure
+    </a>
+</div>
+
+@if (Model.Any())
+{
+    <div class="row">
+        <div class="col-lg-9">
+            <div class="row">
+                @foreach (var figure in Model)
+                {
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card shadow-sm h-100">
+                            @if (figure.ImageUrls.Any())
+                            {
+                                <img src="@figure.ImageUrls.First()" class="card-img-top" alt="@figure.Name" style="height: 200px; object-fit: cover;">
+                            }
+                            else
+                            {
+                                <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
+                                    <i class="fas fa-robot fa-3x text-muted"></i>
+                                </div>
+                            }
+                            
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">@figure.Name</h5>
+                                <p class="card-text flex-grow-1">@figure.Description.Substring(0, Math.Min(80, figure.Description.Length))@(figure.Description.Length > 80 ? "..." : "")</p>
+                                
+                                <div class="mb-2">
+                                    <span class="badge bg-info text-dark">@figure.Rarity.Name</span>
+                                    @if (figure.Hashtags.Any())
+                                    {
+                                        @foreach (var hashtag in figure.Hashtags.Take(2))
+                                        {
+                                            <span class="badge bg-secondary">#@hashtag.Name</span>
+                                        }
+                                    }
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center mt-auto mb-3">
+                                    <small class="text-muted">
+                                        <i class="fas fa-calendar me-1"></i>@figure.LastChanged.ToString("MMM dd, yyyy")
+                                    </small>
+                                    <small class="text-muted">
+                                        <i class="fas fa-images me-1"></i>@figure.ImageUrls.Count() image(s)
+                                    </small>
+                                </div>
+                                
+                                <div class="btn-group w-100" role="group">
+                                    <a asp-controller="Figures" asp-action="Details" asp-route-id="@figure.Id" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-eye me-1"></i>View
+                                    </a>
+                                    <a asp-controller="Figures" asp-action="Edit" asp-route-id="@figure.Id" class="btn btn-outline-secondary btn-sm">
+                                        <i class="fas fa-edit me-1"></i>Edit
+                                    </a>
+                                    <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal@(figure.Id)">
+                                        <i class="fas fa-trash me-1"></i>Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delete Confirmation Modal -->
+                    <div class="modal fade" id="deleteModal@(figure.Id)" tabindex="-1" aria-labelledby="deleteModalLabel@(figure.Id)" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel@(figure.Id)">Confirm Delete</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete the figure "<strong>@figure.Name</strong>"? This action cannot be undone.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <form asp-controller="Figures" asp-action="Delete" asp-route-id="@figure.Id" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fas fa-trash me-1"></i>Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="card shadow-sm sticky-top" style="top: 20px;">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-chart-pie me-2"></i>Collection Stats
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td><strong>Total Figures:</strong></td>
+                            <td>@Model.Count()</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Common:</strong></td>
+                            <td>@Model.Count(f => f.Rarity.Name == "Common")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Uncommon:</strong></td>
+                            <td>@Model.Count(f => f.Rarity.Name == "Uncommon")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rare:</strong></td>
+                            <td>@Model.Count(f => f.Rarity.Name == "Rare")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Epic:</strong></td>
+                            <td>@Model.Count(f => f.Rarity.Name == "Epic")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Legendary:</strong></td>
+                            <td>@Model.Count(f => f.Rarity.Name == "Legendary")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>With Images:</strong></td>
+                            <td>@Model.Count(f => f.ImageUrls.Any())</td>
+                        </tr>
+                    </table>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <a asp-controller="Figures" asp-action="Create" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>Add Figure
+                        </a>
+                        <a asp-controller="Figures" asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="fas fa-robot me-2"></i>Browse All
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mt-4">
+                <div class="card-header">
+                    <h6 class="card-title mb-0">
+                        <i class="fas fa-trophy me-2"></i>Rarity Distribution
+                    </h6>
+                </div>
+                <div class="card-body">
+                    @{
+                        var rarityGroups = Model.GroupBy(f => f.Rarity.Name).ToList();
+                        var totalFigures = Model.Count();
+                    }
+                    @foreach (var group in rarityGroups.OrderByDescending(g => g.Count()))
+                    {
+                        var percentage = totalFigures > 0 ? (group.Count() * 100.0 / totalFigures) : 0;
+                        <div class="mb-2">
+                            <div class="d-flex justify-content-between">
+                                <small>@group.Key</small>
+                                <small>@group.Count() (@percentage.ToString("F1")%)</small>
+                            </div>
+                            <div class="progress" style="height: 5px;">
+                                <div class="progress-bar" role="progressbar" style="width: @percentage%" aria-valuenow="@percentage" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="card shadow-sm mt-4">
+                <div class="card-header">
+                    <h6 class="card-title mb-0">
+                        <i class="fas fa-lightbulb me-2"></i>Collection Tips
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Add detailed descriptions</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Upload multiple angles</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Use relevant hashtags</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Keep rarity accurate</li>
+                        <li class="mb-0"><i class="fas fa-check text-success me-2"></i>Update regularly</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center py-5">
+        <i class="fas fa-robot fa-5x text-muted mb-4"></i>
+        <h3 class="text-muted">No Figures in Your Collection</h3>
+        <p class="text-muted">Start building your amazing figure collection today! Add your first figure and share it with the community.</p>
+        <a asp-controller="Figures" asp-action="Create" class="btn btn-primary btn-lg">
+            <i class="fas fa-plus me-2"></i>Add Your First Figure
+        </a>
+        <div class="mt-4">
+            <a asp-controller="Figures" asp-action="Index" class="btn btn-outline-secondary">
+                <i class="fas fa-robot me-2"></i>Browse Community Figures
+            </a>
+        </div>
+    </div>
+}

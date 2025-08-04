@@ -10,6 +10,9 @@ namespace FigureMeUp.Data.Models.View_models
     {
         public string UserName { get; set; }
         public string Email { get; set; }
+        public int FiguresCount { get; set; }
+        public int PostsCount { get; set; }
+        public int FavoritesCount { get; set; } = 0; // Placeholder for future implementation
 
     }
 }

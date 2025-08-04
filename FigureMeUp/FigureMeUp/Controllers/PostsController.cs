@@ -16,7 +16,6 @@ namespace FigureMeUp.Controllers
             _postService = postService;
         }
 
-        // GET: Posts
         public async Task<IActionResult> Index()
         {
             var posts = await _postService.GetAllPostsAsync();
@@ -24,11 +23,12 @@ namespace FigureMeUp.Controllers
             return View(activePosts);
         }
 
-        // GET: Posts/Details/5(vece e GUID)!
         public async Task<IActionResult> Details(Guid id)
         {
             var post = await _postService.GetPostByIdAsync(id);
-            if (post == null || post.IsDeleted)
+            var addView = await _postService.AddViewAsync(id);
+            if (post == null
+                || post.IsDeleted)
             {
                 return NotFound();
             }
@@ -36,22 +36,24 @@ namespace FigureMeUp.Controllers
             return View(post);
         }
 
-        // GET: Posts/Create
+
         [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Posts/Create
+
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PostViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid
+                || model != null)
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
                 var result = await _postService.CreatePostAsync(model, userId);
 
                 if (result)
@@ -68,7 +70,7 @@ namespace FigureMeUp.Controllers
             return View(model);
         }
 
-        // GET: Posts/Edit/5(vece e GUID)!!
+
         [Authorize]
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -97,7 +99,7 @@ namespace FigureMeUp.Controllers
             return View(model);
         }
 
-        // POST: Posts/Edit/5(vece e GUID)!
+
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
@@ -137,7 +139,6 @@ namespace FigureMeUp.Controllers
             return View(model);
         }
 
-        // POST: Posts/Delete/5(vece e GUID)
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
@@ -166,6 +167,127 @@ namespace FigureMeUp.Controllers
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        // POST: Posts/ToggleLike/5
+        //[HttpPost]
+        //[Authorize]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> ToggleLike(Guid id)
+        //{
+        //    var post = await _postService.GetPostByIdAsync(id);
+        //    if (post == null || post.IsDeleted)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        //    // TODO: Implement like functionality in PostService
+        //    // 1. Create a PostLikes table with PostId, UserId, CreatedAt columns
+        //    // 2. Add methods to PostService:
+        //    //    - Task<bool> TogglePostLikeAsync(Guid postId, string userId)
+        //    //    - Task<int> GetPostLikesCountAsync(Guid postId)
+        //    //    - Task<bool> IsPostLikedByUserAsync(Guid postId, string userId)
+        //    // 3. Update Post model to include navigation property for likes
+
+        //    var result = await _postService.ToggleLikeAsync(id, userId);
+        //    if (result)
+        //    {
+        //        TempData["Success"] = "Like status updated!";
+        //    }
+
+        //    //// For now, just redirect back
+        //    //TempData["Info"] = "Like functionality will be implemented soon!";
+        //    return RedirectToAction(nameof(Index));
+        //    //return Json(new { success = true, message = "Like functionality will be implemented soon!" });
+        //}
+
+        // Add this method to your PostsController.cs
+
+        // Add this method to your PostsController.cs
+
+        // Add this method to your PostsController.cs
+        // Replace the existing ToggleLike method with this simpler version
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ToggleLike(string id)
+        {
+            try
+            {
+                // Validate the ID
+                if (string.IsNullOrEmpty(id))
+                {
+                    return Json(new { success = false, message = "Post ID is required" });
+                }
+
+                if (!Guid.TryParse(id, out Guid postId))
+                {
+                    return Json(new { success = false, message = "Invalid post ID format" });
+                }
+
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return Json(new { success = false, message = "User not authenticated" });
+                }
+
+                // Check if post exists first
+                var post = await _postService.GetPostByIdAsync(postId);
+                if (post == null || post.IsDeleted)
+                {
+                    return Json(new { success = false, message = "Post not found" });
+                }
+
+                // Toggle the like
+                var result = await _postService.ToggleLikeAsync(postId, userId);
+
+                if (result)
+                {
+                    // Get updated post data
+                    var updatedPost = await _postService.GetPostByIdAsync(postId);
+                    if (updatedPost != null)
+                    {
+                        var isLiked = updatedPost.LikedByUsersIds.Contains(userId);
+                        var message = isLiked ? "Post liked successfully!" : "Post unliked successfully!";
+
+                        return Json(new
+                        {
+                            success = true,
+                            message = message,
+                            isLiked = isLiked,
+                            likesCount = updatedPost.LikesCount
+                        });
+                    }
+                }
+
+                return Json(new { success = false, message = "Failed to toggle like. Please try again." });
+            }
+            catch (Exception ex)
+            {
+                // Log the actual exception for debugging
+                System.Diagnostics.Debug.WriteLine($"ToggleLike error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"StackTrace: {ex.StackTrace}");
+
+                return Json(new { success = false, message = $"Server error: {ex.Message}" });
+            }
+        }
+
+        //test
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ToggleLikeAjax(Guid id)
+        {
+            var post = await _postService.GetPostByIdAsync(id);
+            if (post == null || post.IsDeleted)
+            {
+                return Json(new { success = false, message = "Post not found" });
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return Json(new { success = false, message = "Like functionality not implemented yet" });
         }
     }
 }

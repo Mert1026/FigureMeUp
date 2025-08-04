@@ -24,12 +24,24 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Figures/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlndXJlc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Figures/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlndXJlc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Figures/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlndXJlc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Figures/Index.cshtml]
@@ -40,12 +52,36 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Home/LikedContent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMaWtlZENvbnRlbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Home/MyFigures.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNeUZpZ3VyZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Home/MyPosts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNeVBvc3RzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Home/ViewProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxWaWV3UHJvZmlsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Posts/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Posts/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Posts/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdHNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Posts/Index.cshtml]

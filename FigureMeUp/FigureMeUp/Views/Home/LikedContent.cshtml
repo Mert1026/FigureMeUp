@@ -1,0 +1,518 @@
+﻿@model FigureMeUp.Data.Models.View_models.LikedContentViewModel
+@{
+    ViewData["Title"] = "My Liked Content";
+}
+
+@* Add CSRF token for AJAX requests *@
+<form style="display: none;">
+    @Html.AntiForgeryToken()
+</form>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-heart me-2 text-danger"></i>My Liked Content</h2>
+    <div class="btn-group" role="group" aria-label="View options">
+        <button type="button" class="btn btn-outline-primary active" onclick="showContent('all')">
+            <i class="fas fa-th me-1"></i>All
+        </button>
+        <button type="button" class="btn btn-outline-primary" onclick="showContent('figures')">
+            <i class="fas fa-robot me-1"></i>Figures
+        </button>
+        <button type="button" class="btn btn-outline-primary" onclick="showContent('posts')">
+            <i class="fas fa-newspaper me-1"></i>Posts
+        </button>
+    </div>
+</div>
+
+@if (Model.LikedFigures.Any() || Model.LikedPosts.Any())
+{
+    <!-- Liked Figures Section -->
+    <div id="figures-section" class="content-section">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4><i class="fas fa-robot me-2 text-primary"></i>Liked Figures (@Model.LikedFigures.Count())</h4>
+        </div>
+
+        @if (Model.LikedFigures.Any())
+        {
+            <div class="row mb-5">
+                @foreach (var figure in Model.LikedFigures)
+                {
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card shadow-sm h-100">
+                            @if (figure.ImageUrls.Any())
+                            {
+                                <img src="@figure.ImageUrls.First()" class="card-img-top" alt="@figure.Name" style="height: 200px; object-fit: cover;">
+                            }
+                            else
+                            {
+                                <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
+                                    <i class="fas fa-robot fa-3x text-muted"></i>
+                                </div>
+                            }
+
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">@figure.Name</h5>
+                                <p class="card-text flex-grow-1">@figure.Description.Substring(0, Math.Min(100, figure.Description.Length))@(figure.Description.Length > 100 ? "..." : "")</p>
+
+                                <div class="mb-2">
+                                    <span class="badge bg-info text-dark">@figure.Rarity.Name</span>
+                                    @if (figure.Hashtags.Any())
+                                    {
+                                        @foreach (var hashtag in figure.Hashtags.Take(2))
+                                        {
+                                            <span class="badge bg-secondary">#@hashtag.Name</span>
+                                        }
+                                    }
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center mt-auto">
+                                    <small class="text-muted">
+                                        <i class="fas fa-user me-1"></i>@(figure.Owner?.UserName ?? "Unknown")
+                                    </small>
+                                    <small class="text-muted">
+                                        <i class="fas fa-calendar me-1"></i>@figure.LastChanged.ToString("MMM dd")
+                                    </small>
+                                </div>
+
+                                <div class="mt-3 d-flex justify-content-between">
+                                    <a asp-controller="Figures" asp-action="Details" asp-route-id="@figure.Id" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-eye me-1"></i>View Details
+                                    </a>
+                                    @* <a asp-controller="Figures" asp-action="ToggleLike" asp-route-id="@figure.Id" class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-heart-broken me-1"></i>Unlike
+                                    </a> *@
+                                    <button class="btn btn-outline-danger btn-sm" onclick="unlikeFigure('@(figure.Id)')">
+
+                                        <i class="fas fa-heart-broken me-1"></i>Unlike
+                                    </button>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-4 mb-5">
+                <i class="fas fa-robot fa-4x text-muted mb-3"></i>
+                <h5 class="text-muted">No Liked Figures</h5>
+                <p class="text-muted">You haven't liked any figures yet. Explore and find some amazing figures to like!</p>
+                <a asp-controller="Figures" asp-action="Index" class="btn btn-primary">
+                    <i class="fas fa-search me-2"></i>Browse Figures
+                </a>
+            </div>
+        }
+    </div>
+
+    <!-- Liked Posts Section -->
+    <div id="posts-section" class="content-section">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4><i class="fas fa-newspaper me-2 text-success"></i>Liked Posts (@Model.LikedPosts.Count())</h4>
+        </div>
+
+        @if (Model.LikedPosts.Any())
+        {
+            <div class="row">
+                <div class="col-lg-8">
+                    @foreach (var post in Model.LikedPosts)
+                    {
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title mb-2">
+                                            <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" class="text-decoration-none">
+                                                @post.Title
+                                            </a>
+                                        </h5>
+                                        <div class="d-flex align-items-center text-muted small mb-2">
+                                            <i class="fas fa-user me-1"></i>
+                                            <span class="me-3">@(post.Publisher?.UserName ?? "Unknown")</span>
+                                            <i class="fas fa-calendar me-1"></i>
+                                            <span class="me-3">@post.CreatedAt.ToString("MMM dd, yyyy HH:mm")</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-danger btn-sm" onclick="unlikePost('@post.Id')">
+                                        <i class="fas fa-heart-broken me-1"></i>Unlike
+                                    </button>
+                                </div>
+
+                                <p class="card-text">@post.Content.Substring(0, Math.Min(200, post.Content.Length))@(post.Content.Length > 200 ? "..." : "")</p>
+
+                                @if (post.ImageUrls.Any())
+                                {
+                                    <div class="row mb-3">
+                                        @if (post.ImageUrls.Count() == 1)
+                                        {
+                                            <div class="col-12">
+                                                <img src="@post.ImageUrls.First()" class="img-fluid rounded" alt="Post image" style="max-height: 300px; width: 100%; object-fit: cover;">
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            @foreach (var imageUrl in post.ImageUrls.Take(3))
+                                            {
+                                                <div class="col-md-4 mb-2">
+                                                    <img src="@imageUrl" class="img-fluid rounded" alt="Post image" style="height: 120px; width: 100%; object-fit: cover;">
+                                                </div>
+                                            }
+                                            @if (post.ImageUrls.Count() > 3)
+                                            {
+                                                <div class="col-12 text-center mt-2">
+                                                    <small class="text-muted">+@(post.ImageUrls.Count() - 3) more images</small>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                }
+
+                                @if (post.Hashtags.Any())
+                                {
+                                    <div class="mb-3">
+                                        @foreach (var hashtag in post.Hashtags)
+                                        {
+                                            <span class="badge bg-secondary me-1">#@hashtag.Name</span>
+                                        }
+                                    </div>
+                                }
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-eye me-1"></i>View Details
+                                        </a>
+                                    </div>
+                                    <small class="text-muted">
+                                        <i class="fas fa-heart text-danger me-1"></i>Liked
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="col-lg-4">
+                    <div class="card shadow-sm sticky-top" style="top: 20px;">
+                        <div class="card-header">
+                            <h6 class="card-title mb-0">
+                                <i class="fas fa-info-circle me-2"></i>Your Activity
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <div class="border-end">
+                                        <h4 class="text-primary mb-1">@Model.LikedFigures.Count()</h4>
+                                        <small class="text-muted">Liked Figures</small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <h4 class="text-success mb-1">@Model.LikedPosts.Count()</h4>
+                                    <small class="text-muted">Liked Posts</small>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="d-grid gap-2">
+                                <a asp-controller="Figures" asp-action="Index" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-search me-2"></i>Find More Figures
+                                </a>
+                                <a asp-controller="Posts" asp-action="Index" class="btn btn-outline-success btn-sm">
+                                    <i class="fas fa-newspaper me-2"></i>Browse Posts
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-4">
+                <i class="fas fa-newspaper fa-4x text-muted mb-3"></i>
+                <h5 class="text-muted">No Liked Posts</h5>
+                <p class="text-muted">You haven't liked any posts yet. Explore and find some interesting posts to like!</p>
+                <a asp-controller="Posts" asp-action="Index" class="btn btn-success">
+                    <i class="fas fa-search me-2"></i>Browse Posts
+                </a>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="text-center py-5">
+        <i class="fas fa-heart fa-5x text-muted mb-4"></i>
+        <h3 class="text-muted">No Liked Content Yet</h3>
+        <p class="text-muted">Start exploring and liking content to see it here!</p>
+        <div class="mt-4">
+            <a asp-controller="Figures" asp-action="Index" class="btn btn-primary btn-lg me-3">
+                <i class="fas fa-robot me-2"></i>Browse Figures
+            </a>
+            <a asp-controller="Posts" asp-action="Index" class="btn btn-success btn-lg">
+                <i class="fas fa-newspaper me-2"></i>Browse Posts
+            </a>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    <script>
+        function showContent(type) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.btn-group .btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+
+            const figuresSection = document.getElementById('figures-section');
+            const postsSection = document.getElementById('posts-section');
+
+            switch(type) {
+                case 'figures':
+                    figuresSection.style.display = 'block';
+                    postsSection.style.display = 'none';
+                    break;
+                case 'posts':
+                    figuresSection.style.display = 'none';
+                    postsSection.style.display = 'block';
+                    break;
+                default: // 'all'
+                    figuresSection.style.display = 'block';
+                    postsSection.style.display = 'block';
+            }
+        }
+
+        function unlikeFigure(figureId) {
+            if (confirm('Are you sure you want to unlike this figure?')) {
+                // Disable the button to prevent multiple clicks
+                const button = event.target.closest('button');
+                const originalText = button.innerHTML;
+                button.disabled = true;
+                button.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Removing...';
+
+                // Get CSRF token
+                const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+                // Create form data
+                const formData = new FormData();
+                formData.append('figureId', figureId);
+                formData.append('__RequestVerificationToken', token);
+
+                // Make AJAX call to unlike the figure
+                fetch('@Url.Action("UnlikeFigure", "Home")', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Remove the figure card from DOM with animation
+                        const figureCard = button.closest('.col-md-6, .col-lg-4');
+                        if (figureCard) {
+                            // Add fade out animation
+                            figureCard.style.transition = 'opacity 0.3s ease-out';
+                            figureCard.style.opacity = '0';
+
+                            setTimeout(() => {
+                                figureCard.remove();
+
+                                // Update the figures count in the header
+                                updateFiguresCount();
+
+                                // Check if no figures left and show empty state
+                                checkEmptyFiguresState();
+
+                                // Show success message
+                                showNotification('success', data.message || 'Figure unliked successfully!');
+                            }, 300);
+                        }
+                    } else {
+                        // Re-enable button on failure
+                        button.disabled = false;
+                        button.innerHTML = originalText;
+                        showNotification('error', data.message || 'Failed to unlike figure');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Re-enable button on error
+                    button.disabled = false;
+                    button.innerHTML = originalText;
+                    showNotification('error', 'An error occurred while unliking the figure');
+                });
+            }
+        }
+
+        function unlikePost(postId) {
+            if (confirm('Are you sure you want to unlike this post?')) {
+                // Disable the button to prevent multiple clicks
+                const button = event.target.closest('button');
+                const originalText = button.innerHTML;
+                button.disabled = true;
+                button.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Removing...';
+
+                // Get CSRF token
+                const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+                // Create form data
+                const formData = new FormData();
+                formData.append('postId', postId);
+                formData.append('__RequestVerificationToken', token);
+
+                // Make AJAX call to unlike the post
+                fetch('@Url.Action("UnlikePost", "Home")', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Remove the post card from DOM with animation
+                        const postCard = button.closest('.card');
+                        if (postCard) {
+                            // Add fade out animation
+                            postCard.style.transition = 'opacity 0.3s ease-out';
+                            postCard.style.opacity = '0';
+
+                            setTimeout(() => {
+                                postCard.remove();
+
+                                // Update the posts count in the header
+                                updatePostsCount();
+
+                                // Check if no posts left and show empty state
+                                checkEmptyPostsState();
+
+                                // Show success message
+                                showNotification('success', data.message || 'Post unliked successfully!');
+                            }, 300);
+                        }
+                    } else {
+                        // Re-enable button on failure
+                        button.disabled = false;
+                        button.innerHTML = originalText;
+                        showNotification('error', data.message || 'Failed to unlike post');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Re-enable button on error
+                    button.disabled = false;
+                    button.innerHTML = originalText;
+                    showNotification('error', 'An error occurred while unliking the post');
+                });
+            }
+        }
+
+        // Helper function to update figures count
+        function updateFiguresCount() {
+            const figuresSection = document.getElementById('figures-section');
+            const remainingFigures = figuresSection.querySelectorAll('.col-md-6, .col-lg-4').length;
+            const figuresHeader = figuresSection.querySelector('h4');
+            if (figuresHeader) {
+                figuresHeader.innerHTML = `<i class="fas fa-robot me-2 text-primary"></i>Liked Figures (${remainingFigures})`;
+            }
+
+            // Update activity panel count
+            const activityFiguresCount = document.querySelector('.text-primary.mb-1');
+            if (activityFiguresCount) {
+                activityFiguresCount.textContent = remainingFigures;
+            }
+        }
+
+        // Helper function to update posts count
+        function updatePostsCount() {
+            const postsSection = document.getElementById('posts-section');
+            // Only count post cards in the main content area (col-lg-8), not the sidebar
+            const mainContentArea = postsSection.querySelector('.col-lg-8');
+            const remainingPosts = mainContentArea ? mainContentArea.querySelectorAll('.card').length : 0;
+
+            const postsHeader = postsSection.querySelector('h4');
+            if (postsHeader) {
+                postsHeader.innerHTML = `<i class="fas fa-newspaper me-2 text-success"></i>Liked Posts (${remainingPosts})`;
+            }
+
+            // Update activity panel count
+            const activityPostsCount = document.querySelector('.text-success.mb-1');
+            if (activityPostsCount) {
+                activityPostsCount.textContent = remainingPosts;
+            }
+        }
+
+        // Helper function to check if figures section is empty
+        function checkEmptyFiguresState() {
+            const figuresSection = document.getElementById('figures-section');
+            const figureCards = figuresSection.querySelectorAll('.col-md-6, .col-lg-4');
+
+            if (figureCards.length === 0) {
+                const figuresRow = figuresSection.querySelector('.row');
+                if (figuresRow) {
+                    figuresRow.innerHTML = `
+                        <div class="text-center py-4 mb-5">
+                            <i class="fas fa-robot fa-4x text-muted mb-3"></i>
+                            <h5 class="text-muted">No Liked Figures</h5>
+                            <p class="text-muted">You haven't liked any figures yet. Explore and find some amazing figures to like!</p>
+                            <a href="@Url.Action("Index", "Figures")" class="btn btn-primary">
+                                <i class="fas fa-search me-2"></i>Browse Figures
+                            </a>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Helper function to check if posts section is empty
+        function checkEmptyPostsState() {
+            const postsSection = document.getElementById('posts-section');
+            // Only check post cards in the main content area (col-lg-8), not the sidebar
+            const mainContentArea = postsSection.querySelector('.col-lg-8');
+            const postCards = mainContentArea ? mainContentArea.querySelectorAll('.card') : [];
+
+            if (postCards.length === 0) {
+                const postsContent = postsSection.querySelector('.col-lg-8');
+                if (postsContent) {
+                    postsContent.innerHTML = `
+                        <div class="text-center py-4">
+                            <i class="fas fa-newspaper fa-4x text-muted mb-3"></i>
+                            <h5 class="text-muted">No Liked Posts</h5>
+                            <p class="text-muted">You haven't liked any posts yet. Explore and find some interesting posts to like!</p>
+                            <a href="@Url.Action("Index", "Posts")" class="btn btn-success">
+                                <i class="fas fa-search me-2"></i>Browse Posts
+                            </a>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Helper function to show notifications
+        function showNotification(type, message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+
+            // Add to page
+            document.body.appendChild(notification);
+
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        // Initialize view on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            showContent('all');
+        });
+    </script>
+}

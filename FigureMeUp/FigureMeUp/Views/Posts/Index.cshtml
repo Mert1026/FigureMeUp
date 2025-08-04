@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<FigureMeUp.Data.Models.Post>
 @{
     ViewData["Title"] = "All Posts";
+    var currentUserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -24,7 +25,7 @@
                         <div class="d-flex justify-content-between align-items-start mb-3">
                             <div class="flex-grow-1">
                                 <h4 class="card-title mb-2">
-                                    <a class="text-decoration-none">
+                                    <a asp-action="Details" asp-route-id="@post.Id" class="text-decoration-none">
                                         @post.Title
                                     </a>
                                 </h4>
@@ -97,22 +98,36 @@
                         }
 
                         <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                @if (post.ImageUrls.Count() > 1)
-                                {
-                                    <a  class="btn btn-primary btn-sm">
-                                        <i class="fas fa-images me-1"></i>View Details
-                                    </a>
-                                }
+                            <div class="d-flex align-items-center">
+                                <a asp-action="Details" asp-route-id="@post.Id" class="btn btn-primary btn-sm me-2">
+                                    <i class="fas fa-eye me-1"></i>View Details
+                                </a>
+
                                 @if (User.Identity.IsAuthenticated)
                                 {
-                                    <button class="btn btn-outline-danger btn-sm">
+                                    <button type="button"
+                                            class="btn btn-sm me-2 like-btn @(post.LikedByUsersIds.Contains(currentUserId ?? "") ? "btn-danger" : "btn-outline-danger")"
+                                            data-post-id="@post.Id"
+                                            data-is-liked="@(post.LikedByUsersIds.Contains(currentUserId ?? "").ToString().ToLower())">
+                                        <i class="fas fa-heart me-1"></i>
+                                        <span class="like-text">@(post.LikedByUsersIds.Contains(currentUserId ?? "") ? "Unlike" : "Like")</span>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-outline-danger btn-sm me-2" disabled>
                                         <i class="fas fa-heart me-1"></i>Like
                                     </button>
                                 }
+
+                                <span class="text-muted small like-count" data-post-id="@post.Id">
+                                    <i class="fas fa-heart text-danger me-1"></i>
+                                    <strong class="count-number">@(post.LikesCount)</strong>
+                                    likes
+                                </span>
                             </div>
                             <small class="text-muted">
-                                <i class="fas fa-eye me-1"></i>0 views
+                                <i class="fas fa-eye me-1"></i>@(post.ViewsCount) views
                             </small>
                         </div>
                     </div>
@@ -191,3 +206,166 @@ else
         }
     </div>
 }
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers to all like buttons
+            document.querySelectorAll('.like-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    toggleLike(this);
+                });
+            });
+        });
+
+        function toggleLike(button) {
+            const postId = button.getAttribute('data-post-id');
+            const isLiked = button.getAttribute('data-is-liked') === 'true';
+
+            console.log('Toggle like called for post:', postId, 'Currently liked:', isLiked);
+
+            // Disable button to prevent multiple clicks
+            const originalContent = button.innerHTML;
+            button.disabled = true;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Processing...';
+
+            // Construct URL with query parameter
+            const url = '@Url.Action("ToggleLike", "Posts")' + '?id=' + encodeURIComponent(postId);
+            console.log('Sending request to:', url);
+
+            // Make AJAX call with GET method first to test
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                console.log('Response ok:', response.ok);
+
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        console.log('Error response body:', text);
+                        throw new Error(`HTTP error! status: ${response.status}, body: ${text}`);
+                    });
+                }
+
+                const contentType = response.headers.get('content-type');
+                console.log('Content type:', contentType);
+
+                if (!contentType || !contentType.includes('application/json')) {
+                    return response.text().then(text => {
+                        console.log('Non-JSON response:', text);
+                        throw new Error('Server did not return JSON: ' + text);
+                    });
+                }
+
+                return response.json();
+            })
+            .then(data => {
+                console.log('Received data:', data);
+
+                if (data.success) {
+                    // Update button state using data from server
+                    button.setAttribute('data-is-liked', data.isLiked.toString());
+
+                    // Update button appearance and text
+                    if (data.isLiked) {
+                        button.className = 'btn btn-sm me-2 like-btn btn-danger';
+                    } else {
+                        button.className = 'btn btn-sm me-2 like-btn btn-outline-danger';
+                    }
+
+                    // Update button text - check if like-text span exists
+                    const likeTextSpan = button.querySelector('.like-text');
+                    if (likeTextSpan) {
+                        likeTextSpan.textContent = data.isLiked ? 'Unlike' : 'Like';
+                    } else {
+                        // If span doesn't exist, update the entire button content
+                        button.innerHTML = `<i class="fas fa-heart me-1"></i><span class="like-text">${data.isLiked ? 'Unlike' : 'Like'}</span>`;
+                    }
+
+                    // Update like count with server data
+                    const likeCountSpan = document.querySelector(`.like-count[data-post-id="${postId}"] .count-number`);
+                    if (likeCountSpan) {
+                        likeCountSpan.textContent = data.likesCount;
+                    } else {
+                        console.warn('Like count span not found for post:', postId);
+                    }
+
+                    // Show success notification
+                    showNotification('success', data.message);
+                } else {
+                    console.error('Server returned error:', data.message);
+                    // Show error notification
+                    showNotification('error', data.message || 'Failed to toggle like');
+                }
+
+                // Re-enable button with original structure
+                button.disabled = false;
+                // Restore the original button structure if it was lost
+                if (!button.querySelector('.like-text')) {
+                    const currentIsLiked = button.getAttribute('data-is-liked') === 'true';
+                    button.innerHTML = `<i class="fas fa-heart me-1"></i><span class="like-text">${currentIsLiked ? 'Unlike' : 'Like'}</span>`;
+                } else {
+                    button.innerHTML = originalContent;
+                }
+
+                // Update button text - check if like-text span exists
+                    const likeTextSpan = button.querySelector('.like-text');
+                    if (likeTextSpan) {
+                        likeTextSpan.textContent = data.isLiked ? 'Unlike' : 'Like';
+                    } else {
+                        // If span doesn't exist, update the entire button content
+                        button.innerHTML = `<i class="fas fa-heart me-1"></i><span class="like-text">${data.isLiked ? 'Unlike' : 'Like'}</span>`;
+                    }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                console.error('Error details:', error.message);
+
+                // Re-enable button on error with proper structure
+                button.disabled = false;
+                // Restore the original button structure
+                if (!button.querySelector('.like-text')) {
+                    const currentIsLiked = button.getAttribute('data-is-liked') === 'true';
+                    button.innerHTML = `<i class="fas fa-heart me-1"></i><span class="like-text">${currentIsLiked ? 'Unlike' : 'Like'}</span>`;
+                } else {
+                    button.innerHTML = originalContent;
+                }
+
+                // Show error notification with more details
+                showNotification('error', error.message);
+            });
+        }
+
+        // Helper function to show notifications (same as in LikedContent view)
+        function showNotification(type, message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+
+            // Add to page
+            document.body.appendChild(notification);
+
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+    </script>
+}
+
+@* Add CSRF token for AJAX requests *@
+<form style="display: none;">
+    @Html.AntiForgeryToken()
+</form>

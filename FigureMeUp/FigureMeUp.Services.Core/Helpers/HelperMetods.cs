@@ -38,5 +38,30 @@ namespace FigureMeUp.Services.Core.Helpers
             return _context.Rarities
                 .FirstOrDefault(r => r.Name == rarityName && !r.IsDeleted);
         }
+
+        public static async Task<bool> IsValidImageUrlAsync(string url)
+        {
+        try
+        {
+            using (var client = new HttpClient())
+            {
+                client.Timeout = TimeSpan.FromSeconds(10);
+
+                // Use HEAD request to avoid downloading the entire file
+                var response = await client.SendAsync(new HttpRequestMessage(HttpMethod.Head, url));
+
+                if (!response.IsSuccessStatusCode)
+                    return false;
+
+                // Check if content type indicates an image
+                var contentType = response.Content.Headers.ContentType?.MediaType;
+                return contentType != null && contentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase);
+            }
+        }
+        catch
+        {
+            return false;
+        }
+        }
     }
 }

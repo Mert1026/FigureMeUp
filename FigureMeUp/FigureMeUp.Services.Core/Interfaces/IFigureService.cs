@@ -15,5 +15,10 @@ namespace FigureMeUp.Services.Core.Interfaces
         public Task<bool> AddFigureAsync(FiguresViewModel figure, string userId);
         public Task<bool> UpdateFigureAsync(FiguresViewModel figure, string userId);
         public Task<bool> DeleteFigureAsync(Guid id);
+        public Task<bool> AddLikeAsync(Guid postId, string userId);
+        public Task<bool> ToggleLikeAsync(Guid postId, string userId);
+        public Task<IEnumerable<Figure>> GetFiguresByUserIdAsync(string userId);
+        public Task<IEnumerable<Figure>> GetLikedFiguresByUserIdAsync(string userId);
+
     }
 }

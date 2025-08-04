@@ -1,8 +1,12 @@
 ﻿using FigureMeUp.Data.Models;
 using FigureMeUp.Data.Models.View_models;
+using FigureMeUp.Services.Core;
 using FigureMeUp.Services.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
 namespace FigureMeUp.Controllers
@@ -158,5 +162,63 @@ namespace FigureMeUp.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ToggleLike(string id)
+        {
+            try
+            {
+
+                if (string.IsNullOrEmpty(id))
+                {
+                    return Json(new { success = false, message = "Figure ID is required" });
+                }
+                if (!Guid.TryParse(id, out Guid figureId))
+                {
+                    return Json(new { success = false, message = "Invalid figure ID format" });
+                }
+
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return Json(new { success = false, message = "User not authenticated" });
+                }
+
+
+                var figure = await _figureService.GetFigureByIdAsync(figureId);
+                if (figure == null || figure.IsDeleted)
+                {
+                    return Json(new { success = false, message = "Figure not found" });
+                }
+
+
+                var result = await _figureService.ToggleLikeAsync(figureId, userId);
+                if (result)
+                {
+
+                    var updatedFigure = await _figureService.GetFigureByIdAsync(figureId);
+                    if (updatedFigure != null)
+                    {
+                        var isLiked = updatedFigure.LikedByUsersIds.Contains(userId);
+                        var message = isLiked ? "Figure liked successfully!" : "Figure unliked successfully!";
+                        return Json(new
+                        {
+                            success = true,
+                            message = message,
+                            isLiked = isLiked,
+                            likesCount = updatedFigure.LikesCount
+                        });
+                    }
+                }
+
+                return Json(new { success = false, message = "Failed to toggle like. Please try again." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = $"Server error: {ex.Message}" });
+            }
+        }
     }
+
 }

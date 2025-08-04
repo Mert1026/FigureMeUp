@@ -60,6 +60,8 @@ namespace FigureMeUp.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(userId);
+            var figures = await _figureService.GetAllFiguresAsync();
+            var posts = await _postService.GetAllPostsAsync();
 
             if (user == null)
             {
@@ -69,7 +71,9 @@ namespace FigureMeUp.Controllers
             var model = new ProfileDetailsViewModel
             {
                 UserName = user.UserName ?? string.Empty,
-                Email = user.Email ?? string.Empty
+                Email = user.Email ?? string.Empty,
+                FiguresCount = figures.Count(f => f.OwnerId == userId && !f.IsDeleted),
+                PostsCount = posts.Count(p => p.PublisherId == userId && !p.IsDeleted),
             };
 
             return View(model);
@@ -78,10 +82,96 @@ namespace FigureMeUp.Controllers
         [Authorize]
         public async Task<IActionResult> ViewFavorites()
         {
-            // This would require implementing a favorites system in your models and services
-            // For now, returning empty list as placeholder
+            //TODO
             var favorites = new List<Figure>();
             return View(favorites);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> LikedContent()
+        {
+            try
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                // TODO: Replace these with your actual service methods
+                var likedFigures = await _figureService.GetLikedFiguresByUserIdAsync(userId);
+                var likedPosts = await _postService.GetLikedPostsByUserIdAsync(userId);
+
+                var model = new LikedContentViewModel
+                {
+                    LikedFigures = likedFigures.ToList(),
+                    LikedPosts = likedPosts.ToList()
+                };
+
+                return View(model);
+            }
+            catch
+            {
+                return View("Error", new ErrorViewModel { RequestId = "An error occurred while fetching liked content." });
+            }
+            
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UnlikeFigure([FromForm] string figureId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(figureId) || !Guid.TryParse(figureId, out Guid parsedFigureId))
+                {
+                    return Json(new { success = false, message = "Invalid figure ID" });
+                }
+
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var result = await _figureService.ToggleLikeAsync(parsedFigureId, userId);
+
+                if (result)
+                {
+                    return Json(new { success = true, message = "Figure unliked successfully" });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Failed to unlike figure" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred while unliking the figure" });
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UnlikePost([FromForm] string postId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(postId) || !Guid.TryParse(postId, out Guid parsedPostId))
+                {
+                    return Json(new { success = false, message = "Invalid post ID" });
+                }
+
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var result = await _postService.ToggleLikeAsync(parsedPostId, userId);
+
+                if (result)
+                {
+                    return Json(new { success = true, message = "Post unliked successfully" });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Failed to unlike post" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred while unliking the post" });
+            }
         }
     }
 

@@ -47,6 +47,13 @@ namespace FigureMeUp.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
+                    b.Property<string>("LikedByUsersIds")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LikesCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -126,6 +133,13 @@ namespace FigureMeUp.Data.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
+                    b.Property<string>("LikedByUsersIds")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LikesCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("PublisherId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -134,6 +148,9 @@ namespace FigureMeUp.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(80)
                         .HasColumnType("nvarchar(80)");
+
+                    b.Property<int>("ViewsCount")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

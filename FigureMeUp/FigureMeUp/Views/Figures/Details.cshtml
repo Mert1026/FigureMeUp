@@ -40,12 +40,35 @@
                             </ul>
                         </div>
                     }
-                    else if (User.Identity.IsAuthenticated)
+                </div>
+
+                <!-- Like Button Section -->
+                <div class="d-flex align-items-center mb-4 p-3 bg-light rounded">
+                    @if (User.Identity.IsAuthenticated)
                     {
-                        <button class="btn btn-outline-danger">
-                            <i class="fas fa-heart me-1"></i>Add to Favorites
+                        <!-- TODO: Add ToggleFigureLike action to FiguresController -->
+                        <!-- Check if current user has already liked this figure -->
+                        <form asp-action="ToggleLike" asp-route-id="@Model.Id" method="post" class="d-inline me-3">
+                            <button type="submit" class="btn btn-outline-danger btn-sm like-btn" data-figure-id="@Model.Id">
+                                <!-- TODO: Add conditional class 'btn-danger' if user has liked, 'btn-outline-danger' if not -->
+                                <i class="fas fa-heart me-1"></i>
+                                <span class="like-text">Like</span> <!-- Change to "Unlike" if already liked -->
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <button class="btn btn-outline-danger btn-sm me-3" disabled>
+                            <i class="fas fa-heart me-1"></i>Like
                         </button>
                     }
+                    <!-- TODO: Implement like counter in Figure model -->
+                    <!-- Add property: public int LikesCount { get; set; } -->
+                    <!-- Or create a separate FigureLikes table with FigureId and UserId -->
+                    <span class="text-muted">
+                        <strong class="like-counter">0</strong> <!-- Replace with @Model.LikesCount -->
+                        <span class="like-label">likes</span>
+                    </span>
                 </div>
 
                 @if (Model.ImageUrls.Any())
@@ -143,6 +166,10 @@
                         <td><strong>Images:</strong></td>
                         <td>@Model.ImageUrls.Count()</td>
                     </tr>
+                    <tr>
+                        <td><strong>Likes:</strong></td>
+                        <td><strong class="like-counter">0</strong></td> <!-- TODO: Replace with @Model.LikesCount -->
+                    </tr>
                 </table>
 
                 <div class="d-grid gap-2 mt-4">
@@ -206,4 +233,36 @@
             </div>
         </div>
     </div>
+}
+
+@section Scripts {
+    <script>
+        // TODO: Implement AJAX like functionality for figures (optional)
+        // Add this after implementing the ToggleLike action method in FiguresController
+        /*
+        $(document).ready(function() {
+            $('.like-btn').click(function(e) {
+                e.preventDefault();
+                var figureId = $(this).data('figure-id');
+                var button = $(this);
+
+                $.post('/Figures/ToggleLike/' + figureId, function(data) {
+                    if (data.success) {
+                        // Update button appearance
+                        if (data.isLiked) {
+                            button.removeClass('btn-outline-danger').addClass('btn-danger');
+                            button.find('.like-text').text('Unlike');
+                        } else {
+                            button.removeClass('btn-danger').addClass('btn-outline-danger');
+                            button.find('.like-text').text('Like');
+                        }
+                        // Update counter
+                        $('.like-counter').text(data.likesCount);
+                        $('.like-label').text(data.likesCount === 1 ? 'like' : 'likes');
+                    }
+                });
+            });
+        });
+        */
+    </script>
 }
