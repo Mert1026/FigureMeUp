@@ -14,7 +14,7 @@ namespace FigureMeUp.Data.Seeders
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            string[] roles = { "Admin", "User" };
+            string[] roles = { "Admin", "User", "Banned" };
 
             foreach (var role in roles)
             {

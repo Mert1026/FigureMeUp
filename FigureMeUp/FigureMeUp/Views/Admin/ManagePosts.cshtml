@@ -13,8 +13,8 @@
 <!-- Filter Controls -->
 <div class="card shadow-sm mb-4">
     <div class="card-body">
-        <div class="row">
-            <div class="col-md-3">
+        <div class="row justify-content-center">
+            <div class="col-md-3 justify-content-center">
                 <select class="form-select" id="statusFilter">
                     <option value="">All Posts</option>
                     <option value="active">Active Posts</option>
@@ -28,7 +28,7 @@
                 <input type="date" class="form-control" id="dateFilter">
             </div>
             <div class="col-md-3">
-                <button class="btn btn-primary" onclick="applyFilters()">
+                <button class="btn btn-primary bg-primary border-0" onclick="applyFilters()">
                     <i class="fas fa-filter me-2"></i>Apply Filters
                 </button>
             </div>
@@ -222,9 +222,26 @@ else
 
                 // Date filter (you might need to adjust this based on your date format)
                 if (date) {
-                    const postDate = row.cells[2].textContent;
-                    // Add your date comparison logic here
+                    const postDateStr = row.cells[2].textContent.trim();
+
+                     // Convert dd/MM/yyyy (from input) to a Date object
+                    const [day, month, year] = date.split('/');
+                    const inputDate = new Date(`${year}-${month}-${day}`);
+
+                    // Convert yyyy-MM-dd (from table) to a Date object
+                    const postDate = new Date(postDateStr);
+
+                    // Compare only the date parts (ignore time)
+                    const isSameDate =
+                    inputDate.getFullYear() === postDate.getFullYear() &&
+                    inputDate.getMonth() === postDate.getMonth() &&
+                    inputDate.getDate() === postDate.getDate();
+
+                    if (isSameDate) {
+                     showRow = true;
+                    }
                 }
+
 
                 row.style.display = showRow ? '' : 'none';
             });

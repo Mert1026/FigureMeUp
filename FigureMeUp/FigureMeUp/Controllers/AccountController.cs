@@ -86,7 +86,23 @@ namespace FigureMeUp.Controllers
 
                 if (result.Succeeded)
                 {
-                    TempData["Success"] = "Welcome back!";
+                    IdentityUser? user = await _userManager.FindByNameAsync(model.Username);
+                    if(user == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "User not found.");
+                        return View(model);
+                    }
+                    else
+                    {
+                        // Check if the user is banned
+                        if (await _userManager.IsInRoleAsync(user, "Banned"))
+                        {
+                            ModelState.AddModelError(string.Empty, "Your account is banned. Please contact support.");
+                            return View(model);
+                        }
+                        
+                    }
+                        TempData["Success"] = "Welcome back!";
                     return RedirectToLocal(returnUrl);
                 }
 
@@ -107,6 +123,8 @@ namespace FigureMeUp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+       
+
         private IActionResult RedirectToLocal(string? returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
@@ -118,5 +136,6 @@ namespace FigureMeUp.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+
     }
 }

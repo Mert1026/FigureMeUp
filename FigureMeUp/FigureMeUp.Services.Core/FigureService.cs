@@ -311,5 +311,16 @@ namespace FigureMeUp.Services.Core
                 return Enumerable.Empty<Figure>();
             }
         }
+
+        public async Task<bool> RestoreFigureAsync(Guid id)
+        {
+            Figure? figure = await this.GetFigureByIdAsync(id);
+            if (figure != null)
+            {
+                figure.IsDeleted = false;
+                return await _figuresRepository.UpdateAsync(figure);
+            }
+            return false;
+        }
     }
 }

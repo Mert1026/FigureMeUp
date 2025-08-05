@@ -12,10 +12,8 @@ namespace FigureMeUp.Data.Models.View_models
         public string UserName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
-        public bool IsDeleted { get; set; }
         public bool IsBanned { get; set; }
         public int PostsCount { get; set; }
         public int FiguresCount { get; set; }
-        public DateTime? LastLoginDate { get; set; }
     }
 }

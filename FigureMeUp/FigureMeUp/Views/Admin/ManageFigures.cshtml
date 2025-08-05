@@ -1,0 +1,287 @@
+﻿@model IEnumerable<FigureMeUp.Data.Models.Figure>
+@{
+    ViewData["Title"] = "Manage Figures";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">Manage All Figures</h2>
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+    </a>
+</div>
+
+<!-- Filter Controls -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2">
+                <select class="form-select" id="statusFilter">
+                    <option value="">All Figures</option>
+                    <option value="active">Active Figures</option>
+                    <option value="deleted">Deleted Figures</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select" id="rarityFilter">
+                    <option value="">All Rarities</option>
+                    <!-- You can populate this from your Rarity model -->
+                    <option value="common">Common</option>
+                    <option value="rare">Rare</option>
+                    <option value="epic">Epic</option>
+                    <option value="legendary">Legendary</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="searchOwner" placeholder="Search by owner...">
+            </div>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="searchName" placeholder="Search by name...">
+            </div>
+            <div class="col-md-2">
+                <input type="date" class="form-control" id="dateFilter">
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary bg-primary border-0" onclick="applyFilters()">
+                    <i class="fas fa-filter me-1"></i>Filter
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Figure</th>
+                    <th>Owner</th>
+                    <th>Rarity</th>
+                    <th>Last Changed</th>
+                    <th>Likes</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var figure in Model)
+                {
+                    <tr class="@(figure.IsDeleted ? "table-danger" : "bg-white")">
+                        <td>
+                            <div class="d-flex align-items-center">
+                                @if (figure.ImageUrls.Any())
+                                {
+                                    <img src="@figure.ImageUrls.First()" alt="@figure.Name"
+                                         class="me-2 rounded" style="width: 50px; height: 50px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <div class="me-2 d-flex align-items-center justify-content-center bg-light rounded"
+                                         style="width: 50px; height: 50px;">
+                                        <i class="fas fa-robot text-muted"></i>
+                                    </div>
+                                }
+                                <div>
+                                    <strong>@figure.Name</strong>
+                                    <br>
+                                    <small class="text-muted">
+                                        @figure.Description.Substring(0, Math.Min(40, figure.Description.Length))@(figure.Description.Length > 40 ? "..." : "")
+                                    </small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-user me-2 text-muted"></i>
+                                @(figure.Owner?.UserName ?? "Unknown")
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge" style="background-color: @(GetRarityColor(figure.Rarity?.Name))">
+                                @(figure.Rarity?.Name ?? "Unknown")
+                            </span>
+                        </td>
+                        <td>
+                            <small>@figure.LastChanged.ToString("MMM dd, yyyy")</small>
+                        </td>
+                        <td>
+                            <span class="badge bg-danger">
+                                <i class="fas fa-heart me-1"></i>@figure.LikesCount
+                            </span>
+                        </td>
+                        <td>
+                            @if (figure.IsDeleted)
+                            {
+                                <span class="badge bg-danger">Deleted</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-controller="Figures" asp-action="Details" asp-route-id="@figure.Id"
+                                   class="btn btn-outline-primary btn-sm" title="View Details">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+
+                                @if (!figure.IsDeleted)
+                                {
+                                    <a asp-controller="Figures" asp-action="Edit" asp-route-id="@figure.Id"
+                                       class="btn btn-outline-secondary btn-sm" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-outline-danger btn-sm"
+                                            data-bs-toggle="modal" data-bs-target="#deleteFigureModal@(figure.Id)" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-outline-success btn-sm"
+                                            data-bs-toggle="modal" data-bs-target="#restoreFigureModal@(figure.Id)" title="Restore">
+                                        <i class="fas fa-undo"></i>
+                                    </button>
+                                }
+                            </div>
+
+                            @if (!figure.IsDeleted)
+                            {
+                                <!-- Delete Modal -->
+                                <div class="modal fade" id="deleteFigureModal@(figure.Id)" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Delete Figure</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you sure you want to delete the figure <strong>"@figure.Name"</strong>?</p>
+                                                <p class="text-muted small">This will soft delete the figure. It can be restored later.</p>
+                                                @if (figure.ImageUrls.Any())
+                                                {
+                                                    <img src="@figure.ImageUrls.First()" alt="@figure.Name"
+                                                         class="img-thumbnail mt-2" style="max-width: 200px;">
+                                                }
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <form asp-action="DeleteFigure" asp-route-id="@figure.Id" method="post" class="d-inline">
+                                                    <button type="submit" class="btn btn-danger">
+                                                        <i class="fas fa-trash me-1"></i>Delete
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <!-- Restore Modal -->
+                                <div class="modal fade" id="restoreFigureModal@(figure.Id)" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Restore Figure</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you sure you want to restore the figure <strong>"@figure.Name"</strong>?</p>
+                                                <p class="text-muted small">This will make the figure visible to users again.</p>
+                                                @if (figure.ImageUrls.Any())
+                                                {
+                                                    <img src="@figure.ImageUrls.First()" alt="@figure.Name"
+                                                         class="img-thumbnail mt-2" style="max-width: 200px;">
+                                                }
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <form asp-action="RestoreFigure" asp-route-id="@figure.Id" method="post" class="d-inline">
+                                                    <button type="submit" class="btn btn-success">
+                                                        <i class="fas fa-undo me-1"></i>Restore
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="text-center py-5">
+        <i class="fas fa-robot fa-5x text-muted mb-4"></i>
+        <h3 class="text-muted">No Figures Found</h3>
+        <p class="text-muted">There are no figures to manage at the moment.</p>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        function applyFilters() {
+            const status = document.getElementById('statusFilter').value;
+            const rarity = document.getElementById('rarityFilter').value.toLowerCase();
+            const owner = document.getElementById('searchOwner').value.toLowerCase();
+            const name = document.getElementById('searchName').value.toLowerCase();
+            const date = document.getElementById('dateFilter').value;
+
+            const rows = document.querySelectorAll('tbody tr');
+
+            rows.forEach(row => {
+                let showRow = true;
+
+                // Status filter
+                if (status) {
+                    const isDeleted = row.classList.contains('table-danger');
+                    if (status === 'active' && isDeleted) showRow = false;
+                    if (status === 'deleted' && !isDeleted) showRow = false;
+                }
+
+                // Rarity filter
+                if (rarity) {
+                    const figureRarity = row.cells[2].textContent.toLowerCase();
+                    if (!figureRarity.includes(rarity)) showRow = false;
+                }
+
+                // Owner filter
+                if (owner) {
+                    const ownerName = row.cells[1].textContent.toLowerCase();
+                    if (!ownerName.includes(owner)) showRow = false;
+                }
+
+                // Name filter
+                if (name) {
+                    const figureName = row.cells[0].textContent.toLowerCase();
+                    if (!figureName.includes(name)) showRow = false;
+                }
+
+                row.style.display = showRow ? '' : 'none';
+            });
+        }
+    </script>
+}
+
+@functions {
+    string GetRarityColor(string rarityName)
+    {
+        return rarityName?.ToLower() switch
+        {
+            "common" => "#6c757d",
+            "uncommon" => "#28a745",
+            "rare" => "#007bff",
+            "epic" => "#6f42c1",
+            "legendary" => "#fd7e14",
+            "mythic" => "#e83e8c",
+            _ => "#6c757d"
+        };
+    }
+}
