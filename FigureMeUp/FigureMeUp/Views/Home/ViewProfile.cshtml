@@ -6,7 +6,7 @@
 <div class="row justify-content-center">
     <div class="col-lg-8">
         <div class="card shadow">
-            <div class="card-header bg-info text-white">
+            <div class="card-header bg-info text-white bg-primary">
                 <h3 class="mb-0">
                     <i class="fas fa-user-circle me-2"></i>Profile Details
                 </h3>
@@ -20,14 +20,14 @@
                         <h4 class="mt-3">@Model.UserName</h4>
                         <p class="text-muted">Community Member</p>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-8 flex-column">
                         <div class="row">
                             <div class="col-sm-6 mb-3">
                                 <div class="card bg-light">
                                     <div class="card-body text-center">
-                                        <i class="fas fa-robot fa-2x text-primary mb-2"></i>
+                                        <i class="fas fa-robot fa-2x text-icon mb-2"></i>
                                         <h5 class="card-title">My Figures</h5>
-                                        <a asp-action="MyFigures" class="btn btn-primary btn-sm">
+                                        <a asp-action="MyFigures" class="btn btn-primary btn-sm bg-primary border-0">
                                             <i class="fas fa-eye me-1"></i>View
                                         </a>
                                     </div>
@@ -36,9 +36,9 @@
                             <div class="col-sm-6 mb-3">
                                 <div class="card bg-light">
                                     <div class="card-body text-center">
-                                        <i class="fas fa-newspaper fa-2x text-success mb-2"></i>
+                                        <i class="fas fa-newspaper fa-2x text-success mb-2 text-icon"></i>
                                         <h5 class="card-title">My Posts</h5>
-                                        <a asp-action="MyPosts" class="btn btn-success btn-sm">
+                                        <a asp-action="MyPosts" class="btn btn-success btn-sm bg-primary border-0">
                                             <i class="fas fa-eye me-1"></i>View
                                         </a>
                                     </div>
@@ -47,30 +47,15 @@
                             <div class="col-sm-6 mb-3">
                                 <div class="card bg-light">
                                     <div class="card-body text-center">
-                                        <i class="fas fa-heart fa-2x text-danger mb-2"></i>
+                                        <i class="fas fa-heart fa-2x text-danger mb-2 text-icon"></i>
                                         <h5 class="card-title">Liked Content</h5>
-                                        <a asp-action="LikedContent" class="btn btn-danger btn-sm">
+                                        <a asp-action="LikedContent" class="btn btn-danger btn-sm bg-primary border-0">
                                             <i class="fas fa-eye me-1"></i>View
                                         </a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 mb-3">
-                                <div class="card bg-light">
-                                    <div class="card-body text-center">
-                                        <i class="fas fa-plus fa-2x text-warning mb-2"></i>
-                                        <h5 class="card-title">Quick Add</h5>
-                                        <div class="btn-group" role="group">
-                                            <a asp-controller="Figures" asp-action="Create" class="btn btn-outline-primary btn-sm">
-                                                <i class="fas fa-robot"></i>
-                                            </a>
-                                            <a asp-controller="Posts" asp-action="Create" class="btn btn-outline-success btn-sm">
-                                                <i class="fas fa-plus"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -79,7 +64,7 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <h5><i class="fas fa-info-circle me-2"></i>Account Information</h5>
+                        <h5><i class="fas fa-info-circle me-2 text-icon"></i>Account Information</h5>
                         <table class="table table-borderless">
                             <tr>
                                 <td><strong>Username:</strong></td>
@@ -96,24 +81,24 @@
                         </table>
                     </div>
                     <div class="col-md-6">
-                        <h5><i class="fas fa-chart-bar me-2"></i>Statistics</h5>
+                        <h5><i class="fas fa-chart-bar me-2 text-icon"></i>Statistics</h5>
                         <div class="row text-center">
                             <div class="col-4">
                                 <div class="stat-item">
-                                    <div class="stat-number text-primary">@Model.FiguresCount</div>
-                                    <div class="stat-label small text-muted">Figures</div>
+                                    <div class="stat-number text-icon">@Model.FiguresCount</div>
+                                    <div class="stat-label small text-icon">Figures</div>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="stat-item">
-                                    <div class="stat-number text-success">@Model.PostsCount</div>
-                                    <div class="stat-label small text-muted">Posts</div>
+                                    <div class="stat-number text-icon">@Model.PostsCount</div>
+                                    <div class="stat-label small text-icon">Posts</div>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="stat-item">
-                                    <div class="stat-number text-danger">0</div>
-                                    <div class="stat-label small text-muted">Favorites</div>
+                                    <div class="stat-number text-icon">0</div>
+                                    <div class="stat-label small text-icon ">Favorites</div>
                                 </div>
                             </div>
                         </div>

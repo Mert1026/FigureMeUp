@@ -74,6 +74,7 @@ namespace FigureMeUp.Controllers
 
         // GET: Figures/Edit/5(vece e GUID)
         [Authorize]
+        [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> Edit(Guid id)
         {
             var figure = await _figureService.GetFigureByIdAsync(id);
@@ -83,7 +84,8 @@ namespace FigureMeUp.Controllers
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (figure.OwnerId != userId)
+            if (figure.OwnerId != userId
+                && !User.IsInRole("Admin"))
             {
                 return Forbid();
             }
@@ -106,6 +108,7 @@ namespace FigureMeUp.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> Edit(Guid id, FiguresViewModel model)
         {
             if (id != model.Id)
@@ -136,6 +139,7 @@ namespace FigureMeUp.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var figure = await _figureService.GetFigureByIdAsync(id);
@@ -144,8 +148,10 @@ namespace FigureMeUp.Controllers
                 return NotFound();
             }
 
+            bool a = User.IsInRole("Admin");
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (figure.OwnerId != userId)
+            if (figure.OwnerId != userId
+                && !a)
             {
                 return Forbid();
             }

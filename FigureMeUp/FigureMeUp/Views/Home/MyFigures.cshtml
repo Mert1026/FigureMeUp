@@ -4,8 +4,8 @@
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2><i class="fas fa-robot me-2 text-primary"></i>My Figure Collection</h2>
-    <a asp-controller="Figures" asp-action="Create" class="btn btn-primary">
+    <h2 class="fw-bold text-primary"><i class="fas fa-robot me-2 text-primary"></i>My Figure Collection</h2>
+    <a asp-controller="Figures" asp-action="Create" class="btn btn-primary bg-primary border-0">
         <i class="fas fa-plus me-2"></i>Add New Figure
     </a>
 </div>
@@ -18,7 +18,7 @@
                 @foreach (var figure in Model)
                 {
                     <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card shadow-sm h-100">
+                        <div class="card shadow-sm h-100 bg-body">
                             @if (figure.ImageUrls.Any())
                             {
                                 <img src="@figure.ImageUrls.First()" class="card-img-top" alt="@figure.Name" style="height: 200px; object-fit: cover;">
@@ -55,8 +55,9 @@
                                 </div>
                                 
                                 <div class="btn-group w-100" role="group">
-                                    <a asp-controller="Figures" asp-action="Details" asp-route-id="@figure.Id" class="btn btn-primary btn-sm">
-                                        <i class="fas fa-eye me-1"></i>View
+                                    <a asp-controller="Figures" asp-action="Details" asp-route-id="@figure.Id" class="btn bg-primary btn-sm">
+                                        @* <i class="fas fa-eye me-1 text-primary"></i>View *@
+                                         <i class="text-primary">Details</i>
                                     </a>
                                     <a asp-controller="Figures" asp-action="Edit" asp-route-id="@figure.Id" class="btn btn-outline-secondary btn-sm">
                                         <i class="fas fa-edit me-1"></i>Edit
@@ -97,12 +98,12 @@
 
         <div class="col-lg-3">
             <div class="card shadow-sm sticky-top" style="top: 20px;">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">
-                        <i class="fas fa-chart-pie me-2"></i>Collection Stats
+                <div class="card-header bg-primary">
+                    <h5 class="card-title mb-0 text-body text-primary">
+                        <i class="fas fa-chart-pie me-2 text-primary"></i>Collection Stats
                     </h5>
                 </div>
-                <div class="card-body">
+                <div class="card-body bg-body rounded-3">
                     <table class="table table-borderless">
                         <tr>
                             <td><strong>Total Figures:</strong></td>
@@ -135,7 +136,7 @@
                     </table>
 
                     <div class="d-grid gap-2 mt-4">
-                        <a asp-controller="Figures" asp-action="Create" class="btn btn-primary">
+                        <a asp-controller="Figures" asp-action="Create" class="btn btn-primary bg-primary border-0">
                             <i class="fas fa-plus me-2"></i>Add Figure
                         </a>
                         <a asp-controller="Figures" asp-action="Index" class="btn btn-outline-secondary">
@@ -145,64 +146,24 @@
                 </div>
             </div>
 
-            <div class="card shadow-sm mt-4">
-                <div class="card-header">
-                    <h6 class="card-title mb-0">
-                        <i class="fas fa-trophy me-2"></i>Rarity Distribution
-                    </h6>
-                </div>
-                <div class="card-body">
-                    @{
-                        var rarityGroups = Model.GroupBy(f => f.Rarity.Name).ToList();
-                        var totalFigures = Model.Count();
-                    }
-                    @foreach (var group in rarityGroups.OrderByDescending(g => g.Count()))
-                    {
-                        var percentage = totalFigures > 0 ? (group.Count() * 100.0 / totalFigures) : 0;
-                        <div class="mb-2">
-                            <div class="d-flex justify-content-between">
-                                <small>@group.Key</small>
-                                <small>@group.Count() (@percentage.ToString("F1")%)</small>
-                            </div>
-                            <div class="progress" style="height: 5px;">
-                                <div class="progress-bar" role="progressbar" style="width: @percentage%" aria-valuenow="@percentage" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
+            
 
-            <div class="card shadow-sm mt-4">
-                <div class="card-header">
-                    <h6 class="card-title mb-0">
-                        <i class="fas fa-lightbulb me-2"></i>Collection Tips
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <ul class="list-unstyled small">
-                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Add detailed descriptions</li>
-                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Upload multiple angles</li>
-                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Use relevant hashtags</li>
-                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Keep rarity accurate</li>
-                        <li class="mb-0"><i class="fas fa-check text-success me-2"></i>Update regularly</li>
-                    </ul>
-                </div>
-            </div>
+           
         </div>
     </div>
 }
 else
 {
-    <div class="text-center py-5">
-        <i class="fas fa-robot fa-5x text-muted mb-4"></i>
-        <h3 class="text-muted">No Figures in Your Collection</h3>
-        <p class="text-muted">Start building your amazing figure collection today! Add your first figure and share it with the community.</p>
-        <a asp-controller="Figures" asp-action="Create" class="btn btn-primary btn-lg">
+    <div class="text-center py-5 text-white">
+        <i class="fas fa-robot fa-5x text-muted mb-4 text-primary"></i>
+        <h3 class="text-primary">No Figures in Your Collection</h3>
+        <p class="text-primary">Start building your amazing figure collection today! Add your first figure and share it with the community.</p>
+        <a asp-controller="Figures" asp-action="Create" class="btn btn-primary btn-lg bg-primary border-0">
             <i class="fas fa-plus me-2"></i>Add Your First Figure
         </a>
-        <div class="mt-4">
-            <a asp-controller="Figures" asp-action="Index" class="btn btn-outline-secondary">
-                <i class="fas fa-robot me-2"></i>Browse Community Figures
+        <div class="mt-4 text-white">
+            <a asp-controller="Figures" asp-action="Index" class="btn btn-outline-secondary bg-primary border-0 text-white">
+                <i class="fas fa-robot me-2 text-white"></i>Browse Community Figures
             </a>
         </div>
     </div>

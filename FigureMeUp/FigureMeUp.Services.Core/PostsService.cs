@@ -214,6 +214,7 @@ namespace FigureMeUp.Services.Core
                 Post? post = _postsRepository
                 .GetAllAttached()
                 .Include(p => p.Publisher)
+                .Include(p => p.Hashtags)
                 .FirstOrDefault(p => p.Id == id);
 
                 return Task.FromResult(post);
@@ -267,6 +268,7 @@ namespace FigureMeUp.Services.Core
                 List<Post> posts = _postsRepository
                     .GetAllAttached()
                     .Where(p => p.PublisherId == userId && !p.IsDeleted)
+                    .Include(h => h.Hashtags)
                     .ToList();
 
                 return posts;
@@ -295,6 +297,17 @@ namespace FigureMeUp.Services.Core
                 //Redirection to error page
                 return Enumerable.Empty<Post>();
             }
+        }
+
+        public async Task<bool> RestorePostAsync(Guid id)
+        {
+            Post? post = await this.GetPostByIdAsync(id);
+            if (post != null)
+            {
+                post.IsDeleted = false;
+                return await _postsRepository.UpdateAsync(post);
+            }
+            return false;
         }
     }
 }

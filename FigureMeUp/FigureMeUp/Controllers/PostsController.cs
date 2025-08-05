@@ -27,8 +27,7 @@ namespace FigureMeUp.Controllers
         {
             var post = await _postService.GetPostByIdAsync(id);
             var addView = await _postService.AddViewAsync(id);
-            if (post == null
-                || post.IsDeleted)
+            if ((post == null|| post.IsDeleted) && !User.IsInRole("Admin"))
             {
                 return NotFound();
             }
@@ -72,6 +71,7 @@ namespace FigureMeUp.Controllers
 
 
         [Authorize]
+        [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> Edit(Guid id)
         {
             var post = await _postService.GetPostByIdAsync(id);
@@ -81,7 +81,8 @@ namespace FigureMeUp.Controllers
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (post.PublisherId != userId)
+            if (post.PublisherId != userId
+                && !User.IsInRole("Admin"))
             {
                 return Forbid();
             }
@@ -103,6 +104,7 @@ namespace FigureMeUp.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> Edit(Guid id, PostViewModel model)
         {
             var existingPost = await _postService.GetPostByIdAsync(id);
@@ -112,7 +114,8 @@ namespace FigureMeUp.Controllers
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (existingPost.PublisherId != userId)
+            if (existingPost.PublisherId != userId
+                && !User.IsInRole("Admin"))
             {
                 return Forbid();
             }
@@ -151,7 +154,8 @@ namespace FigureMeUp.Controllers
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (post.PublisherId != userId)
+            if (post.PublisherId != userId
+                && !User.IsInRole("Admin"))
             {
                 return Forbid();
             }

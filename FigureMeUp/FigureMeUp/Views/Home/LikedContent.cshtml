@@ -9,16 +9,16 @@
 </form>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2><i class="fas fa-heart me-2 text-danger"></i>My Liked Content</h2>
+    <h2 class="fw-bold text-primary">My Liked Content</h2>
     <div class="btn-group" role="group" aria-label="View options">
-        <button type="button" class="btn btn-outline-primary active" onclick="showContent('all')">
-            <i class="fas fa-th me-1"></i>All
+        <button type="button" class="btn btn-outline-primary active bg-primary border-0" onclick="showContent('all')">
+            <i class="fas fa-th me-1 text-white"></i>
         </button>
-        <button type="button" class="btn btn-outline-primary" onclick="showContent('figures')">
-            <i class="fas fa-robot me-1"></i>Figures
+        <button type="button" class="btn btn-outline-primary bg-primary border-0" onclick="showContent('figures')">
+            <i class="fas fa-robot me-1 text-white"></i>
         </button>
-        <button type="button" class="btn btn-outline-primary" onclick="showContent('posts')">
-            <i class="fas fa-newspaper me-1"></i>Posts
+        <button type="button" class="btn btn-outline-primary bg-primary border-0" onclick="showContent('posts')">
+            <i class="fas fa-newspaper me-1 text-white"></i>
         </button>
     </div>
 </div>
@@ -28,7 +28,7 @@
     <!-- Liked Figures Section -->
     <div id="figures-section" class="content-section">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4><i class="fas fa-robot me-2 text-primary"></i>Liked Figures (@Model.LikedFigures.Count())</h4>
+            <h4 class="text-primary"><i class="fas fa-robot me-2 text-primary"></i>Liked Figures (@Model.LikedFigures.Count())</h4>
         </div>
 
         @if (Model.LikedFigures.Any())
@@ -49,12 +49,31 @@
                                 </div>
                             }
 
-                            <div class="card-body d-flex flex-column">
+                            <div class="card-body d-flex flex-column bg-body rounded-3">
                                 <h5 class="card-title">@figure.Name</h5>
                                 <p class="card-text flex-grow-1">@figure.Description.Substring(0, Math.Min(100, figure.Description.Length))@(figure.Description.Length > 100 ? "..." : "")</p>
 
                                 <div class="mb-2">
-                                    <span class="badge bg-info text-dark">@figure.Rarity.Name</span>
+                                    @if (figure.Rarity.Name == "Legendary")
+                                    {
+                                        <span class="badge bg-warning text-dark">@figure.Rarity.Name</span>
+                                    }
+                                    else if (figure.Rarity.Name == "Epic")
+                                    {
+                                        <span class="badge bg-danger text-white">@figure.Rarity.Name</span>
+                                    }
+                                    else if (figure.Rarity.Name == "Rare")
+                                    {
+                                        <span class="badge bg-info text-dark">@figure.Rarity.Name</span>
+                                    }
+                                    else if (figure.Rarity.Name == "Uncommon")
+                                    {
+                                        <span class="badge bg-secondary text-white">@figure.Rarity.Name</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-light text-dark">@figure.Rarity.Name</span>
+                                    }
                                     @if (figure.Hashtags.Any())
                                     {
                                         @foreach (var hashtag in figure.Hashtags.Take(2))
@@ -74,7 +93,7 @@
                                 </div>
 
                                 <div class="mt-3 d-flex justify-content-between">
-                                    <a asp-controller="Figures" asp-action="Details" asp-route-id="@figure.Id" class="btn btn-primary btn-sm">
+                                    <a asp-controller="Figures" asp-action="Details" asp-route-id="@figure.Id" class="btn btn-primary btn-sm bg-primary border-0">
                                         <i class="fas fa-eye me-1"></i>View Details
                                     </a>
                                     @* <a asp-controller="Figures" asp-action="ToggleLike" asp-route-id="@figure.Id" class="btn btn-outline-danger btn-sm">
@@ -95,11 +114,11 @@
         else
         {
             <div class="text-center py-4 mb-5">
-                <i class="fas fa-robot fa-4x text-muted mb-3"></i>
-                <h5 class="text-muted">No Liked Figures</h5>
-                <p class="text-muted">You haven't liked any figures yet. Explore and find some amazing figures to like!</p>
-                <a asp-controller="Figures" asp-action="Index" class="btn btn-primary">
-                    <i class="fas fa-search me-2"></i>Browse Figures
+                <i class="fas fa-robot fa-4x text-white mb-3"></i>
+                <h5 class="text-white">No Liked Figures</h5>
+                <p class="text-white">You haven't liked any figures yet. Explore and find some amazing figures to like!</p>
+                <a asp-controller="Figures" asp-action="Index" class="btn btn-primary bg-primary border-0">
+                    <i class="fas fa-search me-2 text-white"></i>Browse Figures
                 </a>
             </div>
         }
@@ -108,7 +127,7 @@
     <!-- Liked Posts Section -->
     <div id="posts-section" class="content-section">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4><i class="fas fa-newspaper me-2 text-success"></i>Liked Posts (@Model.LikedPosts.Count())</h4>
+            <h4 class="text-primary"><i class="fas fa-newspaper me-2 text-primary"></i>Liked Posts (@Model.LikedPosts.Count())</h4>
         </div>
 
         @if (Model.LikedPosts.Any())
@@ -117,12 +136,12 @@
                 <div class="col-lg-8">
                     @foreach (var post in Model.LikedPosts)
                     {
-                        <div class="card shadow-sm mb-4">
+                        <div class="card shadow-sm mb-4 bg-body">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-start mb-3">
                                     <div class="flex-grow-1">
                                         <h5 class="card-title mb-2">
-                                            <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" class="text-decoration-none">
+                                            <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" class="text-decoration-none text-black border-0">
                                                 @post.Title
                                             </a>
                                         </h5>
@@ -179,7 +198,7 @@
 
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" class="btn btn-primary btn-sm">
+                                        <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" class="btn btn-primary btn-sm bg-primary border-0">
                                             <i class="fas fa-eye me-1"></i>View Details
                                         </a>
                                     </div>
@@ -191,38 +210,7 @@
                         </div>
                     }
                 </div>
-                <div class="col-lg-4">
-                    <div class="card shadow-sm sticky-top" style="top: 20px;">
-                        <div class="card-header">
-                            <h6 class="card-title mb-0">
-                                <i class="fas fa-info-circle me-2"></i>Your Activity
-                            </h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="row text-center">
-                                <div class="col-6">
-                                    <div class="border-end">
-                                        <h4 class="text-primary mb-1">@Model.LikedFigures.Count()</h4>
-                                        <small class="text-muted">Liked Figures</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <h4 class="text-success mb-1">@Model.LikedPosts.Count()</h4>
-                                    <small class="text-muted">Liked Posts</small>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="d-grid gap-2">
-                                <a asp-controller="Figures" asp-action="Index" class="btn btn-outline-primary btn-sm">
-                                    <i class="fas fa-search me-2"></i>Find More Figures
-                                </a>
-                                <a asp-controller="Posts" asp-action="Index" class="btn btn-outline-success btn-sm">
-                                    <i class="fas fa-newspaper me-2"></i>Browse Posts
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         }
         else
@@ -231,7 +219,7 @@
                 <i class="fas fa-newspaper fa-4x text-muted mb-3"></i>
                 <h5 class="text-muted">No Liked Posts</h5>
                 <p class="text-muted">You haven't liked any posts yet. Explore and find some interesting posts to like!</p>
-                <a asp-controller="Posts" asp-action="Index" class="btn btn-success">
+                <a asp-controller="Posts" asp-action="Index" class="btn btn-success bg-primary border-0">
                     <i class="fas fa-search me-2"></i>Browse Posts
                 </a>
             </div>
@@ -241,14 +229,14 @@
 else
 {
     <div class="text-center py-5">
-        <i class="fas fa-heart fa-5x text-muted mb-4"></i>
-        <h3 class="text-muted">No Liked Content Yet</h3>
-        <p class="text-muted">Start exploring and liking content to see it here!</p>
+        <i class="fas fa-heart fa-5x text-white mb-4"></i>
+        <h3 class="text-white">No Liked Content Yet</h3>
+        <p class="text-white">Start exploring and liking content to see it here!</p>
         <div class="mt-4">
-            <a asp-controller="Figures" asp-action="Index" class="btn btn-primary btn-lg me-3">
+            <a asp-controller="Figures" asp-action="Index" class="btn btn-primary btn-lg me-3 bg-primary border-0">
                 <i class="fas fa-robot me-2"></i>Browse Figures
             </a>
-            <a asp-controller="Posts" asp-action="Index" class="btn btn-success btn-lg">
+            <a asp-controller="Posts" asp-action="Index" class="btn btn-success btn-lg bg-primary border-0">
                 <i class="fas fa-newspaper me-2"></i>Browse Posts
             </a>
         </div>

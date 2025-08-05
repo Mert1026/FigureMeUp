@@ -15,6 +15,7 @@ namespace FigureMeUp.Services.Core.Interfaces
         public Task<bool> CreatePostAsync(PostViewModel post, string userId);
         public Task<bool> UpdatePostAsync(Post post);
         public Task<bool> DeletePostAsync(Guid id);
+        public Task<bool> RestorePostAsync(Guid id);
         public Task<bool> AddLikeAsync(Guid postId, string userId);
         Task<bool> ToggleLikeAsync(Guid postId, string userId);
         public Task<bool> AddViewAsync(Guid postId);

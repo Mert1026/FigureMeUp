@@ -3,7 +3,9 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="hero-section bg-primary text-white text-center py-5 mb-5 rounded">
+
+
+<div class="bg-primary text-white text-center py-5 mb-5 rounded-pill">
     <div class="container">
         <h1 class="display-4 fw-bold">
             <i class="fas fa-robot me-3"></i>Welcome to FigureMeUp
@@ -12,9 +14,6 @@
         @if (!User.Identity.IsAuthenticated)
         {
             <div class="mt-4">
-                <a class="btn btn-light btn-lg me-3" asp-area="Identity" asp-page="/Account/Register">
-                    <i class="fas fa-user-plus me-2"></i>Get Started
-                </a>
                 <a class="btn btn-outline-light btn-lg" asp-controller="Figures" asp-action="Index">
                     <i class="fas fa-search me-2"></i>Browse Figures
                 </a>
@@ -25,10 +24,10 @@
 
 <div class="row">
     <div class="col-lg-8">
-        <div class="card shadow-sm">
-            <div class="card-header bg-white">
-                <h3 class="card-title mb-0">
-                    <i class="fas fa-newspaper me-2 text-primary"></i>Recent Posts
+        <div class="card shadow-sm bg-secondary">
+            <div class="card-header bg-primary">
+                <h3 class="card-title mb-0 text-white">
+                    <i class="fas fa-newspaper me-2 text-white"></i>Recent Posts
                 </h3>
             </div>
             <div class="card-body">
@@ -36,11 +35,11 @@
                 {
                     @foreach (var post in Model.RecentPosts)
                     {
-                        <div class="post-card border-bottom pb-3 mb-3">
+                        <div class="post-card bg-body p-3 mb-3">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div class="flex-grow-1">
-                                    <h5 class="mb-2">
-                                        <a  class="text-decoration-none">
+                                    <h5 class="mb-2 text-black">
+                                        <a  class="text-decoration-none text-black">
                                             @post.Title
                                         </a>
                                     </h5>
@@ -65,7 +64,7 @@
                         </div>
                     }
                     <div class="text-center">
-                        <a href="@Url.Action("Index", "Posts")" class="btn btn-primary">
+                        <a href="@Url.Action("Index", "Posts")" class="btn bg-primary text-white">
                             <i class="fas fa-newspaper me-2"></i>View All Posts
                         </a>
                     </div>
@@ -88,10 +87,10 @@
     </div>
 
     <div class="col-lg-4">
-        <div class="card shadow-sm">
-            <div class="card-header bg-white">
-                <h4 class="card-title mb-0">
-                    <i class="fas fa-robot me-2 text-primary"></i>Recent Figures
+        <div class="card shadow-sm bg-secondary">
+            <div class="card-header bg-primary">
+                <h4 class="card-title text-white mb-0">
+                    <i class="fas fa-robot me-2 text-white"></i>Recent Figures
                 </h4>
             </div>
             <div class="card-body">
@@ -99,7 +98,7 @@
                 {
                     @foreach (var figure in Model.RecentFigures)
                     {
-                        <div class="figure-card mb-3 p-3 border rounded">
+                        <div class="figure-card bg-body mb-3 p-3 border rounded-3">
                             <div class="d-flex align-items-center">
                                 @if (figure.ImageUrls.Any())
                                 {
@@ -113,7 +112,7 @@
                                 }
                                 <div class="flex-grow-1">
                                     <h6 class="mb-1">
-                                        <a class="text-decoration-none">
+                                        <a class="text-decoration-none text-black">
                                             @figure.Name
                                         </a>
                                     </h6>
@@ -125,7 +124,7 @@
                         </div>
                     }
                     <div class="text-center">
-                        <a href="@Url.Action("Index", "Figures")" class="btn btn-outline-primary">
+                        <a href="@Url.Action("Index", "Figures")" class="btn bg-primary text-white">
                             <i class="fas fa-robot me-2"></i>View All Figures
                         </a>
                     </div>
@@ -145,30 +144,6 @@
                 }
             </div>
         </div>
-
-        @if (User.Identity.IsAuthenticated)
-        {
-            <div class="card shadow-sm mt-4">
-                <div class="card-header bg-white">
-                    <h5 class="card-title mb-0">
-                        <i class="fas fa-plus me-2 text-success"></i>Quick Actions
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div class="d-grid gap-2">
-                        <a href="@Url.Action("Create", "Figures")" class="btn btn-outline-primary">
-                            <i class="fas fa-robot me-2"></i>Add Figure
-                        </a>
-                        <a href="@Url.Action("Create", "Posts")" class="btn btn-outline-success">
-                            <i class="fas fa-plus-circle me-2"></i>Create Post
-                        </a>
-                        <a href="@Url.Action("ViewFavorites", "Home")" class="btn btn-outline-danger">
-                            <i class="fas fa-heart me-2"></i>My Favorites
-                        </a>
-                    </div>
-                </div>
-            </div>
-        }
     </div>
 </div>
 

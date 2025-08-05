@@ -110,6 +110,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.Password.RequiredLength = 6;
     options.Password.RequiredUniqueChars = 1;
 })
+.AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
@@ -127,6 +128,21 @@ builder.Services.AddRepositories(typeof(IHashtagsRepository).Assembly);
 builder.Services.AddScoped<HelperMetods>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        await FigureMeUp.Data.Seeders.IdentitySeeder.SeedRolesAsync(services);
+        await FigureMeUp.Data.Seeders.IdentitySeeder.AssignAdminRoleAsync(services);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while seeding the database.");
+    }
+}
 
 if (app.Environment.IsDevelopment())
 {

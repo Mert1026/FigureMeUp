@@ -22,6 +22,64 @@ body {
 }*/
 
 /* Custom CSS for FigureMeUp */
+/* Reset some default styles */
+.navbar.navbar-dark.bg-primary {
+    background-color: #3E3F29 !important;
+}
+
+.bg-body {
+    background-color: #F1F0E4 !important;
+}
+
+.text-primary {
+    color: #F1F0E4 !important;
+}
+
+.text-icon {
+    color: #3E3F29 !important;
+}
+
+.bg-primary {
+    background-color: #3E3F29 !important;
+}
+
+.btn-outline-primary {
+    color: #ff4d4d !important; /* Custom red text color */
+    border-color: #ff4d4d !important; /* Custom red border color */
+    background-color: transparent !important; /* Keep it outline style */
+}
+
+    .btn-outline-primary:hover,
+    .btn-outline-primary:focus {
+        color: white !important; /* Text turns white on hover */
+        background-color: #ff4d4d !important; /* Background becomes red on hover */
+        border-color: #ff4d4d !important; /* Keep border color on hover */
+    }
+
+.btn-outline-secondary {
+    outline-color: #BCA88D !important;
+}
+
+.hero-section {
+    background-color: #BCA88D !important;
+}
+
+    
+.border-bottom {
+    background-color: #3E3F29 !important;
+}
+
+.bg-secondary {
+    background-color: #BCA88D !important;
+}
+
+body {
+    background-color: #7D8D86;
+}
+
+hero-section.bg-primary {
+    background-color: #3E3F29 !important;
+}
 
 .hero-section {
     background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
@@ -116,17 +174,17 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #3E3F29;
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: #BCA88D;
     border-radius: 4px;
 }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: #555;
+        background: #3E3F29;
     }
 
 /* Responsive adjustments */

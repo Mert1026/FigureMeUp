@@ -5,10 +5,10 @@
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2><i class="fas fa-robot me-2 text-primary"></i>All Figures</h2>
+    <h2 class="fw-bold text-primary"><i class="fas fa-robot me-2 text-primary fw-bold"></i>All Figures</h2>
     @if (User.Identity.IsAuthenticated)
     {
-        <a asp-action="Create" class="btn btn-primary">
+        <a asp-action="Create" class="btn btn-primary bg-primary border-0">
             <i class="fas fa-plus me-2"></i>Add New Figure
         </a>
     }
@@ -20,7 +20,7 @@
         @foreach (var figure in Model)
         {
             <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card shadow-sm h-100">
+                <div class="card shadow-sm h-100 bg-body">
                     @if (figure.ImageUrls.Any())
                     {
                         <img src="@figure.ImageUrls.First()" class="card-img-top" alt="@figure.Name" style="height: 200px; object-fit: cover;">
@@ -37,7 +37,28 @@
                         <p class="card-text flex-grow-1">@figure.Description.Substring(0, Math.Min(100, figure.Description.Length))@(figure.Description.Length > 100 ? "..." : "")</p>
                         
                         <div class="mb-2">
-                            <span class="badge bg-info text-dark">@figure.Rarity.Name</span>
+                            @if(figure.Rarity.Name == "Legendary")
+                            {
+                                <span class="badge bg-warning text-dark">@figure.Rarity.Name</span>
+                            }
+                            else if(figure.Rarity.Name == "Epic")
+                            {
+                                <span class="badge bg-danger text-white">@figure.Rarity.Name</span>
+                            }
+                            else if(figure.Rarity.Name == "Rare")
+                            {
+                                <span class="badge bg-info text-dark">@figure.Rarity.Name</span>
+                            }
+                            else if(figure.Rarity.Name == "Uncommon")
+                            {
+                                <span class="badge bg-secondary text-white">@figure.Rarity.Name</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-light text-dark">@figure.Rarity.Name</span>
+                            }
+                           
+                            @* <span class="badge bg-info text-dark">@figure.Rarity.Name</span> *@
                             @if (figure.Hashtags.Any())
                             {
                                 @foreach (var hashtag in figure.Hashtags.Take(2))
@@ -83,11 +104,13 @@
                         </div>
                         
                         <div class="mt-2">
-                            <a asp-action="Details" asp-route-id="@figure.Id" class="btn btn-primary btn-sm">
+                            <a asp-action="Details" asp-route-id="@figure.Id" class="btn btn-primary btn-sm bg-primary border-0">
                                 <i class="fas fa-eye me-1"></i>View Details
                             </a>
                             
-                            @if (User.Identity.IsAuthenticated && figure.OwnerId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value)
+                            @if (User.Identity.IsAuthenticated 
+                            && (figure.OwnerId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                            || User.IsInRole("Admin")))
                             {
                                 <a asp-action="Edit" asp-route-id="@figure.Id" class="btn btn-outline-secondary btn-sm">
                                     <i class="fas fa-edit me-1"></i>Edit
@@ -129,18 +152,18 @@
 else
 {
     <div class="text-center py-5">
-        <i class="fas fa-robot fa-5x text-muted mb-4"></i>
-        <h3 class="text-muted">No Figures Found</h3>
-        <p class="text-muted">Be the first to share your amazing figure collection!</p>
+        <i class="fas fa-robot fa-5x text-white mb-4"></i>
+        <h3 class="text-white">No Figures Found</h3>
+        <p class="text-white">Be the first to share your amazing figure collection!</p>
         @if (User.Identity.IsAuthenticated)
         {
-            <a asp-action="Create" class="btn btn-primary btn-lg">
+            <a asp-action="Create" class="btn btn-primary btn-lg bg-primary border-0">
                 <i class="fas fa-plus me-2"></i>Add Your First Figure
             </a>
         }
         else
         {
-            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary btn-lg">
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary btn-lg bg-primary border-0">
                 <i class="fas fa-user-plus me-2"></i>Join to Add Figures
             </a>
         }
