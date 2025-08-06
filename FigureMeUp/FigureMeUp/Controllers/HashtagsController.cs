@@ -1,4 +1,5 @@
-﻿using FigureMeUp.Data.Models;
+﻿using FigureMeUp.Controllers.IControllers;
+using FigureMeUp.Data.Models;
 using FigureMeUp.Data.Models.View_models;
 using FigureMeUp.Services.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FigureMeUp.Controllers
 {
     [Authorize(Roles = "Admin,User")]
-    public class HashtagController : Controller
+    public class HashtagController : Controller, IHashtagsController
     {
         private readonly IHashtagService _hashtagService;
 

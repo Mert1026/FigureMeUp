@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using FigureMeUp.Data.Models.View_models;   
+using FigureMeUp.Data.Models.View_models;
+using FigureMeUp.Controllers.IControllers;
 
 namespace FigureMeUp.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : Controller, IAccountController
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;

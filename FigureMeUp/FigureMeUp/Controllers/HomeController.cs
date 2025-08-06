@@ -1,3 +1,4 @@
+using FigureMeUp.Controllers.IControllers;
 using FigureMeUp.Data.Models;
 using FigureMeUp.Data.Models.View_models;
 using FigureMeUp.Services.Core.Interfaces;
@@ -9,7 +10,7 @@ using System.Security.Claims;
 namespace FigureMeUp.Controllers
 {
     [Authorize(Roles = "Admin,User")]
-    public class HomeController : Controller
+    public class HomeController : Controller, IHomeController
     {
         private readonly IFigureService _figureService;
         private readonly IPostService _postService;
@@ -24,6 +25,7 @@ namespace FigureMeUp.Controllers
 
         public async Task<IActionResult> Index()
         {
+            return RedirectToAction("er500", "ErrorController");
             try
             {
                 var recentFigures = await _figureService.GetAllFiguresAsync();

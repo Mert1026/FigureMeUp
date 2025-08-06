@@ -1,4 +1,5 @@
-﻿using FigureMeUp.Data.Models;
+﻿using FigureMeUp.Controllers.IControllers;
+using FigureMeUp.Data.Models;
 using FigureMeUp.Data.Models.View_models;
 using FigureMeUp.Services.Core;
 using FigureMeUp.Services.Core.Interfaces;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FigureMeUp.Controllers
 {
     [Authorize(Roles = "Admin,User")]
-    public class AdminController : Controller
+    public class AdminController : Controller, IAdminController
     {
         private readonly IPostService _postService;
         private readonly IFigureService _figureService;

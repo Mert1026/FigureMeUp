@@ -18,11 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Tests\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\FigureMeUp.Data.DBContext\FigureMeUp.Data.csproj" />
     <ProjectReference Include="..\FigureMeUp.Data.Models\FigureMeUp.Data.Models.csproj" />
     <ProjectReference Include="..\FigureMeUp.Infrastructure\FigureMeUp.Infrastructure.csproj" />

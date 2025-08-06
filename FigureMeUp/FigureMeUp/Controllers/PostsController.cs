@@ -1,4 +1,5 @@
-﻿using FigureMeUp.Data.Models;
+﻿using FigureMeUp.Controllers.IControllers;
+using FigureMeUp.Data.Models;
 using FigureMeUp.Data.Models.View_models;
 using FigureMeUp.Services.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -8,7 +9,7 @@ using System.Security.Claims;
 namespace FigureMeUp.Controllers
 {
     [Authorize(Roles = "Admin,User")]
-    public class PostsController : Controller
+    public class PostsController : Controller, IPostsController
     {
         private readonly IPostService _postService;
 

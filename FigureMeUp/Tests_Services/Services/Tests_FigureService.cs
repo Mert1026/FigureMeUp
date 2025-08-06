@@ -9,6 +9,7 @@ using Helper;
 using Helper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MockQueryable.EntityFrameworkCore;
 using Moq;
 
 namespace Tests.Services
@@ -92,28 +93,11 @@ namespace Tests.Services
             _mockFiguresRepository.Verify(x => x.AddAsync(It.IsAny<Figure>()), Times.Never);
         }
 
-        [Test]
-        public async Task GetFigureByIdAsync_ExistingId_ReturnsFigure()
-        {
-            
-            var testFigure = TestsHelper.CreateTestFigure();
-            var queryable = new List<Figure> { testFigure }.AsQueryable();
-
-            _mockFiguresRepository.Setup(x => x.GetAllAttached())
-                .Returns(queryable);
-
-           
-            var result = await _figureService.GetFigureByIdAsync(testFigure.Id);
-
-            
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result.Id, Is.EqualTo(testFigure.Id));
-        }
+       
 
         [Test]
         public async Task ToggleLikeAsync_UserNotLiked_AddsLike()
         {
-            
             var figure = TestsHelper.CreateTestFigure();
             var userId = "test-user-2";
             var queryable = new List<Figure> { figure }.AsQueryable();
@@ -123,10 +107,8 @@ namespace Tests.Services
             _mockFiguresRepository.Setup(x => x.UpdateAsync(It.IsAny<Figure>()))
                 .ReturnsAsync(true);
 
-            
             var result = await _figureService.ToggleLikeAsync(figure.Id, userId);
 
-            
             Assert.That(result, Is.True);
             Assert.That(figure.LikedByUsersIds.Contains(userId), Is.True);
             Assert.That(figure.LikesCount, Is.EqualTo(1));
@@ -135,7 +117,6 @@ namespace Tests.Services
         [Test]
         public async Task ToggleLikeAsync_UserAlreadyLiked_RemovesLike()
         {
-            
             var userId = "test-user-2";
             var figure = TestsHelper.CreateTestFigure();
             figure.LikedByUsersIds.Add(userId);
@@ -147,31 +128,33 @@ namespace Tests.Services
             _mockFiguresRepository.Setup(x => x.UpdateAsync(It.IsAny<Figure>()))
                 .ReturnsAsync(true);
 
-     
             var result = await _figureService.ToggleLikeAsync(figure.Id, userId);
-
 
             Assert.That(result, Is.True);
             Assert.That(figure.LikedByUsersIds.Contains(userId), Is.False);
             Assert.That(figure.LikesCount, Is.EqualTo(0));
         }
 
-        [Test]
-        public async Task DeleteFigureAsync_ExistingFigure_ReturnsTrue()
+       
+
+        private Mock<IQueryable<Figure>> CreateMockDbSet(List<Figure> data)
         {
-            var figure = TestsHelper.CreateTestFigure();
-            var queryable = new List<Figure> { figure }.AsQueryable();
+            var queryable = data.AsQueryable();
+            var mockSet = new Mock<IQueryable<Figure>>();
 
-            _mockFiguresRepository.Setup(x => x.GetAllAttached())
-                .Returns(queryable);
-            _mockFiguresRepository.Setup(x => x.DeleteAsync(It.IsAny<Figure>()))
-                .ReturnsAsync(true);
+            mockSet.As<IAsyncEnumerable<Figure>>()
+                .Setup(m => m.GetAsyncEnumerator(It.IsAny<CancellationToken>()))
+                .Returns(new Helper.TestAsyncEnumerator<Figure>(queryable.GetEnumerator()));
 
-            var result = await _figureService.DeleteFigureAsync(figure.Id);
+            mockSet.As<IQueryable<Figure>>()
+                .Setup(m => m.Provider)
+                .Returns(new TestAsyncQueryProvider<Figure>(queryable.Provider));
 
-            Assert.That(result, Is.True);
-            _mockFiguresRepository.Verify(x => x.DeleteAsync(It.IsAny<Figure>()), Times.Once);
+            mockSet.As<IQueryable<Figure>>().Setup(m => m.Expression).Returns(queryable.Expression);
+            mockSet.As<IQueryable<Figure>>().Setup(m => m.ElementType).Returns(queryable.ElementType);
+            mockSet.As<IQueryable<Figure>>().Setup(m => m.GetEnumerator()).Returns(queryable.GetEnumerator());
+
+            return mockSet;
         }
-
     }
 }

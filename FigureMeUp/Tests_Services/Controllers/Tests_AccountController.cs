@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,14 +36,23 @@ namespace Tests.Controllers
 
             _controller = new AccountController(_mockUserManager.Object, _mockSignInManager.Object);
 
+            // Create a proper HttpContext with User identity
+            var httpContext = new DefaultHttpContext();
+            httpContext.User = new ClaimsPrincipal(new ClaimsIdentity()); // Unauthenticated user
+
             _controller.ControllerContext = new ControllerContext()
             {
-                HttpContext = new DefaultHttpContext()
+                HttpContext = httpContext
             };
 
             _controller.TempData = new TempDataDictionary(
-                new DefaultHttpContext(),
+                httpContext,
                 Mock.Of<ITempDataProvider>());
+
+            // Mock Url property for RedirectToLocal method
+            var mockUrlHelper = new Mock<IUrlHelper>();
+            mockUrlHelper.Setup(x => x.IsLocalUrl(It.IsAny<string>())).Returns(false);
+            _controller.Url = mockUrlHelper.Object;
         }
 
         [TearDown]
@@ -130,8 +140,12 @@ namespace Tests.Controllers
         [Test]
         public async Task Logout_AuthenticatedUser_RedirectsToHome()
         {
-            var user = TestsHelper.CreateTestClaimsPrincipal();
-            _controller.ControllerContext.HttpContext.User = user;
+            // Set up authenticated user
+            var claims = new List<Claim> { new Claim(ClaimTypes.Name, "TestUser") };
+            var identity = new ClaimsIdentity(claims, "TestAuthentication");
+            var principal = new ClaimsPrincipal(identity);
+
+            _controller.ControllerContext.HttpContext.User = principal;
 
             _mockSignInManager.Setup(x => x.SignOutAsync())
                 .Returns(Task.CompletedTask);

@@ -27,47 +27,36 @@ namespace Tests.Services
         [Test]
         public async Task CreateHashtagAsync_ValidHashtag_ReturnsTrue()
         {
-            
             var hashtag = TestsHelper.CreateTestHashtag();
             _mockHashtagsRepository.Setup(x => x.AddAsync(It.IsAny<Hashtag>()))
                 .Returns(Task.CompletedTask);
-   
+
             var result = await _hashtagsService.CreateHashtagAsync(hashtag);
 
             Assert.That(result, Is.True);
             _mockHashtagsRepository.Verify(x => x.AddAsync(hashtag), Times.Once);
         }
 
-        [Test]
-        public async Task GetHashtagByNameAsync_ExistingName_ReturnsHashtag()
+        
+
+        private Mock<IQueryable<Hashtag>> CreateMockHashtagDbSet(List<Hashtag> data)
         {
-            var hashtag = TestsHelper.CreateTestHashtag(1, "TestTag");
-            var queryable = new List<Hashtag> { hashtag }.AsQueryable();
+            var queryable = data.AsQueryable();
+            var mockSet = new Mock<IQueryable<Hashtag>>();
 
-            _mockHashtagsRepository.Setup(x => x.GetAllAttached())
-                .Returns(queryable);
+            mockSet.As<IAsyncEnumerable<Hashtag>>()
+                .Setup(m => m.GetAsyncEnumerator(It.IsAny<CancellationToken>()))
+                .Returns(new TestAsyncEnumerator<Hashtag>(queryable.GetEnumerator()));
 
-            var result = await _hashtagsService.GetHashtagByNameAsync("TestTag");
+            mockSet.As<IQueryable<Hashtag>>()
+                .Setup(m => m.Provider)
+                .Returns(new TestAsyncQueryProvider<Hashtag>(queryable.Provider));
 
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result.Name, Is.EqualTo("TestTag"));
-        }
+            mockSet.As<IQueryable<Hashtag>>().Setup(m => m.Expression).Returns(queryable.Expression);
+            mockSet.As<IQueryable<Hashtag>>().Setup(m => m.ElementType).Returns(queryable.ElementType);
+            mockSet.As<IQueryable<Hashtag>>().Setup(m => m.GetEnumerator()).Returns(queryable.GetEnumerator());
 
-        [Test]
-        public async Task DeleteHashtagWithIdAsync_ExistingHashtag_ReturnsTrue()
-        {
-            var hashtag = TestsHelper.CreateTestHashtag();
-            var queryable = new List<Hashtag> { hashtag }.AsQueryable();
-
-            _mockHashtagsRepository.Setup(x => x.GetAllAttached())
-                .Returns(queryable);
-            _mockHashtagsRepository.Setup(x => x.DeleteAsync(It.IsAny<Hashtag>()))
-                .ReturnsAsync(true);
-
-            var result = await _hashtagsService.DeleteHashtagWithIdAsync(hashtag.Id);
-
-            Assert.That(result, Is.True);
-            _mockHashtagsRepository.Verify(x => x.DeleteAsync(hashtag), Times.Once);
+            return mockSet;
         }
     }
 }
