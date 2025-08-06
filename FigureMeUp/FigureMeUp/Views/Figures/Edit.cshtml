@@ -22,8 +22,9 @@
                                 <label asp-for="Name" class="form-label">
                                     <i class="fas fa-tag me-1"></i>Figure Name
                                 </label>
-                                <input asp-for="Name" class="form-control" placeholder="Enter figure name" />
+                                <input asp-for="Name" class="form-control" placeholder="Enter figure name" maxlength="50" required />
                                 <span asp-validation-for="Name" class="text-danger"></span>
+                                <small class="form-text text-muted">Maximum 50 characters</small>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -31,7 +32,7 @@
                                 <label asp-for="Rarity" class="form-label">
                                     <i class="fas fa-star me-1"></i>Rarity
                                 </label>
-                                <select asp-for="Rarity" class="form-select">
+                                <select asp-for="Rarity" class="form-select" required>
                                     <option value="">Select rarity...</option>
                                     <option value="Common">Common</option>
                                     <option value="Uncommon">Uncommon</option>
@@ -48,8 +49,9 @@
                         <label asp-for="Description" class="form-label">
                             <i class="fas fa-align-left me-1"></i>Description
                         </label>
-                        <textarea asp-for="Description" class="form-control" rows="4" placeholder="Describe your figure..."></textarea>
+                        <textarea asp-for="Description" class="form-control" rows="4" placeholder="Describe your figure..." maxlength="500" required></textarea>
                         <span asp-validation-for="Description" class="text-danger"></span>
+                        <small class="form-text text-muted">Maximum 500 characters</small>
                     </div>
 
                     <div class="mb-3">
@@ -62,7 +64,7 @@
                                 @for (int i = 0; i < Model.ImageUrls.Count; i++)
                                 {
                                     <div class="input-group mb-2">
-                                        <input type="text" name="ImageUrls" value="@Model.ImageUrls[i]" class="form-control" placeholder="Enter image URL" />
+                                        <input type="url" name="ImageUrls" value="@Model.ImageUrls[i]" class="form-control" placeholder="Enter image URL" required />
                                         <button type="button" class="btn btn-outline-danger" onclick="removeImageUrl(this)" style="display: @(Model.ImageUrls.Count > 1 ? "block" : "none");">
                                             <i class="fas fa-times"></i>
                                         </button>
@@ -72,16 +74,17 @@
                             else
                             {
                                 <div class="input-group mb-2">
-                                    <input type="text" name="ImageUrls" class="form-control" placeholder="Enter image URL" />
+                                    <input type="url" name="ImageUrls" class="form-control" placeholder="Enter image URL" required />
                                     <button type="button" class="btn btn-outline-danger" onclick="removeImageUrl(this)" style="display: none;">
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </div>
                             }
                         </div>
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="addImageUrl()">
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="addImageUrl()" id="addImageBtn">
                             <i class="fas fa-plus me-1"></i>Add Another Image
                         </button>
+                        <small class="form-text text-muted">Maximum 5 images</small>
                     </div>
 
                     <div class="mb-3">
@@ -94,7 +97,7 @@
                                 @for (int i = 0; i < Model.Hashtags.Count; i++)
                                 {
                                     <div class="input-group mb-2">
-                                        <input type="text" name="Hashtags" value="@Model.Hashtags[i]" class="form-control" placeholder="Enter hashtag (without #)" />
+                                        <input type="text" name="Hashtags" value="@Model.Hashtags[i]" class="form-control" placeholder="Enter hashtag (without #)" maxlength="15" pattern="[a-zA-Z0-9_]+" title="Only letters, numbers and underscores allowed" />
                                         <button type="button" class="btn btn-outline-danger" onclick="removeHashtag(this)" style="display: @(Model.Hashtags.Count > 1 ? "block" : "none");">
                                             <i class="fas fa-times"></i>
                                         </button>
@@ -104,16 +107,17 @@
                             else
                             {
                                 <div class="input-group mb-2">
-                                    <input type="text" name="Hashtags" class="form-control" placeholder="Enter hashtag (without #)" />
+                                    <input type="text" name="Hashtags" class="form-control" placeholder="Enter hashtag (without #)" maxlength="15" pattern="[a-zA-Z0-9_]+" title="Only letters, numbers and underscores allowed" />
                                     <button type="button" class="btn btn-outline-danger" onclick="removeHashtag(this)" style="display: none;">
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </div>
                             }
                         </div>
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="addHashtag()">
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="addHashtag()" id="addHashtagBtn">
                             <i class="fas fa-plus me-1"></i>Add Another Hashtag
                         </button>
+                        <small class="form-text text-muted">Maximum 5 hashtags, 15 characters each</small>
                     </div>
 
                     <div class="alert alert-info">
@@ -142,40 +146,58 @@
     <script>
         function addImageUrl() {
             const container = document.getElementById('imageUrls');
+            const currentCount = container.querySelectorAll('.input-group').length;
+
+            if (currentCount >= 5) {
+                alert('Maximum 5 images allowed');
+                return;
+            }
+
             const div = document.createElement('div');
             div.className = 'input-group mb-2';
             div.innerHTML = `
-                <input type="text" name="ImageUrls" class="form-control" placeholder="Enter image URL" />
+                <input type="url" name="ImageUrls" class="form-control" placeholder="Enter image URL" required />
                 <button type="button" class="btn btn-outline-danger" onclick="removeImageUrl(this)">
                     <i class="fas fa-times"></i>
                 </button>
             `;
             container.appendChild(div);
             updateRemoveButtons('imageUrls');
+            updateAddButtons();
         }
 
         function removeImageUrl(button) {
             button.parentElement.remove();
             updateRemoveButtons('imageUrls');
+            updateAddButtons();
         }
 
         function addHashtag() {
             const container = document.getElementById('hashtags');
+            const currentCount = container.querySelectorAll('.input-group').length;
+
+            if (currentCount >= 5) {
+                alert('Maximum 5 hashtags allowed');
+                return;
+            }
+
             const div = document.createElement('div');
             div.className = 'input-group mb-2';
             div.innerHTML = `
-                <input type="text" name="Hashtags" class="form-control" placeholder="Enter hashtag (without #)" />
+                <input type="text" name="Hashtags" class="form-control" placeholder="Enter hashtag (without #)" maxlength="15" pattern="[a-zA-Z0-9_]+" title="Only letters, numbers and underscores allowed" />
                 <button type="button" class="btn btn-outline-danger" onclick="removeHashtag(this)">
                     <i class="fas fa-times"></i>
                 </button>
             `;
             container.appendChild(div);
             updateRemoveButtons('hashtags');
+            updateAddButtons();
         }
 
         function removeHashtag(button) {
             button.parentElement.remove();
             updateRemoveButtons('hashtags');
+            updateAddButtons();
         }
 
         function updateRemoveButtons(containerId) {
@@ -186,10 +208,20 @@
             });
         }
 
-        // Initialize remove buttons visibility on page load
+        function updateAddButtons() {
+            const imageContainer = document.getElementById('imageUrls');
+            const hashtagContainer = document.getElementById('hashtags');
+            const imageCount = imageContainer.querySelectorAll('.input-group').length;
+            const hashtagCount = hashtagContainer.querySelectorAll('.input-group').length;
+
+            document.getElementById('addImageBtn').disabled = imageCount >= 5;
+            document.getElementById('addHashtagBtn').disabled = hashtagCount >= 5;
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             updateRemoveButtons('imageUrls');
             updateRemoveButtons('hashtags');
+            updateAddButtons();
         });
     </script>
 }

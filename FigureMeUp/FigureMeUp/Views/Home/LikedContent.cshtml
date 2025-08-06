@@ -45,7 +45,7 @@
                             else
                             {
                                 <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
-                                    <i class="fas fa-robot fa-3x text-muted"></i>
+                                    <i class="fas fa-robot fa-3x text-white"></i>
                                 </div>
                             }
 
@@ -84,10 +84,10 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center mt-auto">
-                                    <small class="text-muted">
+                                    <small class="text-white">
                                         <i class="fas fa-user me-1"></i>@(figure.Owner?.UserName ?? "Unknown")
                                     </small>
-                                    <small class="text-muted">
+                                    <small class="text-white">
                                         <i class="fas fa-calendar me-1"></i>@figure.LastChanged.ToString("MMM dd")
                                     </small>
                                 </div>
@@ -145,7 +145,7 @@
                                                 @post.Title
                                             </a>
                                         </h5>
-                                        <div class="d-flex align-items-center text-muted small mb-2">
+                                        <div class="d-flex align-items-center text-white small mb-2">
                                             <i class="fas fa-user me-1"></i>
                                             <span class="me-3">@(post.Publisher?.UserName ?? "Unknown")</span>
                                             <i class="fas fa-calendar me-1"></i>
@@ -179,7 +179,7 @@
                                             @if (post.ImageUrls.Count() > 3)
                                             {
                                                 <div class="col-12 text-center mt-2">
-                                                    <small class="text-muted">+@(post.ImageUrls.Count() - 3) more images</small>
+                                                    <small class="text-white">+@(post.ImageUrls.Count() - 3) more images</small>
                                                 </div>
                                             }
                                         }
@@ -202,7 +202,7 @@
                                             <i class="fas fa-eye me-1"></i>View Details
                                         </a>
                                     </div>
-                                    <small class="text-muted">
+                                    <small class="text-white">
                                         <i class="fas fa-heart text-danger me-1"></i>Liked
                                     </small>
                                 </div>
@@ -216,9 +216,9 @@
         else
         {
             <div class="text-center py-4">
-                <i class="fas fa-newspaper fa-4x text-muted mb-3"></i>
-                <h5 class="text-muted">No Liked Posts</h5>
-                <p class="text-muted">You haven't liked any posts yet. Explore and find some interesting posts to like!</p>
+                <i class="fas fa-newspaper fa-4x text-white mb-3"></i>
+                <h5 class="text-white">No Liked Posts</h5>
+                <p class="text-white">You haven't liked any posts yet. Explore and find some interesting posts to like!</p>
                 <a asp-controller="Posts" asp-action="Index" class="btn btn-success bg-primary border-0">
                     <i class="fas fa-search me-2"></i>Browse Posts
                 </a>
@@ -420,7 +420,7 @@ else
 
             const postsHeader = postsSection.querySelector('h4');
             if (postsHeader) {
-                postsHeader.innerHTML = `<i class="fas fa-newspaper me-2 text-success"></i>Liked Posts (${remainingPosts})`;
+                postsHeader.innerHTML = `<i class="fas fa-newspaper me-2 text-white"></i>Liked Posts (${remainingPosts})`;
             }
 
             // Update activity panel count
@@ -440,9 +440,9 @@ else
                 if (figuresRow) {
                     figuresRow.innerHTML = `
                         <div class="text-center py-4 mb-5">
-                            <i class="fas fa-robot fa-4x text-muted mb-3"></i>
-                            <h5 class="text-muted">No Liked Figures</h5>
-                            <p class="text-muted">You haven't liked any figures yet. Explore and find some amazing figures to like!</p>
+                            <i class="fas fa-robot fa-4x text-white mb-3"></i>
+                            <h5 class="text-white">No Liked Figures</h5>
+                            <p class="text-white">You haven't liked any figures yet. Explore and find some amazing figures to like!</p>
                             <a href="@Url.Action("Index", "Figures")" class="btn btn-primary">
                                 <i class="fas fa-search me-2"></i>Browse Figures
                             </a>
@@ -464,9 +464,9 @@ else
                 if (postsContent) {
                     postsContent.innerHTML = `
                         <div class="text-center py-4">
-                            <i class="fas fa-newspaper fa-4x text-muted mb-3"></i>
-                            <h5 class="text-muted">No Liked Posts</h5>
-                            <p class="text-muted">You haven't liked any posts yet. Explore and find some interesting posts to like!</p>
+                            <i class="fas fa-newspaper fa-4x text-white mb-3"></i>
+                            <h5 class="text-white">No Liked Posts</h5>
+                            <p class="text-white">You haven't liked any posts yet. Explore and find some interesting posts to like!</p>
                             <a href="@Url.Action("Index", "Posts")" class="btn btn-success">
                                 <i class="fas fa-search me-2"></i>Browse Posts
                             </a>

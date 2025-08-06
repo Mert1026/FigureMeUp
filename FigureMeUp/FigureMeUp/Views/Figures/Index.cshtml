@@ -14,7 +14,6 @@
     }
 </div>
 
-<!-- Filter Controls -->
 <div class="card shadow-sm mb-4">
     <div class="card-body">
         <div class="row justify-content-center align-items-center">
@@ -56,9 +55,9 @@
     <div class="row" id="figuresContainer">
         @foreach (var figure in Model)
         {
-            <div class="col-md-6 col-lg-4 mb-4 border-0" 
+            <div class="col-md-6 col-lg-4 mb-4 border-0 figure-card" 
                  data-rarity="@figure.Rarity.Name.ToLower()" 
-                 data-owner="@(figure.Owner?.UserName ?? "Unknown")" 
+                 data-owner="@(figure.Owner?.UserName?.ToLower() ?? "unknown")" 
                  data-name="@figure.Name.ToLower()" 
                  data-likes="@figure.LikesCount" 
                  data-date="@figure.LastChanged.Ticks">
@@ -76,7 +75,7 @@
 
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">@figure.Name</h5>
-                        <p class="card-text flex-grow-1">@figure.Description.Substring(0, Math.Min(100, figure.Description.Length))@(figure.Description.Length > 100 ? "..." : "")</p>
+                        <p class="card-text flex-grow-1">@(figure.Description.Length > 100 ? figure.Description.Substring(0, 100) + "..." : figure.Description)</p>
 
                         <div class="mb-2">
                             @if (figure.Rarity.Name == "Legendary")
@@ -118,7 +117,6 @@
                             </small>
                         </div>
 
-                        <!-- Like Button and Counter with AJAX -->
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             @if (User.Identity.IsAuthenticated)
                             {
@@ -149,16 +147,14 @@
                                 <i class="fas fa-eye me-1"></i>View Details
                             </a>
 
-                            @if (User.Identity.IsAuthenticated
-                                                && (figure.OwnerId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
-                                                || User.IsInRole("Admin")))
+                            @if (User.Identity.IsAuthenticated && (figure.OwnerId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value || User.IsInRole("Admin")))
                             {
                                 <a asp-action="Edit" asp-route-id="@figure.Id" class="btn btn-outline-secondary btn-sm">
                                     <i class="fas fa-edit me-1"></i>Edit
                                 </a>
-                                <a class="btn btn-outline-danger btn-sm text-danger" href="Delete/@figure.Id" data-bs-toggle="modal" data-bs-target="#deleteFigureModal@(figure.Id)">
+                                <button class="btn btn-outline-danger btn-sm text-danger" data-bs-toggle="modal" data-bs-target="#deleteFigureModal@(figure.Id)">
                                     <i class="fas fa-trash me-1"></i>Delete
-                                </a>
+                                </button>
                             }
                         </div>
                     </div>
@@ -167,7 +163,6 @@
 
             @if (User.Identity.IsAuthenticated && (figure.OwnerId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value || User.IsInRole("Admin")))
             {
-                <!-- Delete Confirmation Modal -->
                 <div class="modal fade" id="deleteFigureModal@(figure.Id)" tabindex="-1" aria-labelledby="deleteFigureModalLabel@(figure.Id)" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -222,6 +217,11 @@ else
                     toggleFigureLike(this);
                 });
             });
+
+            document.getElementById('searchUser').addEventListener('input', applyFilters);
+            document.getElementById('searchName').addEventListener('input', applyFilters);
+            document.getElementById('rarityFilter').addEventListener('change', applyFilters);
+            document.getElementById('sortBy').addEventListener('change', applyFilters);
         });
 
         function applyFilters() {
@@ -239,7 +239,7 @@ else
                     showCard = false;
                 }
                 
-                if (user && !card.dataset.owner.toLowerCase().includes(user)) {
+                if (user && !card.dataset.owner.includes(user)) {
                     showCard = false;
                 }
                 
@@ -313,8 +313,6 @@ else
             const figureId = button.getAttribute('data-figure-id');
             const isLiked = button.getAttribute('data-is-liked') === 'true';
 
-            console.log('Toggle like called for figure:', figureId, 'Currently liked:', isLiked);
-
             if (!figureId || figureId.trim() === '') {
                 showNotification('error', 'Invalid figure ID');
                 return;
@@ -326,7 +324,6 @@ else
 
             const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
             if (!token) {
-                console.error('CSRF token not found');
                 button.disabled = false;
                 button.innerHTML = originalContent;
                 showNotification('error', 'Security token not found. Please refresh the page.');
@@ -334,9 +331,6 @@ else
             }
 
             const url = '@Url.Action("ToggleLike", "Figures")';
-            console.log('Sending request to:', url);
-            console.log('Figure ID (Guid string):', figureId);
-
             const formData = new FormData();
             formData.append('id', figureId);
             formData.append('__RequestVerificationToken', token);
@@ -349,13 +343,8 @@ else
                 body: formData
             })
             .then(response => {
-                console.log('Response status:', response.status);
-                console.log('Response ok:', response.ok);
-
                 if (!response.ok) {
                     return response.text().then(text => {
-                        console.log('Error response body:', text);
-
                         try {
                             const jsonError = JSON.parse(text);
                             if (jsonError.message) {
@@ -366,20 +355,15 @@ else
                             const htmlDoc = parser.parseFromString(text, 'text/html');
                             const title = htmlDoc.querySelector('title')?.textContent || 'Unknown Error';
                             const errorMessage = htmlDoc.querySelector('.error-message, .exception-message, h1')?.textContent || `HTTP ${response.status} Error`;
-
                             throw new Error(`${title}: ${errorMessage}`);
                         }
-
                         throw new Error(`HTTP ${response.status}: ${text.substring(0, 100)}...`);
                     });
                 }
 
                 const contentType = response.headers.get('content-type');
-                console.log('Content type:', contentType);
-
                 if (!contentType || !contentType.includes('application/json')) {
                     return response.text().then(text => {
-                        console.log('Non-JSON response:', text);
                         throw new Error('Server did not return JSON response. Please check if the action exists and returns JSON.');
                     });
                 }
@@ -387,8 +371,6 @@ else
                 return response.json();
             })
             .then(data => {
-                console.log('Received data:', data);
-
                 if (data.success) {
                     button.setAttribute('data-is-liked', data.isLiked.toString());
 
@@ -408,8 +390,6 @@ else
                     const likeCountSpan = document.querySelector(`.figure-like-count[data-figure-id="${figureId}"] .count-number`);
                     if (likeCountSpan) {
                         likeCountSpan.textContent = data.likesCount;
-                    } else {
-                        console.warn('Like count span not found for figure:', figureId);
                     }
 
                     const figureCard = button.closest('.figure-card');
@@ -419,7 +399,6 @@ else
 
                     showNotification('success', data.message);
                 } else {
-                    console.error('Server returned error:', data.message);
                     showNotification('error', data.message || 'Failed to toggle like');
                 }
 
@@ -427,21 +406,9 @@ else
                 if (!button.querySelector('.like-text')) {
                     const currentIsLiked = button.getAttribute('data-is-liked') === 'true';
                     button.innerHTML = `<i class="fas fa-heart me-1"></i><span class="like-text">${currentIsLiked ? 'Unlike' : 'Like'}</span>`;
-                } else {
-                    button.innerHTML = originalContent;
-                }
-
-                const likeTextSpan = button.querySelector('.like-text');
-                if (likeTextSpan) {
-                    likeTextSpan.textContent = data.isLiked ? 'Unlike' : 'Like';
-                } else {
-                    button.innerHTML = `<i class="fas fa-heart me-1"></i><span class="like-text">${data.isLiked ? 'Unlike' : 'Like'}</span>`;
                 }
             })
             .catch(error => {
-                console.error('Fetch error:', error);
-                console.error('Error details:', error.message);
-
                 button.disabled = false;
                 if (!button.querySelector('.like-text')) {
                     const currentIsLiked = button.getAttribute('data-is-liked') === 'true';
@@ -474,7 +441,6 @@ else
     </script>
 }
 
-@* Add CSRF token for AJAX requests *@
 <form style="display: none;">
     @Html.AntiForgeryToken()
 </form>
