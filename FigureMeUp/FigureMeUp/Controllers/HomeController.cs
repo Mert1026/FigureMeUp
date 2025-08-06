@@ -8,6 +8,7 @@ using System.Security.Claims;
 
 namespace FigureMeUp.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class HomeController : Controller
     {
         private readonly IFigureService _figureService;

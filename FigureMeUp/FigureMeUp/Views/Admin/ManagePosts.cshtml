@@ -13,7 +13,7 @@
 <!-- Filter Controls -->
 <div class="card shadow-sm mb-4">
     <div class="card-body">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center align-items-center">
             <div class="col-md-3 justify-content-center">
                 <select class="form-select" id="statusFilter">
                     <option value="">All Posts</option>
@@ -25,11 +25,8 @@
                 <input type="text" class="form-control" id="searchUser" placeholder="Search by username...">
             </div>
             <div class="col-md-3">
-                <input type="date" class="form-control" id="dateFilter">
-            </div>
-            <div class="col-md-3">
                 <button class="btn btn-primary bg-primary border-0" onclick="applyFilters()">
-                    <i class="fas fa-filter me-2"></i>Apply Filters
+                    <i class="fas fa-filter me-2"></i>Filter
                 </button>
             </div>
         </div>
@@ -200,8 +197,6 @@ else
         function applyFilters() {
             const status = document.getElementById('statusFilter').value;
             const user = document.getElementById('searchUser').value.toLowerCase();
-            const date = document.getElementById('dateFilter').value;
-
             const rows = document.querySelectorAll('tbody tr');
 
             rows.forEach(row => {
@@ -220,27 +215,7 @@ else
                     if (!username.includes(user)) showRow = false;
                 }
 
-                // Date filter (you might need to adjust this based on your date format)
-                if (date) {
-                    const postDateStr = row.cells[2].textContent.trim();
-
-                     // Convert dd/MM/yyyy (from input) to a Date object
-                    const [day, month, year] = date.split('/');
-                    const inputDate = new Date(`${year}-${month}-${day}`);
-
-                    // Convert yyyy-MM-dd (from table) to a Date object
-                    const postDate = new Date(postDateStr);
-
-                    // Compare only the date parts (ignore time)
-                    const isSameDate =
-                    inputDate.getFullYear() === postDate.getFullYear() &&
-                    inputDate.getMonth() === postDate.getMonth() &&
-                    inputDate.getDate() === postDate.getDate();
-
-                    if (isSameDate) {
-                     showRow = true;
-                    }
-                }
+          
 
 
                 row.style.display = showRow ? '' : 'none';
@@ -251,7 +226,6 @@ else
         function resetFilters() {
             document.getElementById('statusFilter').value = '';
             document.getElementById('searchUser').value = '';
-            document.getElementById('dateFilter').value = '';
             applyFilters();
         }
     </script>

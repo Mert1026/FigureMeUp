@@ -7,6 +7,7 @@ using System.Security.Claims;
 
 namespace FigureMeUp.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class PostsController : Controller
     {
         private readonly IPostService _postService;

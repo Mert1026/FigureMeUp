@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FigureMeUp.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,User")]
     public class HashtagController : Controller
     {
         private readonly IHashtagService _hashtagService;

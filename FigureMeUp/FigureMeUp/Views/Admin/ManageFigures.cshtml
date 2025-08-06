@@ -13,7 +13,7 @@
 <!-- Filter Controls -->
 <div class="card shadow-sm mb-4">
     <div class="card-body">
-        <div class="row">
+        <div class="row align-items-center justify-content-center">
             <div class="col-md-2">
                 <select class="form-select" id="statusFilter">
                     <option value="">All Figures</option>
@@ -36,9 +36,6 @@
             </div>
             <div class="col-md-2">
                 <input type="text" class="form-control" id="searchName" placeholder="Search by name...">
-            </div>
-            <div class="col-md-2">
-                <input type="date" class="form-control" id="dateFilter">
             </div>
             <div class="col-md-2">
                 <button class="btn btn-primary bg-primary border-0" onclick="applyFilters()">
@@ -232,7 +229,6 @@ else
             const rarity = document.getElementById('rarityFilter').value.toLowerCase();
             const owner = document.getElementById('searchOwner').value.toLowerCase();
             const name = document.getElementById('searchName').value.toLowerCase();
-            const date = document.getElementById('dateFilter').value;
 
             const rows = document.querySelectorAll('tbody tr');
 

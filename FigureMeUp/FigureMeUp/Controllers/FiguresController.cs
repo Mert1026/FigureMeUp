@@ -11,6 +11,7 @@ using System.Security.Claims;
 
 namespace FigureMeUp.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class FiguresController : Controller
     {
         private readonly IFigureService _figureService;
