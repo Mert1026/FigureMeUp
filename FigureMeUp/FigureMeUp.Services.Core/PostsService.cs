@@ -317,5 +317,19 @@ namespace FigureMeUp.Services.Core
             }
             
         }
+
+        public async Task<bool> HardDeletePostByIdAsync(Guid postId)
+        {
+            Post? postToDelete = await this.GetPostByIdAsync(postId);
+            if (postToDelete == null)
+            {
+                return false;
+            }
+
+            await this._postsRepository
+                .HardDeleteAsync(postToDelete);
+
+            return true;
+        }
     }
 }

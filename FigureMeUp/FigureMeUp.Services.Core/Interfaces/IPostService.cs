@@ -21,6 +21,7 @@ namespace FigureMeUp.Services.Core.Interfaces
         public Task<bool> AddViewAsync(Guid postId);
         public Task<IEnumerable<Post>> GetPostsByUserIdAsync(string userId);
         public Task<IEnumerable<Post>> GetLikedPostsByUserIdAsync(string userId);
+        public Task<bool> HardDeletePostByIdAsync(Guid postId);
 
 
     }

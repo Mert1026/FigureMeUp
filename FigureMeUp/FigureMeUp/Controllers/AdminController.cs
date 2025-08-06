@@ -53,6 +53,7 @@ namespace FigureMeUp.Controllers
             }
         }
 
+        //SOFT!!
         [HttpPost]
         public async Task<IActionResult> DeletePost(Guid id)
         {
@@ -60,6 +61,25 @@ namespace FigureMeUp.Controllers
             {
                 await _postService.DeletePostAsync(id);
                 TempData["Success"] = "Post deleted successfully.";
+            }
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
+            return RedirectToAction(nameof(ManagePosts));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> HardDeletePost(Guid id)
+        {
+            try
+            {
+                await _postService.HardDeletePostByIdAsync(id);
+                TempData["Success"] = "Post permanently deleted successfully.";
             }
             catch (Exception ex)
             {
@@ -109,6 +129,8 @@ namespace FigureMeUp.Controllers
             }
         }
 
+        
+        //Soft!!
         [HttpPost]
         public async Task<IActionResult> DeleteFigure(Guid id)
         {
@@ -116,6 +138,25 @@ namespace FigureMeUp.Controllers
             {
                 await _figureService.DeleteFigureAsync(id);
                 TempData["Success"] = "Figure deleted successfully.";
+            }
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
+            return RedirectToAction(nameof(ManageFigures));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> HardDeleteFigure(Guid id)
+        {
+            try
+            {
+                await _figureService.HardDeleteFigureByIdAsync(id);
+                TempData["Success"] = "Figure permanently deleted successfully.";
             }
             catch (Exception ex)
             {

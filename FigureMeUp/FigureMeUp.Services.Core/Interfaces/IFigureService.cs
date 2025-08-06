@@ -20,6 +20,7 @@ namespace FigureMeUp.Services.Core.Interfaces
         public Task<bool> ToggleLikeAsync(Guid postId, string userId);
         public Task<IEnumerable<Figure>> GetFiguresByUserIdAsync(string userId);
         public Task<IEnumerable<Figure>> GetLikedFiguresByUserIdAsync(string userId);
+        public Task<bool> HardDeleteFigureByIdAsync(Guid figureId);
 
     }
 }

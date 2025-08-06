@@ -4,7 +4,7 @@ namespace FigureMeUp.Controllers.IControllers
 {
     public interface IErrorController
     {
-        IActionResult Err404();
-        IActionResult Err500();
+        IActionResult er404();
+        IActionResult er500();
     }
 }

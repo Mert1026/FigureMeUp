@@ -111,8 +111,12 @@
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <button type="button" class="btn btn-outline-danger btn-sm"
-                                            data-bs-toggle="modal" data-bs-target="#deletePostModal@(post.Id)" title="Delete">
+                                            data-bs-toggle="modal" data-bs-target="#deletePostModal@(post.Id)" title="Soft Delete">
                                         <i class="fas fa-trash"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-dark btn-sm"
+                                            data-bs-toggle="modal" data-bs-target="#hardDeletePostModal@(post.Id)" title="Hard Delete">
+                                        <i class="fas fa-times"></i>
                                     </button>
                                 }
                                 else
@@ -121,37 +125,44 @@
                                             data-bs-toggle="modal" data-bs-target="#restorePostModal@(post.Id)" title="Restore">
                                         <i class="fas fa-undo"></i>
                                     </button>
+                                    <button type="button" class="btn btn-outline-dark btn-sm"
+                                            data-bs-toggle="modal" data-bs-target="#hardDeletePostModal@(post.Id)" title="Hard Delete">
+                                        <i class="fas fa-times"></i>
+                                    </button>
                                 }
                             </div>
 
                             @if (!post.IsDeleted)
                             {
-                                <!-- Delete Modal -->
+                                <!-- Soft Delete Modal -->
                                 <div class="modal fade" id="deletePostModal@(post.Id)" tabindex="-1">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Delete Post</h5>
+                                                <h5 class="modal-title">Soft Delete Post</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <p>Are you sure you want to delete the post <strong>"@post.Title"</strong>?</p>
                                                 <p class="text-muted small">This will soft delete the post. It can be restored later.</p>
+                                                @if (post.ImageUrls.Any())
+                                                {
+                                                    <img src="@post.ImageUrls.First()" alt="@post.Title"
+                                                         class="img-thumbnail mt-2" style="max-width: 200px;">
+                                                }
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                                 <form asp-action="DeletePost" asp-route-id="@post.Id" method="post" class="d-inline">
                                                     <button type="submit" class="btn btn-danger">
-                                                        <i class="fas fa-trash me-1"></i>Delete
+                                                        <i class="fas fa-trash me-1"></i>Soft Delete
                                                     </button>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            }
-                            else
-                            {
+
                                 <!-- Restore Modal -->
                                 <div class="modal fade" id="restorePostModal@(post.Id)" tabindex="-1">
                                     <div class="modal-dialog">
@@ -163,6 +174,11 @@
                                             <div class="modal-body">
                                                 <p>Are you sure you want to restore the post <strong>"@post.Title"</strong>?</p>
                                                 <p class="text-muted small">This will make the post visible to users again.</p>
+                                                @if (post.ImageUrls.Any())
+                                                {
+                                                    <img src="@post.ImageUrls.First()" alt="@post.Title"
+                                                         class="img-thumbnail mt-2" style="max-width: 200px;">
+                                                }
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -176,6 +192,72 @@
                                     </div>
                                 </div>
                             }
+                            else
+                            {
+                                <!-- Restore Modal for Deleted Posts -->
+                                <div class="modal fade" id="restorePostModal@(post.Id)" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Restore Post</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you sure you want to restore the post <strong>"@post.Title"</strong>?</p>
+                                                <p class="text-muted small">This will make the post visible to users again.</p>
+                                                @if (post.ImageUrls.Any())
+                                                {
+                                                    <img src="@post.ImageUrls.First()" alt="@post.Title"
+                                                         class="img-thumbnail mt-2" style="max-width: 200px;">
+                                                }
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <form asp-action="RestorePost" asp-route-id="@post.Id" method="post" class="d-inline">
+                                                    <button type="submit" class="btn btn-success">
+                                                        <i class="fas fa-undo me-1"></i>Restore
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <!-- Hard Delete Modal (Available for both active and deleted posts) -->
+                            <div class="modal fade" id="hardDeletePostModal@(post.Id)" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content border-danger">
+                                        <div class="modal-header bg-danger text-white">
+                                            <h5 class="modal-title">
+                                                <i class="fas fa-exclamation-triangle me-2"></i>Permanent Delete Post
+                                            </h5>
+                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="alert alert-danger" role="alert">
+                                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                                <strong>Warning!</strong> This action cannot be undone.
+                                            </div>
+                                            <p>Are you sure you want to <strong>permanently delete</strong> the post <strong>"@post.Title"</strong>?</p>
+                                            <p class="text-danger small">This will completely remove the post from the database. This action is irreversible!</p>
+                                            @if (post.ImageUrls.Any())
+                                            {
+                                                <img src="@post.ImageUrls.First()" alt="@post.Title"
+                                                     class="img-thumbnail mt-2" style="max-width: 200px;">
+                                            }
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <form asp-action="HardDeletePost" asp-route-id="@post.Id" method="post" class="d-inline">
+                                                <button type="submit" class="btn btn-dark">
+                                                    <i class="fas fa-times me-1"></i>Permanently Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 }
@@ -214,9 +296,6 @@ else
                     const username = row.cells[1].textContent.toLowerCase();
                     if (!username.includes(user)) showRow = false;
                 }
-
-          
-
 
                 row.style.display = showRow ? '' : 'none';
             });

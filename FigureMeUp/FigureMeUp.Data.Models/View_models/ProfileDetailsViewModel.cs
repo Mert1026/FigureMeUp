@@ -12,7 +12,7 @@ namespace FigureMeUp.Data.Models.View_models
         public string Email { get; set; }
         public int FiguresCount { get; set; }
         public int PostsCount { get; set; }
-        public int FavoritesCount { get; set; } = 0; // Placeholder for future implementation
+        public int LikedContentCount { get; set; } = 0;
 
     }
 }

@@ -25,7 +25,6 @@ namespace FigureMeUp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return RedirectToAction("er500", "ErrorController");
             try
             {
                 var recentFigures = await _figureService.GetAllFiguresAsync();
@@ -104,6 +103,8 @@ namespace FigureMeUp.Controllers
                 var user = await _userManager.FindByIdAsync(userId);
                 var figures = await _figureService.GetAllFiguresAsync();
                 var posts = await _postService.GetAllPostsAsync();
+                var likedFigures = await _figureService.GetLikedFiguresByUserIdAsync(userId);
+                var likedPosts = await _postService.GetLikedPostsByUserIdAsync(userId);
 
                 if (user == null)
                 {
@@ -116,6 +117,7 @@ namespace FigureMeUp.Controllers
                     Email = user.Email ?? string.Empty,
                     FiguresCount = figures.Count(f => f.OwnerId == userId && !f.IsDeleted),
                     PostsCount = posts.Count(p => p.PublisherId == userId && !p.IsDeleted),
+                    LikedContentCount = likedFigures.Count() + likedPosts.Count()
                 };
 
                 return View(model);

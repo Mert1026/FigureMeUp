@@ -131,8 +131,12 @@
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <button type="button" class="btn btn-outline-danger btn-sm"
-                                            data-bs-toggle="modal" data-bs-target="#deleteFigureModal@(figure.Id)" title="Delete">
+                                            data-bs-toggle="modal" data-bs-target="#deleteFigureModal@(figure.Id)" title="Soft Delete">
                                         <i class="fas fa-trash"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-dark btn-sm"
+                                            data-bs-toggle="modal" data-bs-target="#hardDeleteFigureModal@(figure.Id)" title="Hard Delete">
+                                        <i class="fas fa-times"></i>
                                     </button>
                                 }
                                 else
@@ -141,17 +145,21 @@
                                             data-bs-toggle="modal" data-bs-target="#restoreFigureModal@(figure.Id)" title="Restore">
                                         <i class="fas fa-undo"></i>
                                     </button>
+                                    <button type="button" class="btn btn-outline-dark btn-sm"
+                                            data-bs-toggle="modal" data-bs-target="#hardDeleteFigureModal@(figure.Id)" title="Hard Delete">
+                                        <i class="fas fa-times"></i>
+                                    </button>
                                 }
                             </div>
 
                             @if (!figure.IsDeleted)
                             {
-                                <!-- Delete Modal -->
+                                <!-- Soft Delete Modal -->
                                 <div class="modal fade" id="deleteFigureModal@(figure.Id)" tabindex="-1">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Delete Figure</h5>
+                                                <h5 class="modal-title">Soft Delete Figure</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                             </div>
                                             <div class="modal-body">
@@ -167,16 +175,14 @@
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                                 <form asp-action="DeleteFigure" asp-route-id="@figure.Id" method="post" class="d-inline">
                                                     <button type="submit" class="btn btn-danger">
-                                                        <i class="fas fa-trash me-1"></i>Delete
+                                                        <i class="fas fa-trash me-1"></i>Soft Delete
                                                     </button>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            }
-                            else
-                            {
+
                                 <!-- Restore Modal -->
                                 <div class="modal fade" id="restoreFigureModal@(figure.Id)" tabindex="-1">
                                     <div class="modal-dialog">
@@ -206,6 +212,72 @@
                                     </div>
                                 </div>
                             }
+                            else
+                            {
+                                <!-- Restore Modal for Deleted Items -->
+                                <div class="modal fade" id="restoreFigureModal@(figure.Id)" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Restore Figure</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you sure you want to restore the figure <strong>"@figure.Name"</strong>?</p>
+                                                <p class="text-muted small">This will make the figure visible to users again.</p>
+                                                @if (figure.ImageUrls.Any())
+                                                {
+                                                    <img src="@figure.ImageUrls.First()" alt="@figure.Name"
+                                                         class="img-thumbnail mt-2" style="max-width: 200px;">
+                                                }
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <form asp-action="RestoreFigure" asp-route-id="@figure.Id" method="post" class="d-inline">
+                                                    <button type="submit" class="btn btn-success">
+                                                        <i class="fas fa-undo me-1"></i>Restore
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <!-- Hard Delete Modal (Available for both active and deleted figures) -->
+                            <div class="modal fade" id="hardDeleteFigureModal@(figure.Id)" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content border-danger">
+                                        <div class="modal-header bg-danger text-white">
+                                            <h5 class="modal-title">
+                                                <i class="fas fa-exclamation-triangle me-2"></i>Permanent Delete Figure
+                                            </h5>
+                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="alert alert-danger" role="alert">
+                                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                                <strong>Warning!</strong> This action cannot be undone.
+                                            </div>
+                                            <p>Are you sure you want to <strong>permanently delete</strong> the figure <strong>"@figure.Name"</strong>?</p>
+                                            <p class="text-danger small">This will completely remove the figure from the database. This action is irreversible!</p>
+                                            @if (figure.ImageUrls.Any())
+                                            {
+                                                <img src="@figure.ImageUrls.First()" alt="@figure.Name"
+                                                     class="img-thumbnail mt-2" style="max-width: 200px;">
+                                            }
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <form asp-action="HardDeleteFigure" asp-route-id="@figure.Id" method="post" class="d-inline">
+                                                <button type="submit" class="btn btn-dark">
+                                                    <i class="fas fa-times me-1"></i>Permanently Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 }

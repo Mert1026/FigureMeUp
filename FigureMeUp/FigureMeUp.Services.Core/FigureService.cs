@@ -326,5 +326,19 @@ namespace FigureMeUp.Services.Core
             }
             return false;
         }
+
+        public async Task<bool> HardDeleteFigureByIdAsync(Guid figureId)
+        {
+            Figure? figureToDelete = await this.GetFigureByIdAsync(figureId);
+            if (figureToDelete == null)
+            {
+                return false;
+            }
+
+            await this._figuresRepository
+                .HardDeleteAsync(figureToDelete);
+
+            return true;
+        }
     }
 }
