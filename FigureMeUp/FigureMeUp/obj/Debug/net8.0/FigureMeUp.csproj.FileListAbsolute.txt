@@ -156,7 +156,6 @@ C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\FigureMeUp.csproj.Up2Date
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\FigureMeUp.dll
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\refint\FigureMeUp.dll
@@ -164,3 +163,4 @@ C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\FigureMeUp.genruntimeconfig.cache
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\ref\FigureMeUp.dll
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\FigureMeUp.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

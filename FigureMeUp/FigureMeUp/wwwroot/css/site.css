@@ -1,25 +1,28 @@
-/*html {
-  font-size: 14px;
-}
+/* Add these styles to the TOP of your site.css file */
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+/* Footer Fix - Flexbox Layout */
+html, body {
+    height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
-}*/
+    display: flex;
+    flex-direction: column;
+    background-color: #7D8D86;
+}
+
+.container {
+    flex: 1;
+}
+
+/* Update your existing footer style */
+.footer {
+    margin-top: auto; /* This replaces margin-top: 3rem; */
+    padding: 2rem 0;
+    width: 100%;
+}
+
+/* Rest of your existing CSS stays the same... */
 
 /* Custom CSS for FigureMeUp */
 /* Reset some default styles */
@@ -64,17 +67,13 @@ body {
     background-color: #BCA88D !important;
 }
 
-    
+
 .border-bottom {
     background-color: #3E3F29 !important;
 }
 
 .bg-secondary {
     background-color: #BCA88D !important;
-}
-
-body {
-    background-color: #7D8D86;
 }
 
 hero-section.bg-primary {
@@ -161,11 +160,6 @@ hero-section.bg-primary {
 .profile-avatar {
     border: 4px solid #fff;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.footer {
-    margin-top: 3rem;
-    padding: 2rem 0;
 }
 
 /* Custom scrollbar */

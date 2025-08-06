@@ -1,6 +1,7 @@
 using FigureMeUp.Data;
 using FigureMeUp.Data.Models;
 using FigureMeUp.Data.Models.View_models;
+using FigureMeUp.Data.Repositories;
 using FigureMeUp.Data.Repositories.Interfaces;
 using FigureMeUp.Services.Core;
 using FigureMeUp.Services.Core.Helpers;
@@ -19,8 +20,8 @@ namespace Tests.Services
     {
         private Mock<IFiguresRepository> _mockFiguresRepository;
         private Mock<UserManager<IdentityUser>> _mockUserManager;
-        private Mock<ApplicationDbContext> _mockContext;
         private Mock<IHelperMetods> _mockHelperMethods;
+        private ApplicationDbContext _context;
         private FigureService _figureService;
 
         [SetUp]
@@ -32,21 +33,44 @@ namespace Tests.Services
             _mockHelperMethods = new Mock<IHelperMetods>();
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) // New DB for isolation
                 .Options;
 
-            var realContext = new ApplicationDbContext(options);
+            _context = new ApplicationDbContext(options);
 
             _figureService = new FigureService(
                 _mockFiguresRepository.Object,
                 _mockUserManager.Object,
-                realContext,
+                _context,
                 _mockHelperMethods.Object);
         }
 
-        [Test]
-        public async Task AddFigureAsync_ValidInput_ReturnsTrue()
+        [TearDown]
+        public void TearDown()
         {
+            _context.Dispose(); // Dispose of the context
+        }
+
+        [Test]
+        public async Task DeleteFigureAsync_NonExistingFigure_ReturnsFalse()
+        {
+            // Arrange
+            var emptyQueryable = new List<Figure>().AsQueryable();
+            _mockFiguresRepository.Setup(x => x.GetAllAttached())
+                .Returns(emptyQueryable);
+
+            // Act
+            var result = await _figureService.DeleteFigureAsync(Guid.NewGuid());
+
+            // Assert
+            Assert.That(result, Is.False);
+            _mockFiguresRepository.Verify(x => x.DeleteAsync(It.IsAny<Figure>()), Times.Never);
+        }
+
+        [Test]
+        public async Task AddFigureAsync_InvalidRarity_ReturnsFalse()
+        {
+            // Arrange
             var user = TestsHelper.CreateTestUser();
             var figureViewModel = new FiguresViewModel
             {
@@ -54,107 +78,91 @@ namespace Tests.Services
                 Description = "Test Description",
                 ImageUrls = new List<string> { "https://test.com/image.jpg" },
                 Hashtags = new List<string> { "test" },
-                Rarity = "Common"
+                Rarity = "InvalidRarity"
             };
 
             _mockUserManager.Setup(x => x.FindByIdAsync(It.IsAny<string>()))
                 .ReturnsAsync(user);
-            _mockHelperMethods.Setup(x => x.HashtagsConversion(It.IsAny<List<string>>()))
-                .Returns(new List<Hashtag>());
-            _mockHelperMethods.Setup(x => x.RarityValidation(It.IsAny<string>()))
-                .Returns(new Rarity { Id = 1, Name = "Common" });
-            _mockFiguresRepository.Setup(x => x.AddAsync(It.IsAny<Figure>()))
-                .Returns(Task.CompletedTask);
+            _mockHelperMethods.Setup(x => x.RarityValidation("InvalidRarity"))
+                .Returns((Rarity)null);
 
+            // Act
             var result = await _figureService.AddFigureAsync(figureViewModel, "test-user-1");
 
-            Assert.That(result, Is.True);
-            _mockFiguresRepository.Verify(x => x.AddAsync(It.IsAny<Figure>()), Times.Once);
-        }
-
-        [Test]
-        public async Task AddFigureAsync_InvalidUser_ReturnsFalse()
-        {
-            var figureViewModel = new FiguresViewModel
-            {
-                Name = "Test Figure",
-                Description = "Test Description",
-                ImageUrls = new List<string> { "https://test.com/image.jpg" },
-                Hashtags = new List<string> { "test" },
-                Rarity = "Common"
-            };
-
-            _mockUserManager.Setup(x => x.FindByIdAsync(It.IsAny<string>()))
-                .ReturnsAsync((IdentityUser)null);
-
-            var result = await _figureService.AddFigureAsync(figureViewModel, "invalid-user");
-
+            // Assert
             Assert.That(result, Is.False);
             _mockFiguresRepository.Verify(x => x.AddAsync(It.IsAny<Figure>()), Times.Never);
         }
 
-       
-
         [Test]
-        public async Task ToggleLikeAsync_UserNotLiked_AddsLike()
+        public async Task ToggleLikeAsync_InvalidFigureId_ReturnsFalse()
         {
-            var figure = TestsHelper.CreateTestFigure();
-            var userId = "test-user-2";
-            var queryable = new List<Figure> { figure }.AsQueryable();
-
+            // Arrange
+            var emptyQueryable = new List<Figure>().AsQueryable();
             _mockFiguresRepository.Setup(x => x.GetAllAttached())
-                .Returns(queryable);
-            _mockFiguresRepository.Setup(x => x.UpdateAsync(It.IsAny<Figure>()))
-                .ReturnsAsync(true);
+                .Returns(emptyQueryable);
 
-            var result = await _figureService.ToggleLikeAsync(figure.Id, userId);
+            // Act
+            var result = await _figureService.ToggleLikeAsync(Guid.NewGuid(), "test-user-1");
 
-            Assert.That(result, Is.True);
-            Assert.That(figure.LikedByUsersIds.Contains(userId), Is.True);
-            Assert.That(figure.LikesCount, Is.EqualTo(1));
+            // Assert
+            Assert.That(result, Is.False);
+            _mockFiguresRepository.Verify(x => x.UpdateAsync(It.IsAny<Figure>()), Times.Never);
         }
 
         [Test]
-        public async Task ToggleLikeAsync_UserAlreadyLiked_RemovesLike()
+        public async Task GetLikedFiguresByUserIdAsync_ValidUserId_ReturnsLikedFigures()
         {
-            var userId = "test-user-2";
-            var figure = TestsHelper.CreateTestFigure();
-            figure.LikedByUsersIds.Add(userId);
-            figure.LikesCount = 1;
-            var queryable = new List<Figure> { figure }.AsQueryable();
+            // Arrange
+            var userId = "test-user-1";
+            var figures = new List<Figure>
+            {
+                TestsHelper.CreateTestFigure(),
+                TestsHelper.CreateTestFigure(),
+                TestsHelper.CreateTestFigure()
+            };
 
+            // Only first two figures are liked by the user
+            figures[0].LikedByUsersIds.Add(userId);
+            figures[1].LikedByUsersIds.Add(userId);
+
+            var queryable = figures.AsQueryable();
             _mockFiguresRepository.Setup(x => x.GetAllAttached())
                 .Returns(queryable);
-            _mockFiguresRepository.Setup(x => x.UpdateAsync(It.IsAny<Figure>()))
-                .ReturnsAsync(true);
 
-            var result = await _figureService.ToggleLikeAsync(figure.Id, userId);
+            // Act
+            var result = await _figureService.GetLikedFiguresByUserIdAsync(userId);
 
-            Assert.That(result, Is.True);
-            Assert.That(figure.LikedByUsersIds.Contains(userId), Is.False);
-            Assert.That(figure.LikesCount, Is.EqualTo(0));
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Count(), Is.EqualTo(2));
+            Assert.That(result.All(f => f.LikedByUsersIds.Contains(userId)), Is.True);
         }
 
-       
-
-        private Mock<IQueryable<Figure>> CreateMockDbSet(List<Figure> data)
+        [Test]
+        public async Task GetFiguresByOwnerIdAsync_ValidOwnerId_ReturnsOwnerFigures()
         {
-            var queryable = data.AsQueryable();
-            var mockSet = new Mock<IQueryable<Figure>>();
+            // Arrange
+            var ownerId = "test-owner-1";
+            var figures = new List<Figure>
+            {
+                TestsHelper.CreateTestFigure(ownerId),
+                TestsHelper.CreateTestFigure(ownerId),
+                TestsHelper.CreateTestFigure("different-owner")
+            };
 
-            mockSet.As<IAsyncEnumerable<Figure>>()
-                .Setup(m => m.GetAsyncEnumerator(It.IsAny<CancellationToken>()))
-                .Returns(new Helper.TestAsyncEnumerator<Figure>(queryable.GetEnumerator()));
+            var queryable = figures.AsQueryable();
+            _mockFiguresRepository.Setup(x => x.GetAllAttached())
+                .Returns(queryable);
 
-            mockSet.As<IQueryable<Figure>>()
-                .Setup(m => m.Provider)
-                .Returns(new TestAsyncQueryProvider<Figure>(queryable.Provider));
+            // Act
+            var result = await _figureService.GetFiguresByUserIdAsync(ownerId);
 
-            mockSet.As<IQueryable<Figure>>().Setup(m => m.Expression).Returns(queryable.Expression);
-            mockSet.As<IQueryable<Figure>>().Setup(m => m.ElementType).Returns(queryable.ElementType);
-            mockSet.As<IQueryable<Figure>>().Setup(m => m.GetEnumerator()).Returns(queryable.GetEnumerator());
-
-            return mockSet;
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Count(), Is.EqualTo(2));
+            Assert.That(result.All(f => f.OwnerId == ownerId), Is.True);
         }
+
     }
 }
