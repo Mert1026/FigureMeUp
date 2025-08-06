@@ -142,7 +142,6 @@ C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\FigureMeUp.AssemblyInfoInputs.cache
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\FigureMeUp.AssemblyInfo.cs
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\FigureMeUp.csproj.CoreCompileInputs.cache
-C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\FigureMeUp.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\FigureMeUp.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\FigureMeUp.RazorAssemblyInfo.cache
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\FigureMeUp.RazorAssemblyInfo.cs
@@ -164,3 +163,4 @@ C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\FigureMeUp.pdb
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\FigureMeUp.genruntimeconfig.cache
 C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\ref\FigureMeUp.dll
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\FigureMeUp\obj\Debug\net8.0\FigureMeUp.MvcApplicationPartsAssemblyInfo.cs

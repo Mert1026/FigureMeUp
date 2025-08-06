@@ -1,0 +1,7 @@
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\Tests_Services\bin\Debug\net8.0\CoverletSourceRootsMapping_Tests_Services
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\Tests_Services\obj\Debug\net8.0\Tests_Services.csproj.AssemblyReference.cache
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\Tests_Services\obj\Debug\net8.0\Tests_Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\Tests_Services\obj\Debug\net8.0\Tests_Services.AssemblyInfoInputs.cache
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\Tests_Services\obj\Debug\net8.0\Tests_Services.AssemblyInfo.cs
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\Tests_Services\obj\Debug\net8.0\Tests_Services.csproj.CoreCompileInputs.cache
+C:\Users\merte\Documents\GitHub\FigureMeUp\FigureMeUp\Tests_Services\obj\Debug\net8.0\Tests_Services.sourcelink.json

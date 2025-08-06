@@ -80,6 +80,7 @@ using FigureMeUp.Infrastructure;
 using FigureMeUp.Services;
 using FigureMeUp.Services.Core;
 using FigureMeUp.Services.Core.Helpers;
+using FigureMeUp.Services.Core.Helpers.Interfaces;
 using FigureMeUp.Services.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -125,7 +126,8 @@ builder.Services.AddRepositories(typeof(IFiguresRepository).Assembly);
 builder.Services.AddRepositories(typeof(IPostsRepository).Assembly);
 builder.Services.AddRepositories(typeof(IHashtagsRepository).Assembly);
 
-builder.Services.AddScoped<HelperMetods>();
+builder.Services.AddScoped<IHelperMetods, HelperMetods>();
+
 
 var app = builder.Build();
 

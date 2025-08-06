@@ -4,6 +4,7 @@ using FigureMeUp.Data.Models.View_models;
 using FigureMeUp.Data.Repositories;
 using FigureMeUp.Data.Repositories.Interfaces;
 using FigureMeUp.Services.Core.Helpers;
+using FigureMeUp.Services.Core.Helpers.Interfaces;
 using FigureMeUp.Services.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -23,12 +24,12 @@ namespace FigureMeUp.Services.Core
         private readonly IFiguresRepository _figuresRepository;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ApplicationDbContext _context;
-        private readonly HelperMetods _helperMetods;
+        private readonly IHelperMetods _helperMetods;
 
         public FigureService(IFiguresRepository figuresRepository,
             UserManager<IdentityUser> userManeger,
             ApplicationDbContext context,
-            HelperMetods helperMetods)
+            IHelperMetods helperMetods)
         {
             this._figuresRepository = figuresRepository;
             this._userManager = userManeger;

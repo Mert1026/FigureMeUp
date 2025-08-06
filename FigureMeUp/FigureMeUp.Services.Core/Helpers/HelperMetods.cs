@@ -1,5 +1,6 @@
 ﻿using FigureMeUp.Data;
 using FigureMeUp.Data.Models;
+using FigureMeUp.Services.Core.Helpers.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 namespace FigureMeUp.Services.Core.Helpers
 {
    
-    public class HelperMetods
+    public class HelperMetods : IHelperMetods
     {
         private ApplicationDbContext _context;
 

@@ -3,6 +3,7 @@ using FigureMeUp.Data.Models;
 using FigureMeUp.Data.Models.View_models;
 using FigureMeUp.Data.Repositories.Interfaces;
 using FigureMeUp.Services.Core.Helpers;
+using FigureMeUp.Services.Core.Helpers.Interfaces;
 using FigureMeUp.Services.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,11 +22,11 @@ namespace FigureMeUp.Services.Core
 
         private readonly IPostsRepository _postsRepository;
         private readonly UserManager<IdentityUser> _userManager;
-        private HelperMetods _helperMetods;
+        private IHelperMetods _helperMetods;
 
         public PostsService(IPostsRepository postsRepository,
             UserManager<IdentityUser> userManager,
-            HelperMetods helperMetods)
+            IHelperMetods helperMetods)
         {
             this._postsRepository = postsRepository;
             this._userManager = userManager;

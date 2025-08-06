@@ -28,7 +28,7 @@ namespace FigureMeUp.Services.Core
                 await _hashtagsRepository.AddAsync(hashtag);
                 return true;
             }
-            catch()
+            catch
             {
                 return false;
             }
