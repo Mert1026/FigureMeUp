@@ -184,8 +184,7 @@
 
 @section Scripts {
     <script>
-        // TODO: Implement AJAX like functionality (optional e v dokumenta!!)
-        // This can be used to update like count without page refresh
+      
         
         $(document).ready(function() {
             $('.like-btn').click(function(e) {
@@ -195,7 +194,6 @@
 
                 $.post('/Posts/ToggleLike/' + postId, function(data) {
                     if (data.success) {
-                        // Update button appearance
                         if (data.isLiked) {
                             button.removeClass('btn-outline-danger').addClass('btn-danger');
                             button.find('.like-text').text('Unlike');
@@ -203,7 +201,6 @@
                             button.removeClass('btn-danger').addClass('btn-outline-danger');
                             button.find('.like-text').text('Like');
                         }
-                        // Update counter
                         $('.like-counter').text(data.likesCount);
                         $('.like-label').text(data.likesCount === 1 ? 'like' : 'likes');
                     }

@@ -12,7 +12,7 @@
                 </h3>
             </div>
             <div class="card-body">
-                <form asp-action="Create" method="post">
+                <form asp-action="Create" method="post" id="figureForm">
                     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                     <div class="row">
@@ -20,9 +20,13 @@
                             <div class="mb-3">
                                 <label asp-for="Name" class="form-label">
                                     <i class="fas fa-tag me-1"></i>Figure Name
+                                    <small class="text-muted">(Max 50 characters)</small>
                                 </label>
-                                <input asp-for="Name" class="form-control" placeholder="Enter figure name" />
+                                <input asp-for="Name" class="form-control" placeholder="Enter figure name" maxlength="50" />
                                 <span asp-validation-for="Name" class="text-danger"></span>
+                                <div class="form-text">
+                                    <span id="nameCounter">0</span>/50 characters
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -45,14 +49,19 @@
                     <div class="mb-3">
                         <label asp-for="Description" class="form-label">
                             <i class="fas fa-align-left me-1"></i>Description
+                            <small class="text-muted">(Max 500 characters)</small>
                         </label>
-                        <textarea asp-for="Description" class="form-control" rows="4" placeholder="Describe your figure..."></textarea>
+                        <textarea asp-for="Description" class="form-control" rows="4" placeholder="Describe your figure..." maxlength="500"></textarea>
                         <span asp-validation-for="Description" class="text-danger"></span>
+                        <div class="form-text">
+                            <span id="descriptionCounter">0</span>/500 characters
+                        </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">
                             <i class="fas fa-images me-1"></i>Image URLs
+                            <small class="text-muted">(Max 5 images)</small>
                         </label>
                         <div id="imageUrls">
                             <div class="input-group mb-2">
@@ -62,26 +71,33 @@
                                 </button>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="addImageUrl()">
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="addImageUrl()" id="addImageBtn">
                             <i class="fas fa-plus me-1"></i>Add Another Image
                         </button>
+                        <div class="form-text">
+                            <span id="imageCounter">1</span>/5 images
+                        </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">
                             <i class="fas fa-hashtag me-1"></i>Hashtags
+                            <small class="text-muted">(Max 5 hashtags, 15 chars each)</small>
                         </label>
                         <div id="hashtags">
                             <div class="input-group mb-2">
-                                <input type="text" name="Hashtags" class="form-control" placeholder="Enter hashtag (without #)" />
+                                <input type="text" name="Hashtags" class="form-control hashtag-input" placeholder="Enter hashtag (without #)" maxlength="15" />
                                 <button type="button" class="btn btn-outline-danger" onclick="removeHashtag(this)" style="display: none;">
                                     <i class="fas fa-times"></i>
                                 </button>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="addHashtag()">
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="addHashtag()" id="addHashtagBtn">
                             <i class="fas fa-plus me-1"></i>Add Another Hashtag
                         </button>
+                        <div class="form-text">
+                            <span id="hashtagCounter">1</span>/5 hashtags
+                        </div>
                     </div>
 
                     <div class="d-flex justify-content-end gap-2">
@@ -103,8 +119,58 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
+        // Validation constraints from C#
+        const CONSTRAINTS = {
+            NAME_MAX_LENGTH: 50,
+            DESCRIPTION_MAX_LENGTH: 500,
+            IMAGE_URLS_MAX_COUNT: 5,
+            HASHTAGS_MAX_COUNT: 5,
+            HASHTAG_NAME_MAX_LENGTH: 15
+        };
+
+        // Character counters
+        function updateCharacterCounter(inputElement, counterId, maxLength) {
+            const counter = document.getElementById(counterId);
+            const currentLength = inputElement.value.length;
+            counter.textContent = currentLength;
+
+            if (currentLength > maxLength * 0.9) {
+                counter.style.color = currentLength >= maxLength ? 'red' : 'orange';
+            } else {
+                counter.style.color = '';
+            }
+        }
+
+        // Initialize character counters
+        document.addEventListener('DOMContentLoaded', function() {
+            const nameInput = document.querySelector('input[name="Name"]');
+            const descriptionInput = document.querySelector('textarea[name="Description"]');
+
+            if (nameInput) {
+                nameInput.addEventListener('input', function() {
+                    updateCharacterCounter(this, 'nameCounter', CONSTRAINTS.NAME_MAX_LENGTH);
+                });
+            }
+
+            if (descriptionInput) {
+                descriptionInput.addEventListener('input', function() {
+                    updateCharacterCounter(this, 'descriptionCounter', CONSTRAINTS.DESCRIPTION_MAX_LENGTH);
+                });
+            }
+
+            updateImageCounter();
+            updateHashtagCounter();
+        });
+
         function addImageUrl() {
             const container = document.getElementById('imageUrls');
+            const currentCount = container.children.length;
+
+            if (currentCount >= CONSTRAINTS.IMAGE_URLS_MAX_COUNT) {
+                alert(`Maximum ${CONSTRAINTS.IMAGE_URLS_MAX_COUNT} images allowed.`);
+                return;
+            }
+
             const div = document.createElement('div');
             div.className = 'input-group mb-2';
             div.innerHTML = `
@@ -115,30 +181,41 @@
             `;
             container.appendChild(div);
             updateRemoveButtons('imageUrls');
+            updateImageCounter();
         }
 
         function removeImageUrl(button) {
             button.parentElement.remove();
             updateRemoveButtons('imageUrls');
+            updateImageCounter();
         }
 
         function addHashtag() {
             const container = document.getElementById('hashtags');
+            const currentCount = container.children.length;
+
+            if (currentCount >= CONSTRAINTS.HASHTAGS_MAX_COUNT) {
+                alert(`Maximum ${CONSTRAINTS.HASHTAGS_MAX_COUNT} hashtags allowed.`);
+                return;
+            }
+
             const div = document.createElement('div');
             div.className = 'input-group mb-2';
             div.innerHTML = `
-                <input type="text" name="Hashtags" class="form-control" placeholder="Enter hashtag (without #)" />
+                <input type="text" name="Hashtags" class="form-control hashtag-input" placeholder="Enter hashtag (without #)" maxlength="${CONSTRAINTS.HASHTAG_NAME_MAX_LENGTH}" />
                 <button type="button" class="btn btn-outline-danger" onclick="removeHashtag(this)">
                     <i class="fas fa-times"></i>
                 </button>
             `;
             container.appendChild(div);
             updateRemoveButtons('hashtags');
+            updateHashtagCounter();
         }
 
         function removeHashtag(button) {
             button.parentElement.remove();
             updateRemoveButtons('hashtags');
+            updateHashtagCounter();
         }
 
         function updateRemoveButtons(containerId) {
@@ -148,6 +225,79 @@
                 button.style.display = buttons.length > 1 ? 'block' : 'none';
             });
         }
+
+        function updateImageCounter() {
+            const container = document.getElementById('imageUrls');
+            const count = container.children.length;
+            const counter = document.getElementById('imageCounter');
+            const addBtn = document.getElementById('addImageBtn');
+
+            counter.textContent = count;
+            addBtn.disabled = count >= CONSTRAINTS.IMAGE_URLS_MAX_COUNT;
+
+            if (count >= CONSTRAINTS.IMAGE_URLS_MAX_COUNT) {
+                counter.style.color = 'red';
+                addBtn.classList.add('disabled');
+            } else {
+                counter.style.color = '';
+                addBtn.classList.remove('disabled');
+            }
+        }
+
+        function updateHashtagCounter() {
+            const container = document.getElementById('hashtags');
+            const count = container.children.length;
+            const counter = document.getElementById('hashtagCounter');
+            const addBtn = document.getElementById('addHashtagBtn');
+
+            counter.textContent = count;
+            addBtn.disabled = count >= CONSTRAINTS.HASHTAGS_MAX_COUNT;
+
+            if (count >= CONSTRAINTS.HASHTAGS_MAX_COUNT) {
+                counter.style.color = 'red';
+                addBtn.classList.add('disabled');
+            } else {
+                counter.style.color = '';
+                addBtn.classList.remove('disabled');
+            }
+        }
+
+        // Form validation before submit
+        document.getElementById('figureForm').addEventListener('submit', function(e) {
+            let isValid = true;
+            const errors = [];
+
+            // Validate name
+            const name = document.querySelector('input[name="Name"]').value.trim();
+            if (name.length === 0) {
+                errors.push('Figure name is required.');
+                isValid = false;
+            } else if (name.length > CONSTRAINTS.NAME_MAX_LENGTH) {
+                errors.push(`Figure name cannot exceed ${CONSTRAINTS.NAME_MAX_LENGTH} characters.`);
+                isValid = false;
+            }
+
+            // Validate description
+            const description = document.querySelector('textarea[name="Description"]').value.trim();
+            if (description.length > CONSTRAINTS.DESCRIPTION_MAX_LENGTH) {
+                errors.push(`Description cannot exceed ${CONSTRAINTS.DESCRIPTION_MAX_LENGTH} characters.`);
+                isValid = false;
+            }
+
+            // Validate hashtags
+            const hashtagInputs = document.querySelectorAll('input[name="Hashtags"]');
+            hashtagInputs.forEach((input, index) => {
+                const value = input.value.trim();
+                if (value && value.length > CONSTRAINTS.HASHTAG_NAME_MAX_LENGTH) {
+                    errors.push(`Hashtag ${index + 1} cannot exceed ${CONSTRAINTS.HASHTAG_NAME_MAX_LENGTH} characters.`);
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault();
+                alert('Please fix the following errors:\n\n' + errors.join('\n'));
+            }
+        });
     </script>
 }
-

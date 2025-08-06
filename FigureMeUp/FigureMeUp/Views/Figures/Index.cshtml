@@ -14,12 +14,54 @@
     }
 </div>
 
+<!-- Filter Controls -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-2">
+                <select class="form-select" id="rarityFilter">
+                    <option value="">All Rarities</option>
+                    <option value="legendary">Legendary</option>
+                    <option value="epic">Epic</option>
+                    <option value="rare">Rare</option>
+                    <option value="uncommon">Uncommon</option>
+                    <option value="common">Common</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="searchUser" placeholder="Search by owner...">
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="searchName" placeholder="Search by figure name...">
+            </div>
+            <div class="col-md-2">
+                <select class="form-select" id="sortBy">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="mostLiked">Most Liked</option>
+                    <option value="name">Name A-Z</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary bg-primary border-0 w-100" onclick="applyFilters()">
+                    <i class="fas fa-filter me-2"></i>Filter
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @if (Model.Any())
 {
-    <div class="row">
+    <div class="row" id="figuresContainer">
         @foreach (var figure in Model)
         {
-            <div class="col-md-6 col-lg-4 mb-4">
+            <div class="col-md-6 col-lg-4 mb-4 border-0" 
+                 data-rarity="@figure.Rarity.Name.ToLower()" 
+                 data-owner="@(figure.Owner?.UserName ?? "Unknown")" 
+                 data-name="@figure.Name.ToLower()" 
+                 data-likes="@figure.LikesCount" 
+                 data-date="@figure.LastChanged.Ticks">
                 <div class="card shadow-sm h-100 bg-body">
                     @if (figure.ImageUrls.Any())
                     {
@@ -175,7 +217,6 @@ else
 @section Scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Add click handlers to all figure like buttons
             document.querySelectorAll('.figure-like-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     toggleFigureLike(this);
@@ -183,24 +224,106 @@ else
             });
         });
 
+        function applyFilters() {
+            const rarity = document.getElementById('rarityFilter').value.toLowerCase();
+            const user = document.getElementById('searchUser').value.toLowerCase();
+            const name = document.getElementById('searchName').value.toLowerCase();
+            const sortBy = document.getElementById('sortBy').value;
+            
+            const figureCards = Array.from(document.querySelectorAll('.figure-card'));
+            
+            const filteredCards = figureCards.filter(card => {
+                let showCard = true;
+                
+                if (rarity && card.dataset.rarity !== rarity) {
+                    showCard = false;
+                }
+                
+                if (user && !card.dataset.owner.toLowerCase().includes(user)) {
+                    showCard = false;
+                }
+                
+                if (name && !card.dataset.name.includes(name)) {
+                    showCard = false;
+                }
+                
+                return showCard;
+            });
+            
+            figureCards.forEach(card => card.style.display = 'none');
+            
+            filteredCards.sort((a, b) => {
+                switch(sortBy) {
+                    case 'oldest':
+                        return parseInt(a.dataset.date) - parseInt(b.dataset.date);
+                    case 'mostLiked':
+                        return parseInt(b.dataset.likes) - parseInt(a.dataset.likes);
+                    case 'name':
+                        return a.dataset.name.localeCompare(b.dataset.name);
+                    case 'newest':
+                    default:
+                        return parseInt(b.dataset.date) - parseInt(a.dataset.date);
+                }
+            });
+            
+            const container = document.getElementById('figuresContainer');
+            filteredCards.forEach(card => {
+                card.style.display = '';
+                container.appendChild(card);
+            });
+            
+            updateNoResultsMessage(filteredCards.length === 0);
+        }
+
+        function updateNoResultsMessage(showMessage) {
+            let noResultsDiv = document.getElementById('noResultsMessage');
+            
+            if (showMessage) {
+                if (!noResultsDiv) {
+                    noResultsDiv = document.createElement('div');
+                    noResultsDiv.id = 'noResultsMessage';
+                    noResultsDiv.className = 'text-center py-5 col-12';
+                    noResultsDiv.innerHTML = `
+                        <i class="fas fa-search fa-3x text-white mb-3"></i>
+                        <h4 class="text-white">No figures match your filters</h4>
+                        <p class="text-white">Try adjusting your search criteria</p>
+                        <button class="btn btn-outline-primary bg-secondary" onclick="resetFilters()">
+                            <i class="fas fa-undo me-2"></i>Reset Filters
+                        </button>
+                    `;
+                    document.getElementById('figuresContainer').appendChild(noResultsDiv);
+                }
+                noResultsDiv.style.display = '';
+            } else {
+                if (noResultsDiv) {
+                    noResultsDiv.style.display = 'none';
+                }
+            }
+        }
+
+        function resetFilters() {
+            document.getElementById('rarityFilter').value = '';
+            document.getElementById('searchUser').value = '';
+            document.getElementById('searchName').value = '';
+            document.getElementById('sortBy').value = 'newest';
+            applyFilters();
+        }
+
         function toggleFigureLike(button) {
             const figureId = button.getAttribute('data-figure-id');
             const isLiked = button.getAttribute('data-is-liked') === 'true';
 
             console.log('Toggle like called for figure:', figureId, 'Currently liked:', isLiked);
 
-            // Validate figure ID on client side
             if (!figureId || figureId.trim() === '') {
                 showNotification('error', 'Invalid figure ID');
                 return;
             }
 
-            // Disable button to prevent multiple clicks
             const originalContent = button.innerHTML;
             button.disabled = true;
             button.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Processing...';
 
-            // Get CSRF token
             const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
             if (!token) {
                 console.error('CSRF token not found');
@@ -210,17 +333,14 @@ else
                 return;
             }
 
-            // Use POST body with form data
             const url = '@Url.Action("ToggleLike", "Figures")';
             console.log('Sending request to:', url);
             console.log('Figure ID (Guid string):', figureId);
 
-            // Create form data
             const formData = new FormData();
             formData.append('id', figureId);
             formData.append('__RequestVerificationToken', token);
 
-            // Make AJAX call
             fetch(url, {
                 method: 'POST',
                 headers: {
@@ -236,14 +356,12 @@ else
                     return response.text().then(text => {
                         console.log('Error response body:', text);
 
-                        // Try to parse as JSON first (in case server returns JSON error)
                         try {
                             const jsonError = JSON.parse(text);
                             if (jsonError.message) {
                                 throw new Error(jsonError.message);
                             }
                         } catch (e) {
-                            // If not JSON, parse HTML error page
                             const parser = new DOMParser();
                             const htmlDoc = parser.parseFromString(text, 'text/html');
                             const title = htmlDoc.querySelector('title')?.textContent || 'Unknown Error';
@@ -272,26 +390,21 @@ else
                 console.log('Received data:', data);
 
                 if (data.success) {
-                    // Update button state using data from server
                     button.setAttribute('data-is-liked', data.isLiked.toString());
 
-                    // Update button appearance and text
                     if (data.isLiked) {
                         button.className = 'btn btn-sm figure-like-btn btn-danger';
                     } else {
                         button.className = 'btn btn-sm figure-like-btn btn-outline-danger';
                     }
 
-                    // Update button text - check if like-text span exists
                     const likeTextSpan = button.querySelector('.like-text');
                     if (likeTextSpan) {
                         likeTextSpan.textContent = data.isLiked ? 'Unlike' : 'Like';
                     } else {
-                        // If span doesn't exist, update the entire button content
                         button.innerHTML = `<i class="fas fa-heart me-1"></i><span class="like-text">${data.isLiked ? 'Unlike' : 'Like'}</span>`;
                     }
 
-                    // Update like count with server data
                     const likeCountSpan = document.querySelector(`.figure-like-count[data-figure-id="${figureId}"] .count-number`);
                     if (likeCountSpan) {
                         likeCountSpan.textContent = data.likesCount;
@@ -299,17 +412,18 @@ else
                         console.warn('Like count span not found for figure:', figureId);
                     }
 
-                    // Show success notification
+                    const figureCard = button.closest('.figure-card');
+                    if (figureCard) {
+                        figureCard.dataset.likes = data.likesCount;
+                    }
+
                     showNotification('success', data.message);
                 } else {
                     console.error('Server returned error:', data.message);
-                    // Show error notification
                     showNotification('error', data.message || 'Failed to toggle like');
                 }
 
-                // Re-enable button with original structure
                 button.disabled = false;
-                // Restore the original button structure if it was lost
                 if (!button.querySelector('.like-text')) {
                     const currentIsLiked = button.getAttribute('data-is-liked') === 'true';
                     button.innerHTML = `<i class="fas fa-heart me-1"></i><span class="like-text">${currentIsLiked ? 'Unlike' : 'Like'}</span>`;
@@ -317,12 +431,10 @@ else
                     button.innerHTML = originalContent;
                 }
 
-                // Update button text again to ensure consistency
                 const likeTextSpan = button.querySelector('.like-text');
                 if (likeTextSpan) {
                     likeTextSpan.textContent = data.isLiked ? 'Unlike' : 'Like';
                 } else {
-                    // If span doesn't exist, update the entire button content
                     button.innerHTML = `<i class="fas fa-heart me-1"></i><span class="like-text">${data.isLiked ? 'Unlike' : 'Like'}</span>`;
                 }
             })
@@ -330,9 +442,7 @@ else
                 console.error('Fetch error:', error);
                 console.error('Error details:', error.message);
 
-                // Re-enable button on error with proper structure
                 button.disabled = false;
-                // Restore the original button structure
                 if (!button.querySelector('.like-text')) {
                     const currentIsLiked = button.getAttribute('data-is-liked') === 'true';
                     button.innerHTML = `<i class="fas fa-heart me-1"></i><span class="like-text">${currentIsLiked ? 'Unlike' : 'Like'}</span>`;
@@ -340,14 +450,11 @@ else
                     button.innerHTML = originalContent;
                 }
 
-                // Show error notification with more details
                 showNotification('error', error.message);
             });
         }
 
-        // Helper function to show notifications
         function showNotification(type, message) {
-            // Create notification element
             const notification = document.createElement('div');
             notification.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show position-fixed`;
             notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
@@ -356,10 +463,8 @@ else
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             `;
 
-            // Add to page
             document.body.appendChild(notification);
 
-            // Auto-remove after 5 seconds
             setTimeout(() => {
                 if (notification.parentNode) {
                     notification.remove();

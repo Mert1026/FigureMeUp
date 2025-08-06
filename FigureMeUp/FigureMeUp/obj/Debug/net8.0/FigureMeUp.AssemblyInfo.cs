@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FigureMeUp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3370e26bf47d1e3914bf7a5b831a19e7fb6503a8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2381872c9be40b69d732376a2b0aa35fe849bef3")]
 [assembly: System.Reflection.AssemblyProductAttribute("FigureMeUp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FigureMeUp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

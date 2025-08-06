@@ -12,28 +12,37 @@
                 </h3>
             </div>
             <div class="card-body">
-                <form asp-action="Create" method="post">
+                <form asp-action="Create" method="post" id="postForm">
                     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                     <div class="mb-3">
                         <label asp-for="Title" class="form-label">
                             <i class="fas fa-heading me-1"></i>Post Title
+                            <small class="text-muted">(Max 80 characters)</small>
                         </label>
-                        <input asp-for="Title" class="form-control" placeholder="Enter an engaging title for your post" />
+                        <input asp-for="Title" class="form-control" placeholder="Enter an engaging title for your post" maxlength="80" />
                         <span asp-validation-for="Title" class="text-danger"></span>
+                        <div class="form-text">
+                            <span id="titleCounter">0</span>/80 characters
+                        </div>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Content" class="form-label">
                             <i class="fas fa-align-left me-1"></i>Content
+                            <small class="text-muted">(Max 700 characters)</small>
                         </label>
-                        <textarea asp-for="Content" class="form-control" rows="8" placeholder="Share your thoughts, experiences, or stories with the community..."></textarea>
+                        <textarea asp-for="Content" class="form-control" rows="8" placeholder="Share your thoughts, experiences, or stories with the community..." maxlength="700"></textarea>
                         <span asp-validation-for="Content" class="text-danger"></span>
+                        <div class="form-text">
+                            <span id="contentCounter">0</span>/700 characters
+                        </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">
                             <i class="fas fa-images me-1"></i>Image URLs (Optional)
+                            <small class="text-muted">(Max 10 images)</small>
                         </label>
                         <div id="imageUrls">
                             <div class="input-group mb-2">
@@ -43,34 +52,40 @@
                                 </button>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="addImageUrl()">
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="addImageUrl()" id="addImageBtn">
                             <i class="fas fa-plus me-1"></i>Add Another Image
                         </button>
-                        <small class="form-text text-muted">
-                            <i class="fas fa-info-circle me-1"></i>Posts with multiple images will show a "View Details" button
-                        </small>
+                        <div class="form-text d-flex justify-content-between">
+                            <span>
+                                <i class="fas fa-info-circle me-1"></i>Posts with multiple images will show a "View Details" button
+                            </span>
+                            <span><span id="imageCounter">1</span>/10 images</span>
+                        </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">
                             <i class="fas fa-hashtag me-1"></i>Hashtags (Optional)
+                            <small class="text-muted">(Max 10 hashtags, 15 chars each)</small>
                         </label>
                         <div id="hashtags">
                             <div class="input-group mb-2">
-                                <input type="text" name="Hashtags" class="form-control" placeholder="Enter hashtag (without #)" />
+                                <input type="text" name="Hashtags" class="form-control hashtag-input" placeholder="Enter hashtag (without #)" maxlength="15" />
                                 <button type="button" class="btn btn-outline-danger" onclick="removeHashtag(this)" style="display: none;">
                                     <i class="fas fa-times"></i>
                                 </button>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="addHashtag()">
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="addHashtag()" id="addHashtagBtn">
                             <i class="fas fa-plus me-1"></i>Add Another Hashtag
                         </button>
-                        <small class="form-text text-muted">
-                            <i class="fas fa-info-circle me-1"></i>Use hashtags to help others discover your content
-                        </small>
+                        <div class="form-text d-flex justify-content-between">
+                            <span>
+                                <i class="fas fa-info-circle me-1"></i>Use hashtags to help others discover your content
+                            </span>
+                            <span><span id="hashtagCounter">1</span>/10 hashtags</span>
+                        </div>
                     </div>
-
 
                     <div class="d-flex justify-content-end gap-2 mt-4">
                         <a asp-action="Index" class="btn btn-secondary">
@@ -91,8 +106,55 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
+        const CONSTRAINTS = {
+            TITLE_MAX_LENGTH: 80,
+            CONTENT_MAX_LENGTH: 700,
+            IMAGE_URLS_MAX_COUNT: 10,
+            HASHTAGS_MAX_COUNT: 10,
+            HASHTAG_NAME_MAX_LENGTH: 15
+        };
+
+        function updateCharacterCounter(inputElement, counterId, maxLength) {
+            const counter = document.getElementById(counterId);
+            const currentLength = inputElement.value.length;
+            counter.textContent = currentLength;
+
+            if (currentLength > maxLength * 0.9) {
+                counter.style.color = currentLength >= maxLength ? 'red' : 'orange';
+            } else {
+                counter.style.color = '';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const titleInput = document.querySelector('input[name="Title"]');
+            const contentInput = document.querySelector('textarea[name="Content"]');
+
+            if (titleInput) {
+                titleInput.addEventListener('input', function() {
+                    updateCharacterCounter(this, 'titleCounter', CONSTRAINTS.TITLE_MAX_LENGTH);
+                });
+            }
+
+            if (contentInput) {
+                contentInput.addEventListener('input', function() {
+                    updateCharacterCounter(this, 'contentCounter', CONSTRAINTS.CONTENT_MAX_LENGTH);
+                });
+            }
+
+            updateImageCounter();
+            updateHashtagCounter();
+        });
+
         function addImageUrl() {
             const container = document.getElementById('imageUrls');
+            const currentCount = container.children.length;
+
+            if (currentCount >= CONSTRAINTS.IMAGE_URLS_MAX_COUNT) {
+                alert(`Maximum ${CONSTRAINTS.IMAGE_URLS_MAX_COUNT} images allowed.`);
+                return;
+            }
+
             const div = document.createElement('div');
             div.className = 'input-group mb-2';
             div.innerHTML = `
@@ -103,30 +165,41 @@
             `;
             container.appendChild(div);
             updateRemoveButtons('imageUrls');
+            updateImageCounter();
         }
 
         function removeImageUrl(button) {
             button.parentElement.remove();
             updateRemoveButtons('imageUrls');
+            updateImageCounter();
         }
 
         function addHashtag() {
             const container = document.getElementById('hashtags');
+            const currentCount = container.children.length;
+
+            if (currentCount >= CONSTRAINTS.HASHTAGS_MAX_COUNT) {
+                alert(`Maximum ${CONSTRAINTS.HASHTAGS_MAX_COUNT} hashtags allowed.`);
+                return;
+            }
+
             const div = document.createElement('div');
             div.className = 'input-group mb-2';
             div.innerHTML = `
-                <input type="text" name="Hashtags" class="form-control" placeholder="Enter hashtag (without #)" />
+                <input type="text" name="Hashtags" class="form-control hashtag-input" placeholder="Enter hashtag (without #)" maxlength="${CONSTRAINTS.HASHTAG_NAME_MAX_LENGTH}" />
                 <button type="button" class="btn btn-outline-danger" onclick="removeHashtag(this)">
                     <i class="fas fa-times"></i>
                 </button>
             `;
             container.appendChild(div);
             updateRemoveButtons('hashtags');
+            updateHashtagCounter();
         }
 
         function removeHashtag(button) {
             button.parentElement.remove();
             updateRemoveButtons('hashtags');
+            updateHashtagCounter();
         }
 
         function updateRemoveButtons(containerId) {
@@ -136,5 +209,78 @@
                 button.style.display = buttons.length > 1 ? 'block' : 'none';
             });
         }
+
+        function updateImageCounter() {
+            const container = document.getElementById('imageUrls');
+            const count = container.children.length;
+            const counter = document.getElementById('imageCounter');
+            const addBtn = document.getElementById('addImageBtn');
+
+            counter.textContent = count;
+            addBtn.disabled = count >= CONSTRAINTS.IMAGE_URLS_MAX_COUNT;
+
+            if (count >= CONSTRAINTS.IMAGE_URLS_MAX_COUNT) {
+                counter.style.color = 'red';
+                addBtn.classList.add('disabled');
+            } else {
+                counter.style.color = '';
+                addBtn.classList.remove('disabled');
+            }
+        }
+
+        function updateHashtagCounter() {
+            const container = document.getElementById('hashtags');
+            const count = container.children.length;
+            const counter = document.getElementById('hashtagCounter');
+            const addBtn = document.getElementById('addHashtagBtn');
+
+            counter.textContent = count;
+            addBtn.disabled = count >= CONSTRAINTS.HASHTAGS_MAX_COUNT;
+
+            if (count >= CONSTRAINTS.HASHTAGS_MAX_COUNT) {
+                counter.style.color = 'red';
+                addBtn.classList.add('disabled');
+            } else {
+                counter.style.color = '';
+                addBtn.classList.remove('disabled');
+            }
+        }
+
+        document.getElementById('postForm').addEventListener('submit', function(e) {
+            let isValid = true;
+            const errors = [];
+
+            const title = document.querySelector('input[name="Title"]').value.trim();
+            if (title.length === 0) {
+                errors.push('Post title is required.');
+                isValid = false;
+            } else if (title.length > CONSTRAINTS.TITLE_MAX_LENGTH) {
+                errors.push(`Post title cannot exceed ${CONSTRAINTS.TITLE_MAX_LENGTH} characters.`);
+                isValid = false;
+            }
+
+            const content = document.querySelector('textarea[name="Content"]').value.trim();
+            if (content.length === 0) {
+                errors.push('Post content is required.');
+                isValid = false;
+            } else if (content.length > CONSTRAINTS.CONTENT_MAX_LENGTH) {
+                errors.push(`Post content cannot exceed ${CONSTRAINTS.CONTENT_MAX_LENGTH} characters.`);
+                isValid = false;
+            }
+
+            const hashtagInputs = document.querySelectorAll('input[name="Hashtags"]');
+            hashtagInputs.forEach((input, index) => {
+                const value = input.value.trim();
+                if (value && value.length > CONSTRAINTS.HASHTAG_NAME_MAX_LENGTH) {
+                    errors.push(`Hashtag ${index + 1} cannot exceed ${CONSTRAINTS.HASHTAG_NAME_MAX_LENGTH} characters.`);
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault();
+                alert('Please fix the following errors:\n\n' + errors.join('\n'));
+            }
+        });
     </script>
 }

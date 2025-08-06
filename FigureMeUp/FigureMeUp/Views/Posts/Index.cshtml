@@ -14,13 +14,54 @@
     }
 </div>
 
+<!-- Filter Controls -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="searchAuthor" placeholder="Search by author...">
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="searchTitle" placeholder="Search by title...">
+            </div>
+            <div class="col-md-2">
+                <select class="form-select" id="sortBy">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="mostLiked">Most Liked</option>
+                    <option value="mostViewed">Most Viewed</option>
+                    <option value="title">Title A-Z</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select" id="hasImages">
+                    <option value="">All Posts</option>
+                    <option value="withImages">With Images</option>
+                    <option value="textOnly">Text Only</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary bg-primary border-0 w-100" onclick="applyFilters()">
+                    <i class="fas fa-filter me-2"></i>Filter
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @if (Model.Any())
 {
-    <div class="row justify-content-center">
-        <div class="col-lg-8 col-xl-6">
-            @foreach (var post in Model)
-            {
-                <div class="card shadow-sm mb-4 bg-body">
+    <div class="row justify-content-center" id="postsContainer">
+        @foreach (var post in Model)
+        {
+            <div class="col-lg-6 mb-4 post-card border-0"
+                 data-author="@(post.Publisher?.UserName ?? "Unknown")"
+                 data-title="@post.Title.ToLower()"
+                 data-likes="@post.LikesCount"
+                 data-views="@post.ViewsCount"
+                 data-date="@post.CreatedAt.Ticks"
+                 data-has-images="@(post.ImageUrls.Any() ? "true" : "false")">
+                <div class="card shadow-sm h-100 bg-body">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start mb-3">
                             <div class="flex-grow-1">
@@ -68,21 +109,21 @@
                                 @if (post.ImageUrls.Count() == 1)
                                 {
                                     <div class="col-12">
-                                        <img src="@post.ImageUrls.First()" class="img-fluid rounded" alt="Post image" style="max-height: 400px; width: 100%; object-fit: cover;">
+                                        <img src="@post.ImageUrls.First()" class="img-fluid rounded" alt="Post image" style="max-height: 300px; width: 100%; object-fit: cover;">
                                     </div>
                                 }
                                 else
                                 {
-                                    @foreach (var imageUrl in post.ImageUrls.Take(3))
+                                    @foreach (var imageUrl in post.ImageUrls.Take(2))
                                     {
-                                        <div class="col-md-4 mb-2">
-                                            <img src="@imageUrl" class="img-fluid rounded" alt="Post image" style="height: 150px; width: 100%; object-fit: cover;">
+                                        <div class="col-6 mb-2">
+                                            <img src="@imageUrl" class="img-fluid rounded" alt="Post image" style="height: 120px; width: 100%; object-fit: cover;">
                                         </div>
                                     }
-                                    @if (post.ImageUrls.Count() > 3)
+                                    @if (post.ImageUrls.Count() > 2)
                                     {
                                         <div class="col-12 text-center mt-2">
-                                            <small class="text-muted">+@(post.ImageUrls.Count() - 3) more images</small>
+                                            <small class="text-muted">+@(post.ImageUrls.Count() - 2) more images</small>
                                         </div>
                                     }
                                 }
@@ -160,8 +201,8 @@
                         </div>
                     </div>
                 }
-            }
-        </div>
+            </div>
+        }
     </div>
 }
 else
@@ -183,7 +224,6 @@ else
 @section Scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Add click handlers to all like buttons
             document.querySelectorAll('.like-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     toggleLike(this);
@@ -191,22 +231,108 @@ else
             });
         });
 
+        function applyFilters() {
+            const author = document.getElementById('searchAuthor').value.toLowerCase();
+            const title = document.getElementById('searchTitle').value.toLowerCase();
+            const sortBy = document.getElementById('sortBy').value;
+            const hasImages = document.getElementById('hasImages').value;
+
+            const postCards = Array.from(document.querySelectorAll('.post-card'));
+
+            const filteredCards = postCards.filter(card => {
+                let showCard = true;
+
+                if (author && !card.dataset.author.toLowerCase().includes(author)) {
+                    showCard = false;
+                }
+
+                if (title && !card.dataset.title.includes(title)) {
+                    showCard = false;
+                }
+
+                if (hasImages === 'withImages' && card.dataset.hasImages !== 'true') {
+                    showCard = false;
+                } else if (hasImages === 'textOnly' && card.dataset.hasImages === 'true') {
+                    showCard = false;
+                }
+
+                return showCard;
+            });
+
+            postCards.forEach(card => card.style.display = 'none');
+
+            filteredCards.sort((a, b) => {
+                switch(sortBy) {
+                    case 'oldest':
+                        return parseInt(a.dataset.date) - parseInt(b.dataset.date);
+                    case 'mostLiked':
+                        return parseInt(b.dataset.likes) - parseInt(a.dataset.likes);
+                    case 'mostViewed':
+                        return parseInt(b.dataset.views) - parseInt(a.dataset.views);
+                    case 'title':
+                        return a.dataset.title.localeCompare(b.dataset.title);
+                    case 'newest':
+                    default:
+                        return parseInt(b.dataset.date) - parseInt(a.dataset.date);
+                }
+            });
+
+            const container = document.getElementById('postsContainer');
+            filteredCards.forEach(card => {
+                card.style.display = '';
+                container.appendChild(card);
+            });
+
+            updateNoResultsMessage(filteredCards.length === 0);
+        }
+
+        function updateNoResultsMessage(showMessage) {
+            let noResultsDiv = document.getElementById('noResultsMessage');
+
+            if (showMessage) {
+                if (!noResultsDiv) {
+                    noResultsDiv = document.createElement('div');
+                    noResultsDiv.id = 'noResultsMessage';
+                    noResultsDiv.className = 'text-center py-5 col-12';
+                    noResultsDiv.innerHTML = `
+                        <i class="fas fa-search fa-3x text-white mb-3"></i>
+                        <h4 class="text-white">No posts match your filters</h4>
+                        <p class="text-white">Try adjusting your search criteria</p>
+                        <button class="btn btn-outline-primary bg-secondary" onclick="resetFilters()">
+                            <i class="fas fa-undo me-2"></i>Reset Filters
+                        </button>
+                    `;
+                    document.getElementById('postsContainer').appendChild(noResultsDiv);
+                }
+                noResultsDiv.style.display = '';
+            } else {
+                if (noResultsDiv) {
+                    noResultsDiv.style.display = 'none';
+                }
+            }
+        }
+
+        function resetFilters() {
+            document.getElementById('searchAuthor').value = '';
+            document.getElementById('searchTitle').value = '';
+            document.getElementById('sortBy').value = 'newest';
+            document.getElementById('hasImages').value = '';
+            applyFilters();
+        }
+
         function toggleLike(button) {
             const postId = button.getAttribute('data-post-id');
             const isLiked = button.getAttribute('data-is-liked') === 'true';
 
             console.log('Toggle like called for post:', postId, 'Currently liked:', isLiked);
 
-            // Disable button to prevent multiple clicks
             const originalContent = button.innerHTML;
             button.disabled = true;
             button.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Processing...';
 
-            // Construct URL with query parameter
             const url = '@Url.Action("ToggleLike", "Posts")' + '?id=' + encodeURIComponent(postId);
             console.log('Sending request to:', url);
 
-            // Make AJAX call with GET method first to test
             fetch(url, {
                 method: 'POST',
                 headers: {
@@ -241,26 +367,21 @@ else
                 console.log('Received data:', data);
 
                 if (data.success) {
-                    // Update button state using data from server
                     button.setAttribute('data-is-liked', data.isLiked.toString());
 
-                    // Update button appearance and text
                     if (data.isLiked) {
                         button.className = 'btn btn-sm me-2 like-btn btn-danger';
                     } else {
                         button.className = 'btn btn-sm me-2 like-btn btn-outline-danger';
                     }
 
-                    // Update button text - check if like-text span exists
                     const likeTextSpan = button.querySelector('.like-text');
                     if (likeTextSpan) {
                         likeTextSpan.textContent = data.isLiked ? 'Unlike' : 'Like';
                     } else {
-                        // If span doesn't exist, update the entire button content
                         button.innerHTML = `<i class="fas fa-heart me-1"></i><span class="like-text">${data.isLiked ? 'Unlike' : 'Like'}</span>`;
                     }
 
-                    // Update like count with server data
                     const likeCountSpan = document.querySelector(`.like-count[data-post-id="${postId}"] .count-number`);
                     if (likeCountSpan) {
                         likeCountSpan.textContent = data.likesCount;
@@ -268,17 +389,18 @@ else
                         console.warn('Like count span not found for post:', postId);
                     }
 
-                    // Show success notification
+                    const postCard = button.closest('.post-card');
+                    if (postCard) {
+                        postCard.dataset.likes = data.likesCount;
+                    }
+
                     showNotification('success', data.message);
                 } else {
                     console.error('Server returned error:', data.message);
-                    // Show error notification
                     showNotification('error', data.message || 'Failed to toggle like');
                 }
 
-                // Re-enable button with original structure
                 button.disabled = false;
-                // Restore the original button structure if it was lost
                 if (!button.querySelector('.like-text')) {
                     const currentIsLiked = button.getAttribute('data-is-liked') === 'true';
                     button.innerHTML = `<i class="fas fa-heart me-1"></i><span class="like-text">${currentIsLiked ? 'Unlike' : 'Like'}</span>`;
@@ -286,22 +408,18 @@ else
                     button.innerHTML = originalContent;
                 }
 
-                // Update button text - check if like-text span exists
-                    const likeTextSpan = button.querySelector('.like-text');
-                    if (likeTextSpan) {
-                        likeTextSpan.textContent = data.isLiked ? 'Unlike' : 'Like';
-                    } else {
-                        // If span doesn't exist, update the entire button content
-                        button.innerHTML = `<i class="fas fa-heart me-1"></i><span class="like-text">${data.isLiked ? 'Unlike' : 'Like'}</span>`;
-                    }
+                const likeTextSpan = button.querySelector('.like-text');
+                if (likeTextSpan) {
+                    likeTextSpan.textContent = data.isLiked ? 'Unlike' : 'Like';
+                } else {
+                    button.innerHTML = `<i class="fas fa-heart me-1"></i><span class="like-text">${data.isLiked ? 'Unlike' : 'Like'}</span>`;
+                }
             })
             .catch(error => {
                 console.error('Fetch error:', error);
                 console.error('Error details:', error.message);
 
-                // Re-enable button on error with proper structure
                 button.disabled = false;
-                // Restore the original button structure
                 if (!button.querySelector('.like-text')) {
                     const currentIsLiked = button.getAttribute('data-is-liked') === 'true';
                     button.innerHTML = `<i class="fas fa-heart me-1"></i><span class="like-text">${currentIsLiked ? 'Unlike' : 'Like'}</span>`;
@@ -309,14 +427,11 @@ else
                     button.innerHTML = originalContent;
                 }
 
-                // Show error notification with more details
                 showNotification('error', error.message);
             });
         }
 
-        // Helper function to show notifications (same as in LikedContent view)
         function showNotification(type, message) {
-            // Create notification element
             const notification = document.createElement('div');
             notification.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show position-fixed`;
             notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
@@ -325,10 +440,8 @@ else
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             `;
 
-            // Add to page
             document.body.appendChild(notification);
 
-            // Auto-remove after 5 seconds
             setTimeout(() => {
                 if (notification.parentNode) {
                     notification.remove();
