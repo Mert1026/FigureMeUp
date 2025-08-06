@@ -144,6 +144,35 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+app.Use(async (context, next) =>
+{
+    try
+    {
+        await next();
+
+        // Handle 404 Not Found
+        if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
+        {
+            context.Request.Path = "/error/404";
+            await next();
+        }
+    }
+    catch (Exception ex)
+    {
+        // Handle unhandled exception (500)
+        if (!context.Response.HasStarted)
+        {
+            context.Response.Clear();
+            context.Response.StatusCode = 500;
+            context.Request.Path = "/error/500";
+            await next();
+        }
+
+        // Optionally log the exception (ex) here using ILogger
+    }
+});
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -156,6 +185,8 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+
 
 app.UseRouting();
 

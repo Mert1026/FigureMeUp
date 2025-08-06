@@ -44,9 +44,11 @@ namespace FigureMeUp.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error loading posts for management");
-                TempData["Error"] = "Failed to load posts. Please try again.";
-                return View(new List<object>()); // Return empty list or redirect to dashboard
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
         }
 
@@ -60,8 +62,11 @@ namespace FigureMeUp.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error deleting post {PostId}", id);
-                TempData["Error"] = "Failed to delete post. Please try again.";
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
             return RedirectToAction(nameof(ManagePosts));
         }
@@ -76,8 +81,11 @@ namespace FigureMeUp.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error restoring post {PostId}", id);
-                TempData["Error"] = "Failed to restore post. Please try again.";
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
             return RedirectToAction(nameof(ManagePosts));
         }
@@ -92,9 +100,11 @@ namespace FigureMeUp.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error loading figures for management");
-                TempData["Error"] = "Failed to load figures. Please try again.";
-                return View(new List<object>()); // Return empty list or redirect to dashboard
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
         }
 
@@ -108,8 +118,11 @@ namespace FigureMeUp.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error deleting figure {FigureId}", id);
-                TempData["Error"] = "Failed to delete figure. Please try again.";
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
             return RedirectToAction(nameof(ManageFigures));
         }
@@ -124,8 +137,11 @@ namespace FigureMeUp.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error restoring figure {FigureId}", id);
-                TempData["Error"] = "Failed to restore figure. Please try again.";
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
             return RedirectToAction(nameof(ManageFigures));
         }
@@ -288,9 +304,11 @@ namespace FigureMeUp.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error loading users for management");
-                TempData["Error"] = "Failed to load users. Please try again.";
-                return View(new List<AdminUserViewModel>());
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
         }
 
@@ -312,8 +330,11 @@ namespace FigureMeUp.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error in BanUser action for user {UserId}", id);
-                TempData["Error"] = "An error occurred while banning the user.";
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
 
             return RedirectToAction(nameof(ManageUsers));
@@ -337,8 +358,11 @@ namespace FigureMeUp.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error in UnbanUser action for user {UserId}", id);
-                TempData["Error"] = "An error occurred while unbanning the user.";
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
 
             return RedirectToAction(nameof(ManageUsers));

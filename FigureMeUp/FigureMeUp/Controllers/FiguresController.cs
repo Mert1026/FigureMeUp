@@ -24,21 +24,43 @@ namespace FigureMeUp.Controllers
         // GET: Figures
         public async Task<IActionResult> Index()
         {
-            var figures = await _figureService.GetAllFiguresAsync();
-            var activeFigures = figures.Where(f => !f.IsDeleted).ToList();
-            return View(activeFigures);
+            try
+            {
+                var figures = await _figureService.GetAllFiguresAsync();
+                var activeFigures = figures.Where(f => !f.IsDeleted).ToList();
+                return View(activeFigures);
+            }
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
         // GET: Figures/Details/5(vece e GUID)
         public async Task<IActionResult> Details(Guid id)
         {
-            var figure = await _figureService.GetFigureByIdAsync(id);
-            if (figure == null || figure.IsDeleted)
+            try
             {
-                return NotFound();
-            }
+                var figure = await _figureService.GetFigureByIdAsync(id);
+                if (figure == null || figure.IsDeleted)
+                {
+                    return NotFound();
+                }
 
-            return View(figure);
+                return View(figure);
+            }
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
         // GET: Figures/Create
@@ -54,23 +76,39 @@ namespace FigureMeUp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(FiguresViewModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var result = await _figureService.AddFigureAsync(model, userId);
+                if (ModelState.IsValid)
+                {
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    if (string.IsNullOrEmpty(userId))
+                    {
+                        return Forbid();
+                    }
+                    var result = await _figureService.AddFigureAsync(model, userId);
 
-                if (result)
-                {
-                    TempData["Success"] = "Figure created successfully!";
-                    return RedirectToAction(nameof(Index));
+                    if (result)
+                    {
+                        TempData["Success"] = "Figure created successfully!";
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Failed to create figure. Please try again.");
+                    }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Failed to create figure. Please try again.");
-                }
+
+                return View(model);
+
             }
-
-            return View(model);
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
         // GET: Figures/Edit/5(vece e GUID)
@@ -78,31 +116,42 @@ namespace FigureMeUp.Controllers
         [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var figure = await _figureService.GetFigureByIdAsync(id);
-            if (figure == null || figure.IsDeleted)
+            try
             {
-                return NotFound();
+                var figure = await _figureService.GetFigureByIdAsync(id);
+                if (figure == null || figure.IsDeleted)
+                {
+                    return NotFound();
+                }
+
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (figure.OwnerId != userId
+                    && !User.IsInRole("Admin"))
+                {
+                    return Forbid();
+                }
+
+                var model = new FiguresViewModel
+                {
+                    Id = figure.Id,
+                    Name = figure.Name,
+                    Description = figure.Description,
+                    ImageUrls = figure.ImageUrls.ToList(),
+                    Hashtags = figure.Hashtags.Select(h => h.Name).ToList(),
+                    Rarity = figure.Rarity.Name,
+                    OwnerName = figure.Owner.UserName ?? string.Empty
+                };
+
+                return View(model);
             }
-
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (figure.OwnerId != userId
-                && !User.IsInRole("Admin"))
+            catch (Exception ex)
             {
-                return Forbid();
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
-
-            var model = new FiguresViewModel
-            {
-                Id = figure.Id,
-                Name = figure.Name,
-                Description = figure.Description,
-                ImageUrls = figure.ImageUrls.ToList(),
-                Hashtags = figure.Hashtags.Select(h => h.Name).ToList(),
-                Rarity = figure.Rarity.Name,
-                OwnerName = figure.Owner.UserName ?? string.Empty
-            };
-
-            return View(model);
         }
 
         // POST: Figures/Edit/5(vece e GUID)
@@ -112,28 +161,43 @@ namespace FigureMeUp.Controllers
         [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> Edit(Guid id, FiguresViewModel model)
         {
-            if (id != model.Id)
+            try
             {
-                return NotFound();
-            }
+                if (id != model.Id)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid)
+                if (ModelState.IsValid)
+                {
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    if (string.IsNullOrEmpty(userId))
+                    {
+                        return Forbid();
+                    }
+                    var result = await _figureService.UpdateFigureAsync(model, userId);
+
+                    if (result)
+                    {
+                        TempData["Success"] = "Figure updated successfully!";
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Failed to update figure. Please try again.");
+                    }
+                }
+
+                return View(model);
+            }
+            catch (Exception ex)
             {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var result = await _figureService.UpdateFigureAsync(model, userId);
-
-                if (result)
+                CustomErrorViewModel err = new CustomErrorViewModel()
                 {
-                    TempData["Success"] = "Figure updated successfully!";
-                    return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Failed to update figure. Please try again.");
-                }
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
-
-            return View(model);
         }
 
         // POST: Figures/Delete/5(vece e GUID)
@@ -143,31 +207,43 @@ namespace FigureMeUp.Controllers
         [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var figure = await _figureService.GetFigureByIdAsync(id);
-            if (figure == null)
+            try
             {
-                return NotFound();
-            }
+                var figure = await _figureService.GetFigureByIdAsync(id);
+                if (figure == null)
+                {
+                    return NotFound();
+                }
 
-            bool a = User.IsInRole("Admin");
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (figure.OwnerId != userId
-                && !a)
-            {
-                return Forbid();
-            }
+                bool a = User.IsInRole("Admin");
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (figure.OwnerId != userId
+                    && !a)
+                {
+                    return Forbid();
+                }
 
-            var result = await _figureService.DeleteFigureAsync(id);
-            if (result)
-            {
-                TempData["Success"] = "Figure deleted successfully!";
-            }
-            else
-            {
-                TempData["Error"] = "Failed to delete figure.";
-            }
+                var result = await _figureService.DeleteFigureAsync(id);
+                if (result)
+                {
+                    TempData["Success"] = "Figure deleted successfully!";
+                }
+                else
+                {
+                    TempData["Error"] = "Failed to delete figure.";
+                }
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+
+            }
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
         [HttpPost]
@@ -223,7 +299,11 @@ namespace FigureMeUp.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = $"Server error: {ex.Message}" });
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
         }
     }

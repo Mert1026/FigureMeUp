@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigureMeUp.Services.Core", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FigureMeUp.Infrastructure", "FigureMeUp.Infrastructure\FigureMeUp.Infrastructure.csproj", "{8AE2FB6B-59DA-4FFB-A986-2A5B4781DFE6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{51C8B788-028D-42F3-B6A9-E02DE99BB35B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

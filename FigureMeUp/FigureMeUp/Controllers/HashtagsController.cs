@@ -1,4 +1,5 @@
 ﻿using FigureMeUp.Data.Models;
+using FigureMeUp.Data.Models.View_models;
 using FigureMeUp.Services.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,98 +25,153 @@ namespace FigureMeUp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Hashtag model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var existingHashtag = await _hashtagService.GetHashtagByNameAsync(model.Name);
-                if (existingHashtag != null)
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("Name", "This hashtag already exists.");
-                    return View(model);
+                    var existingHashtag = await _hashtagService.GetHashtagByNameAsync(model.Name);
+                    if (existingHashtag != null)
+                    {
+                        ModelState.AddModelError("Name", "This hashtag already exists.");
+                        return View(model);
+                    }
+
+                    var result = await _hashtagService.CreateHashtagAsync(model);
+
+                    if (result)
+                    {
+                        TempData["Success"] = "Hashtag created successfully!";
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Failed to create hashtag. Please try again.");
+                    }
                 }
 
-                var result = await _hashtagService.CreateHashtagAsync(model);
-
-                if (result)
-                {
-                    TempData["Success"] = "Hashtag created successfully!";
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Failed to create hashtag. Please try again.");
-                }
+                return View(model);
             }
-
-            return View(model);
+            catch(Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _hashtagService.DeleteHashtagWithIdAsync(id);
-
-            if (result)
+            try
             {
-                TempData["Success"] = "Hashtag deleted successfully!";
-            }
-            else
-            {
-                TempData["Error"] = "Failed to delete hashtag.";
-            }
+                var result = await _hashtagService.DeleteHashtagWithIdAsync(id);
 
-            return RedirectToAction("Index", "Home");
+                if (result)
+                {
+                    TempData["Success"] = "Hashtag deleted successfully!";
+                }
+                else
+                {
+                    TempData["Error"] = "Failed to delete hashtag.";
+                }
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteByName(string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            try
             {
-                TempData["Error"] = "Hashtag name is required.";
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    TempData["Error"] = "Hashtag name is required.";
+                    return RedirectToAction("Index", "Home");
+                }
+
+                var result = await _hashtagService.DeleteHashtagWithNameAsync(name);
+
+                if (result)
+                {
+                    TempData["Success"] = "Hashtag deleted successfully!";
+                }
+                else
+                {
+                    TempData["Error"] = "Failed to delete hashtag or hashtag not found.";
+                }
+
                 return RedirectToAction("Index", "Home");
             }
-
-            var result = await _hashtagService.DeleteHashtagWithNameAsync(name);
-
-            if (result)
+            catch(Exception ex)
             {
-                TempData["Success"] = "Hashtag deleted successfully!";
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
-            else
-            {
-                TempData["Error"] = "Failed to delete hashtag or hashtag not found.";
-            }
-
-            return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var hashtag = await _hashtagService.GetHashtagByIdAsync(id);
-            if (hashtag == null || hashtag.IsDeleted)
+            try
             {
-                return NotFound();
-            }
+                var hashtag = await _hashtagService.GetHashtagByIdAsync(id);
+                if (hashtag == null || hashtag.IsDeleted)
+                {
+                    return NotFound();
+                }
 
-            return View(hashtag);
+                return View(hashtag);
+            }
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
         public async Task<IActionResult> DetailsByName(string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            try
             {
-                return NotFound();
-            }
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    return NotFound();
+                }
 
-            var hashtag = await _hashtagService.GetHashtagByNameAsync(name);
-            if (hashtag == null || hashtag.IsDeleted)
+                var hashtag = await _hashtagService.GetHashtagByNameAsync(name);
+                if (hashtag == null || hashtag.IsDeleted)
+                {
+                    return NotFound();
+                }
+
+                return View("Details", hashtag);
+            }
+            catch (Exception ex)
             {
-                return NotFound();
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
-
-            return View("Details", hashtag);
         }
     }
 }

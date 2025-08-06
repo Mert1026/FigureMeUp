@@ -19,21 +19,44 @@ namespace FigureMeUp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var posts = await _postService.GetAllPostsAsync();
-            var activePosts = posts.Where(p => !p.IsDeleted).OrderByDescending(p => p.CreatedAt).ToList();
-            return View(activePosts);
+            try
+            {
+                var posts = await _postService.GetAllPostsAsync();
+                var activePosts = posts.Where(p => !p.IsDeleted).OrderByDescending(p => p.CreatedAt).ToList();
+                return View(activePosts);
+            }
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
+
         }
 
         public async Task<IActionResult> Details(Guid id)
         {
-            var post = await _postService.GetPostByIdAsync(id);
-            var addView = await _postService.AddViewAsync(id);
-            if ((post == null|| post.IsDeleted) && !User.IsInRole("Admin"))
+            try
             {
-                return NotFound();
-            }
+                var post = await _postService.GetPostByIdAsync(id);
+                var addView = await _postService.AddViewAsync(id);
+                if ((post == null || post.IsDeleted) && !User.IsInRole("Admin"))
+                {
+                    return NotFound();
+                }
 
-            return View(post);
+                return View(post);
+            }
+            catch(Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
 
@@ -49,25 +72,39 @@ namespace FigureMeUp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PostViewModel model)
         {
-            if (ModelState.IsValid
-                || model != null)
+            try
             {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-                var result = await _postService.CreatePostAsync(model, userId);
-
-                if (result)
+                if (ModelState.IsValid
+               || model != null)
                 {
-                    TempData["Success"] = "Post created successfully!";
-                    return RedirectToAction(nameof(Index));
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    if (string.IsNullOrEmpty(userId))
+                    {
+                        return Forbid();
+                    }
+                    var result = await _postService.CreatePostAsync(model, userId);
+
+                    if (result)
+                    {
+                        TempData["Success"] = "Post created successfully!";
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Failed to create post. Please try again.");
+                    }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Failed to create post. Please try again.");
-                }
+
+                return View(model);
             }
-
-            return View(model);
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
 
@@ -75,30 +112,41 @@ namespace FigureMeUp.Controllers
         [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var post = await _postService.GetPostByIdAsync(id);
-            if (post == null || post.IsDeleted)
+            try
             {
-                return NotFound();
+                var post = await _postService.GetPostByIdAsync(id);
+                if (post == null || post.IsDeleted)
+                {
+                    return NotFound();
+                }
+
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (post.PublisherId != userId
+                    && !User.IsInRole("Admin"))
+                {
+                    return Forbid();
+                }
+
+                var model = new PostViewModel
+                {
+                    Title = post.Title,
+                    Content = post.Content,
+                    ImageUrls = post.ImageUrls.ToList(),
+                    Hashtags = post.Hashtags.Select(h => h.Name).ToList(),
+                    AuthorName = post.Publisher?.UserName ?? string.Empty,
+                    PostedOn = post.CreatedAt.ToString("yyyy-MM-dd")
+                };
+
+                return View(model);
             }
-
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (post.PublisherId != userId
-                && !User.IsInRole("Admin"))
+            catch (Exception ex)
             {
-                return Forbid();
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
-
-            var model = new PostViewModel
-            {
-                Title = post.Title,
-                Content = post.Content,
-                ImageUrls = post.ImageUrls.ToList(),
-                Hashtags = post.Hashtags.Select(h => h.Name).ToList(),
-                AuthorName = post.Publisher?.UserName ?? string.Empty,
-                PostedOn = post.CreatedAt.ToString("yyyy-MM-dd")
-            };
-
-            return View(model);
         }
 
 
@@ -108,39 +156,51 @@ namespace FigureMeUp.Controllers
         [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> Edit(Guid id, PostViewModel model)
         {
-            var existingPost = await _postService.GetPostByIdAsync(id);
-            if (existingPost == null)
+          
+            try
             {
-                return NotFound();
-            }
-
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (existingPost.PublisherId != userId
-                && !User.IsInRole("Admin"))
-            {
-                return Forbid();
-            }
-
-            if (ModelState.IsValid)
-            {
-                existingPost.Title = model.Title;
-                existingPost.Content = model.Content;
-                existingPost.ImageUrls = model.ImageUrls ?? new List<string>();
-
-                var result = await _postService.UpdatePostAsync(existingPost);
-
-                if (result)
+                var existingPost = await _postService.GetPostByIdAsync(id);
+                if (existingPost == null)
                 {
-                    TempData["Success"] = "Post updated successfully!";
-                    return RedirectToAction(nameof(Index));
+                    return NotFound();
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Failed to update post. Please try again.");
-                }
-            }
 
-            return View(model);
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (existingPost.PublisherId != userId
+                    && !User.IsInRole("Admin"))
+                {
+                    return Forbid();
+                }
+
+                if (ModelState.IsValid)
+                {
+                    existingPost.Title = model.Title;
+                    existingPost.Content = model.Content;
+                    existingPost.ImageUrls = model.ImageUrls ?? new List<string>();
+
+                    var result = await _postService.UpdatePostAsync(existingPost);
+
+                    if (result)
+                    {
+                        TempData["Success"] = "Post updated successfully!";
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Failed to update post. Please try again.");
+                    }
+                }
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
         [HttpPost]
@@ -148,72 +208,43 @@ namespace FigureMeUp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var post = await _postService.GetPostByIdAsync(id);
-            if (post == null)
+            try
             {
-                return NotFound();
-            }
+                var post = await _postService.GetPostByIdAsync(id);
+                if (post == null)
+                {
+                    return NotFound();
+                }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (post.PublisherId != userId
-                && !User.IsInRole("Admin"))
-            {
-                return Forbid();
-            }
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (post.PublisherId != userId
+                    && !User.IsInRole("Admin"))
+                {
+                    return Forbid();
+                }
 
-            var result = await _postService.DeletePostAsync(id);
-            if (result)
-            {
-                TempData["Success"] = "Post deleted successfully!";
-            }
-            else
-            {
-                TempData["Error"] = "Failed to delete post.";
-            }
+                var result = await _postService.DeletePostAsync(id);
+                if (result)
+                {
+                    TempData["Success"] = "Post deleted successfully!";
+                }
+                else
+                {
+                    TempData["Error"] = "Failed to delete post.";
+                }
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
+           
         }
-
-        // POST: Posts/ToggleLike/5
-        //[HttpPost]
-        //[Authorize]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> ToggleLike(Guid id)
-        //{
-        //    var post = await _postService.GetPostByIdAsync(id);
-        //    if (post == null || post.IsDeleted)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        //    // TODO: Implement like functionality in PostService
-        //    // 1. Create a PostLikes table with PostId, UserId, CreatedAt columns
-        //    // 2. Add methods to PostService:
-        //    //    - Task<bool> TogglePostLikeAsync(Guid postId, string userId)
-        //    //    - Task<int> GetPostLikesCountAsync(Guid postId)
-        //    //    - Task<bool> IsPostLikedByUserAsync(Guid postId, string userId)
-        //    // 3. Update Post model to include navigation property for likes
-
-        //    var result = await _postService.ToggleLikeAsync(id, userId);
-        //    if (result)
-        //    {
-        //        TempData["Success"] = "Like status updated!";
-        //    }
-
-        //    //// For now, just redirect back
-        //    //TempData["Info"] = "Like functionality will be implemented soon!";
-        //    return RedirectToAction(nameof(Index));
-        //    //return Json(new { success = true, message = "Like functionality will be implemented soon!" });
-        //}
-
-        // Add this method to your PostsController.cs
-
-        // Add this method to your PostsController.cs
-
-        // Add this method to your PostsController.cs
-        // Replace the existing ToggleLike method with this simpler version
 
         [HttpPost]
         [Authorize]
@@ -271,11 +302,11 @@ namespace FigureMeUp.Controllers
             }
             catch (Exception ex)
             {
-                // Log the actual exception for debugging
-                System.Diagnostics.Debug.WriteLine($"ToggleLike error: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"StackTrace: {ex.StackTrace}");
-
-                return Json(new { success = false, message = $"Server error: {ex.Message}" });
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
         }
 
@@ -284,15 +315,28 @@ namespace FigureMeUp.Controllers
         [Authorize]
         public async Task<IActionResult> ToggleLikeAjax(Guid id)
         {
-            var post = await _postService.GetPostByIdAsync(id);
-            if (post == null || post.IsDeleted)
+           
+            try
             {
-                return Json(new { success = false, message = "Post not found" });
+                var post = await _postService.GetPostByIdAsync(id);
+                if (post == null || post.IsDeleted)
+                {
+                    return Json(new { success = false, message = "Post not found" });
+                }
+
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                return Json(new { success = false, message = "Like functionality not implemented yet" });
+
             }
-
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            return Json(new { success = false, message = "Like functionality not implemented yet" });
+            catch(Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
     }
 }

@@ -19,11 +19,22 @@ namespace FigureMeUp.Controllers
         // GET: Account/Register
         public IActionResult Register()
         {
-            if (User.Identity?.IsAuthenticated == true)
+            try
             {
-                return RedirectToAction("Index", "Home");
+                if (User.Identity?.IsAuthenticated == true)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                return View();
             }
-            return View();
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
         // POST: Account/Register
@@ -31,42 +42,64 @@ namespace FigureMeUp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var user = new IdentityUser
+                if (ModelState.IsValid)
                 {
-                    UserName = model.Username,
-                    Email = model.Email
+                    var user = new IdentityUser
+                    {
+                        UserName = model.Username,
+                        Email = model.Email
+                    };
+
+                    var result = await _userManager.CreateAsync(user, model.Password);
+
+                    if (result.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        TempData["Success"] = "Registration successful! Welcome to FigureMeUp!";
+                        return RedirectToAction("Index", "Home");
+                    }
+
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
                 };
-
-                var result = await _userManager.CreateAsync(user, model.Password);
-
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    TempData["Success"] = "Registration successful! Welcome to FigureMeUp!";
-                    return RedirectToAction("Index", "Home");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+                return View("CustomError", err);
             }
 
-            return View(model);
         }
-
         // GET: Account/Login
         public IActionResult Login(string? returnUrl = null)
         {
-            if (User.Identity?.IsAuthenticated == true)
+            try
             {
-                return RedirectToAction("Index", "Home");
-            }
+                if (User.Identity?.IsAuthenticated == true)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
 
-            ViewData["ReturnUrl"] = returnUrl;
-            return View();
+                ViewData["ReturnUrl"] = returnUrl;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
         // POST: Account/Login
@@ -74,42 +107,54 @@ namespace FigureMeUp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-
-            if (ModelState.IsValid)
+            try
             {
-                var result = await _signInManager.PasswordSignInAsync(
-                    model.Username,
-                    model.Password,
-                    model.RememberMe,
-                    lockoutOnFailure: false);
+                ViewData["ReturnUrl"] = returnUrl;
 
-                if (result.Succeeded)
+                if (ModelState.IsValid)
                 {
-                    IdentityUser? user = await _userManager.FindByNameAsync(model.Username);
-                    if(user == null)
+                    var result = await _signInManager.PasswordSignInAsync(
+                        model.Username,
+                        model.Password,
+                        model.RememberMe,
+                        lockoutOnFailure: false);
+
+                    if (result.Succeeded)
                     {
-                        ModelState.AddModelError(string.Empty, "User not found.");
-                        return View(model);
-                    }
-                    else
-                    {
-                        // Check if the user is banned
-                        if (await _userManager.IsInRoleAsync(user, "Banned"))
+                        IdentityUser? user = await _userManager.FindByNameAsync(model.Username);
+                        if (user == null)
                         {
-                            ModelState.AddModelError(string.Empty, "Your account is banned. Please contact support.");
+                            ModelState.AddModelError(string.Empty, "User not found.");
                             return View(model);
                         }
-                        
-                    }
+                        else
+                        {
+                            // Check if the user is banned
+                            if (await _userManager.IsInRoleAsync(user, "Banned"))
+                            {
+                                ModelState.AddModelError(string.Empty, "Your account is banned. Please contact support.");
+                                return View(model);
+                            }
+
+                        }
                         TempData["Success"] = "Welcome back!";
-                    return RedirectToLocal(returnUrl);
+                        return RedirectToLocal(returnUrl);
+                    }
+
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 }
 
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-            }
+                return View(model);
 
-            return View(model);
+            }
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
         // POST: Account/Logout
@@ -118,23 +163,45 @@ namespace FigureMeUp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
-            TempData["Success"] = "You have been logged out successfully.";
-            return RedirectToAction("Index", "Home");
+            try
+            {
+                await _signInManager.SignOutAsync();
+                TempData["Success"] = "You have been logged out successfully.";
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
        
 
         private IActionResult RedirectToLocal(string? returnUrl)
         {
-            if (Url.IsLocalUrl(returnUrl))
+            try
             {
-                return Redirect(returnUrl);
+                if (Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Index", "Home");
-            }
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }   
         }
 
     }

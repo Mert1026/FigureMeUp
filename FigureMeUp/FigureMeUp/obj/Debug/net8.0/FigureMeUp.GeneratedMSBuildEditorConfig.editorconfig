@@ -48,6 +48,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWFuYWdlVXNlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Error/CustomError.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXJyb3JcQ3VzdG9tRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Error/er404.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXJyb3JcZXI0MDQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Error/er500.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXJyb3JcZXI1MDAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/merte/Documents/GitHub/FigureMeUp/FigureMeUp/FigureMeUp/Views/Figures/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlndXJlc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

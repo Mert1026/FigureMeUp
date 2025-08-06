@@ -24,68 +24,108 @@ namespace FigureMeUp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var recentFigures = await _figureService.GetAllFiguresAsync();
-            var recentPosts = await _postService.GetAllPostsAsync();
-
-            var model = new HomeViewModel
+            try
             {
-                RecentFigures = recentFigures.Where(f => !f.IsDeleted).Take(6).ToList(),
-                RecentPosts = recentPosts.Where(p => !p.IsDeleted).Take(5).ToList()
-            };
+                var recentFigures = await _figureService.GetAllFiguresAsync();
+                var recentPosts = await _postService.GetAllPostsAsync();
 
-            return View(model);
+                var model = new HomeViewModel
+                {
+                    RecentFigures = recentFigures.Where(f => !f.IsDeleted).Take(6).ToList(),
+                    RecentPosts = recentPosts.Where(p => !p.IsDeleted).Take(5).ToList()
+                };
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
         [Authorize]
         public async Task<IActionResult> MyPosts()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var allPosts = await _postService.GetAllPostsAsync();
-            var userPosts = allPosts.Where(p => p.PublisherId == userId && !p.IsDeleted).ToList();
+            try
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var allPosts = await _postService.GetAllPostsAsync();
+                var userPosts = allPosts.Where(p => p.PublisherId == userId && !p.IsDeleted).ToList();
 
-            return View(userPosts);
+                return View(userPosts);
+            }
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
         [Authorize]
         public async Task<IActionResult> MyFigures()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var allFigures = await _figureService.GetAllFiguresAsync();
-            var userFigures = allFigures.Where(f => f.OwnerId == userId && !f.IsDeleted).ToList();
+            try
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var allFigures = await _figureService.GetAllFiguresAsync();
+                var userFigures = allFigures.Where(f => f.OwnerId == userId && !f.IsDeleted).ToList();
 
-            return View(userFigures);
+                return View(userFigures);
+            }
+            catch (Exception ex)
+            {
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
         [Authorize]
         public async Task<IActionResult> ViewProfile()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userManager.FindByIdAsync(userId);
-            var figures = await _figureService.GetAllFiguresAsync();
-            var posts = await _postService.GetAllPostsAsync();
-
-            if (user == null)
+            try
             {
-                return NotFound();
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return Forbid();
+                }
+                var user = await _userManager.FindByIdAsync(userId);
+                var figures = await _figureService.GetAllFiguresAsync();
+                var posts = await _postService.GetAllPostsAsync();
+
+                if (user == null)
+                {
+                    return View("Err404");
+                }
+
+                var model = new ProfileDetailsViewModel
+                {
+                    UserName = user.UserName ?? string.Empty,
+                    Email = user.Email ?? string.Empty,
+                    FiguresCount = figures.Count(f => f.OwnerId == userId && !f.IsDeleted),
+                    PostsCount = posts.Count(p => p.PublisherId == userId && !p.IsDeleted),
+                };
+
+                return View(model);
             }
-
-            var model = new ProfileDetailsViewModel
+            catch (Exception ex)
             {
-                UserName = user.UserName ?? string.Empty,
-                Email = user.Email ?? string.Empty,
-                FiguresCount = figures.Count(f => f.OwnerId == userId && !f.IsDeleted),
-                PostsCount = posts.Count(p => p.PublisherId == userId && !p.IsDeleted),
-            };
-
-            return View(model);
-        }
-
-        [Authorize]
-        public async Task<IActionResult> ViewFavorites()
-        {
-            //TODO
-            var favorites = new List<Figure>();
-            return View(favorites);
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
+            }
         }
 
         [Authorize]
@@ -94,8 +134,10 @@ namespace FigureMeUp.Controllers
             try
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-                // TODO: Replace these with your actual service methods
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return Forbid();
+                }
                 var likedFigures = await _figureService.GetLikedFiguresByUserIdAsync(userId);
                 var likedPosts = await _postService.GetLikedPostsByUserIdAsync(userId);
 
@@ -107,9 +149,13 @@ namespace FigureMeUp.Controllers
 
                 return View(model);
             }
-            catch
+            catch(Exception ex)
             {
-                return View("Error", new ErrorViewModel { RequestId = "An error occurred while fetching liked content." });
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
             
         }
@@ -128,6 +174,10 @@ namespace FigureMeUp.Controllers
                 }
 
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return Forbid();
+                }
                 var result = await _figureService.ToggleLikeAsync(parsedFigureId, userId);
 
                 if (result)
@@ -141,7 +191,11 @@ namespace FigureMeUp.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = "An error occurred while unliking the figure" });
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
         }
 
@@ -158,6 +212,10 @@ namespace FigureMeUp.Controllers
                 }
 
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return Forbid();
+                }
                 var result = await _postService.ToggleLikeAsync(parsedPostId, userId);
 
                 if (result)
@@ -171,15 +229,13 @@ namespace FigureMeUp.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = "An error occurred while unliking the post" });
+                CustomErrorViewModel err = new CustomErrorViewModel()
+                {
+                    ErrorMessage = ex.Message
+                };
+                return View("CustomError", err);
             }
         }
     }
 
-    // Helper view model for Home/Index
-    public class HomeViewModel
-    {
-        public IEnumerable<Figure> RecentFigures { get; set; } = new List<Figure>();
-        public IEnumerable<Post> RecentPosts { get; set; } = new List<Post>();
-    }
 }

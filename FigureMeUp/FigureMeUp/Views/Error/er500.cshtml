@@ -1,0 +1,177 @@
+﻿@{
+    ViewData["Title"] = "Server Error";
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 text-center py-5">
+            <div class="error-page">
+                <div class="error-icon mb-4">
+                    <i class="fas fa-robot fa-5x text-danger"></i>
+                </div>
+
+                <h1 class="error-code display-1 fw-bold text-danger mb-3">500</h1>
+
+                <h2 class="error-title h3 mb-4">Internal Server Error</h2>
+
+                <p class="error-description lead text-muted mb-4">
+                    Oops! Something went wrong on our end. Our robots are experiencing technical difficulties,
+                    but don't worry - our engineering team has been notified and is working to fix the issue.
+                </p>
+
+                <div class="error-suggestions mb-5">
+                    <div class="card border-0 bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="fas fa-tools text-warning me-2"></i>What happened?
+                            </h5>
+                            <ul class="list-unstyled text-start">
+                                <li class="mb-2">
+                                    <i class="fas fa-exclamation-triangle text-warning me-2"></i>
+                                    A temporary server issue occurred
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-cog text-info me-2"></i>
+                                    Our team has been automatically notified
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-clock text-primary me-2"></i>
+                                    We're working to resolve this quickly
+                                </li>
+                                <li class="mb-0">
+                                    <i class="fas fa-refresh text-success me-2"></i>
+                                    Try refreshing the page in a few moments
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="error-actions">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <button onclick="location.reload()" class="btn btn-primary btn-lg">
+                            <i class="fas fa-sync-alt me-2"></i>Try Again
+                        </button>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-home me-2"></i>Go Home
+                        </a>
+                    </div>
+
+                    <div class="mt-3">
+                        <button onclick="history.back()" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Go Back
+                        </button>
+                    </div>
+                </div>
+
+                <div class="error-info mt-5">
+                    <div class="card border-0 bg-light">
+                        <div class="card-body">
+                            <h6 class="card-title">
+                                <i class="fas fa-info-circle text-info me-2"></i>Error Information
+                            </h6>
+                            <div class="row text-start">
+                                <div class="col-sm-6">
+                                    <small class="text-muted">
+                                        <strong>Error Code:</strong> 500<br>
+                                        <strong>Time:</strong> @DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")<br>
+                                        <strong>Status:</strong> Under Investigation
+                                    </small>
+                                </div>
+                                <div class="col-sm-6">
+                                    <small class="text-muted">
+                                        <strong>Expected Resolution:</strong> Within 15 minutes<br>
+                                        <strong>Service:</strong> FigureMeUp Platform<br>
+                                        <strong>Impact:</strong> Temporary
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="error-footer mt-5">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="card border-0 bg-transparent">
+                                <div class="card-body">
+                                    <i class="fas fa-life-ring fa-2x text-primary mb-2"></i>
+                                    <h6>Need Help?</h6>
+                                    <p class="small text-muted">Contact our support team</p>
+                                    <a href="mailto:support@figuremeup.com" class="btn btn-outline-primary btn-sm">
+                                        Get Support
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <div class="card border-0 bg-transparent">
+                                <div class="card-body">
+                                    <i class="fas fa-chart-line fa-2x text-success mb-2"></i>
+                                    <h6>Server Status</h6>
+                                    <p class="small text-muted">Check our system status</p>
+                                    <a href="#" class="btn btn-outline-success btn-sm">
+                                        Status Page
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <div class="card border-0 bg-transparent">
+                                <div class="card-body">
+                                    <i class="fas fa-comments fa-2x text-info mb-2"></i>
+                                    <h6>Community</h6>
+                                    <p class="small text-muted">Join our community forums</p>
+                                    <a href="#" class="btn btn-outline-info btn-sm">
+                                        Visit Forum
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <small class="text-muted">
+                        <i class="fas fa-shield-alt me-1"></i>
+                        Rest assured, your data is safe and secure. This is just a temporary hiccup!
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .error-page {
+        animation: fadeIn 0.5s ease-in;
+    }
+
+    .error-icon {
+        animation: pulse 2s infinite;
+    }
+
+    .error-code {
+        background: linear-gradient(45deg, #dc3545, #c82333);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    
+
+    .card:hover {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease;
+    }
+
+    .btn-primary {
+        animation: glow 2s ease-in-out infinite alternate;
+    }
+
+
+}
+</style>

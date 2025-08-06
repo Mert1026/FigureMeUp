@@ -1,0 +1,147 @@
+﻿@{
+    ViewData["Title"] = "Page Not Found";
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 text-center py-5">
+            <div class="error-page">
+                <div class="error-icon mb-4">
+                    <i class="fas fa-robot fa-5x text-muted"></i>
+                </div>
+
+                <h1 class="error-code display-1 fw-bold text-primary mb-3">404</h1>
+
+                <h2 class="error-title h3 mb-4">Oops! Page Not Found</h2>
+
+                <p class="error-description lead text-muted mb-4">
+                    The page you're looking for seems to have wandered off into the digital void.
+                    Our robots are searching for it, but in the meantime, let's get you back on track!
+                </p>
+
+                <div class="error-suggestions mb-5">
+                    <div class="card border-0 bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="fas fa-lightbulb text-warning me-2"></i>What can you do?
+                            </h5>
+                            <ul class="list-unstyled text-start">
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    Check the URL for any typos
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    Use the navigation menu above
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    Start fresh from our homepage
+                                </li>
+                                <li class="mb-0">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    Browse our amazing figure collection
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="error-actions">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-lg">
+                            <i class="fas fa-home me-2"></i>Go Home
+                        </a>
+                        <a asp-controller="Figures" asp-action="Index" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-robot me-2"></i>Browse Figures
+                        </a>
+                    </div>
+
+                    <div class="mt-3">
+                        <button onclick="history.back()" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Go Back
+                        </button>
+                    </div>
+                </div>
+
+                <div class="error-footer mt-5">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="card border-0 bg-transparent">
+                                <div class="card-body">
+                                    <i class="fas fa-robot fa-2x text-primary mb-2"></i>
+                                    <h6>Explore Figures</h6>
+                                    <p class="small text-muted">Discover amazing collectibles</p>
+                                    <a asp-controller="Figures" asp-action="Index" class="btn btn-outline-primary btn-sm">
+                                        View All
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <div class="card border-0 bg-transparent">
+                                <div class="card-body">
+                                    <i class="fas fa-newspaper fa-2x text-success mb-2"></i>
+                                    <h6>Read Posts</h6>
+                                    <p class="small text-muted">Community stories & experiences</p>
+                                    <a asp-controller="Posts" asp-action="Index" class="btn btn-outline-success btn-sm">
+                                        Browse Posts
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <div class="card border-0 bg-transparent">
+                                <div class="card-body">
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <i class="fas fa-plus fa-2x text-warning mb-2"></i>
+                                        <h6>Add Content</h6>
+                                        <p class="small text-muted">Share your collection</p>
+                                        <a asp-controller="Figures" asp-action="Create" class="btn btn-outline-warning btn-sm">
+                                            Add Figure
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <i class="fas fa-user-plus fa-2x text-info mb-2"></i>
+                                        <h6>Join Us</h6>
+                                        <p class="small text-muted">Become part of our community</p>
+                                        <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-outline-info btn-sm">
+                                            Sign Up
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>  
+    .error-page {  
+        animation: fadeIn 0.5s ease-in;  
+    }  
+
+    .error-icon {  
+        animation: bounce 2s infinite;  
+    }  
+
+    .error-code {  
+        background: linear-gradient(45deg, #007bff, #0056b3);  
+        -webkit-background-clip: text;  
+        -webkit-text-fill-color: transparent;  
+        background-clip: text;  
+    }  
+
+    .card:hover {  
+        transform: translateY(-2px);  
+        transition: transform 0.2s ease;  
+    }  
+</style>
