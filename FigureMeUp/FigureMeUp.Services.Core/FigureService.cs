@@ -75,9 +75,8 @@ namespace FigureMeUp.Services.Core
 
                 return OpResult;
             }
-            catch (Exception ex)
+            catch
             {
-                //Redirection to error page
                 return false;
             }
             
@@ -96,9 +95,8 @@ namespace FigureMeUp.Services.Core
                 }
                 return OpResult;
             }
-            catch (Exception ex)
+            catch
             {
-                //Redirection to error page.. ne zabravyay
                 return false;
             }
 
@@ -142,9 +140,8 @@ namespace FigureMeUp.Services.Core
                     return figures;
                 }
             }
-            catch(Exception ex)
+            catch
             {
-                //Redirection to error page
                 return Enumerable.Empty<Figure>();
             }
             
@@ -164,9 +161,8 @@ namespace FigureMeUp.Services.Core
 
                 return figure;
             }
-            catch (Exception ex)
+            catch
             {
-                //Redirection to error page
                 return null;
             }
 
@@ -209,24 +205,21 @@ namespace FigureMeUp.Services.Core
 
                 return OpResult;
             }
-            catch (Exception ex)
+            catch
             {
-                //Redirection to error page
                 return false;
             }
            
         }
 
-        // Method to add a like (only if not already liked)
         public async Task<bool> AddLikeAsync(Guid figureId, string userId)
         {
-            Figure figure = _figuresRepository.GetAllAttached().FirstOrDefault(f => f.Id == figureId);
+            Figure? figure = _figuresRepository.GetAllAttached().FirstOrDefault(f => f.Id == figureId);
             if (figure == null || figure.IsDeleted)
             {
                 return false;
             }
 
-            // Check if user hasn't liked the post yet
             if (!figure.LikedByUsersIds.Contains(userId))
             {
                 figure.LikedByUsersIds.Add(userId);
@@ -235,35 +228,47 @@ namespace FigureMeUp.Services.Core
                 return true;
             }
 
-            // User has already liked the post
             return false;
         }
 
-        // Method to toggle like/unlike (better for your ToggleLike controller action)
         public async Task<bool> ToggleLikeAsync(Guid figureId, string userId)
         {
-            Figure figure = _figuresRepository.GetAllAttached()
-                .FirstOrDefault(f => f.Id == figureId);
-            if (figure == null || figure.IsDeleted)
+            try
+            {
+                if(figureId != Guid.Empty
+                    || userId != String.Empty)
+                {
+                    Figure? figure = _figuresRepository.GetAllAttached()
+                    .FirstOrDefault(f => f.Id == figureId);
+                    if (figure == null || figure.IsDeleted)
+                    {
+                        return false;
+                    }
+
+                    if (figure.LikedByUsersIds.Contains(userId))
+                    {
+                        // User has liked it, so unlike it
+                        figure.LikedByUsersIds.Remove(userId);
+                        figure.LikesCount = Math.Max(0, figure.LikesCount - 1); // Prevent negative counts
+                    }
+                    else
+                    {
+                        // User hasn't liked it, so like it
+                        figure.LikedByUsersIds.Add(userId);
+                        figure.LikesCount++;
+                    }
+
+                    await _figuresRepository.UpdateAsync(figure);
+                    return true;
+                }
+                return false;
+                
+            }
+            catch
             {
                 return false;
             }
-
-            if (figure.LikedByUsersIds.Contains(userId))
-            {
-                // User has liked it, so unlike it
-                figure.LikedByUsersIds.Remove(userId);
-                figure.LikesCount = Math.Max(0, figure.LikesCount - 1); // Prevent negative counts
-            }
-            else
-            {
-                // User hasn't liked it, so like it
-                figure.LikedByUsersIds.Add(userId);
-                figure.LikesCount++;
-            }
-
-            await _figuresRepository.UpdateAsync(figure);
-            return true;
+            
         }
 
         public async Task<IEnumerable<Figure>> GetFiguresByUserIdAsync(string userId)
@@ -281,9 +286,8 @@ namespace FigureMeUp.Services.Core
 
                 return figures;
             }
-            catch (Exception ex)
+            catch
             {
-                //Redirection to error page
                 return Enumerable.Empty<Figure>();
             }
             
@@ -305,9 +309,8 @@ namespace FigureMeUp.Services.Core
 
                 return figures;
             }
-            catch (Exception ex)
+            catch
             {
-                //Redirection to error page
                 return Enumerable.Empty<Figure>();
             }
         }

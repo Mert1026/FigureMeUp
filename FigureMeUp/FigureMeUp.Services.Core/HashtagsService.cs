@@ -1,4 +1,5 @@
 ﻿using FigureMeUp.Data.Models;
+using FigureMeUp.Data.Models.View_models;
 using FigureMeUp.Data.Repositories;
 using FigureMeUp.Data.Repositories.Interfaces;
 using FigureMeUp.Services.Core.Interfaces;
@@ -27,9 +28,8 @@ namespace FigureMeUp.Services.Core
                 await _hashtagsRepository.AddAsync(hashtag);
                 return true;
             }
-            catch(Exception ex)
+            catch()
             {
-                //Redirection to error page
                 return false;
             }
 
@@ -47,9 +47,8 @@ namespace FigureMeUp.Services.Core
                 }
                 return OpResult;
             }
-            catch (Exception ex)
+            catch
             {
-                //Redirection to error page
                 return false;
             }
 
@@ -66,9 +65,9 @@ namespace FigureMeUp.Services.Core
                 }
                 return OpResult;
             }
-            catch (Exception ex)
+            catch
             {
-                //Redirection to error page
+
                 return false;
             }
 
@@ -87,9 +86,8 @@ namespace FigureMeUp.Services.Core
 
                 return hashtag;
             }
-            catch (Exception ex)
+            catch
             {
-                //Redirection to error page
                 return null;
             }
 
@@ -106,9 +104,8 @@ namespace FigureMeUp.Services.Core
 
                 return hashtag;
             }
-            catch (Exception ex)
+            catch
             {
-                //Redirection to error page
                 return null;
             }
 
